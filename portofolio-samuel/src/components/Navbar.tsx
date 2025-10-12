@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, X as XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -94,6 +94,14 @@ export const Navbar = () => {
             className="fixed inset-0 z-40 origin-top animated-grid-background bg-background-dark/60 backdrop-blur-md"
           >
             <div className="container mx-auto relative flex h-full max-w-5xl flex-col items-center justify-center px-4">
+              {/* Close button */}
+              <button
+                aria-label="Tutup menu"
+                onClick={() => setIsOpen(false)}
+                className="absolute right-4 top-4 rounded-full border border-white/20 bg-white/10 p-2 text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-accent-primary/60"
+              >
+                <XIcon size={18} />
+              </button>
               {/* Animated backdrop blob responding to selection */}
               <AnimatePresence mode="wait">
                 {selectedMenuLink && (
