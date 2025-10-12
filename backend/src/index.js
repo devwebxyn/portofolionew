@@ -16,7 +16,28 @@ const PORT = process.env.PORT || 4000;
 
 // Middlewares
 app.use(morgan('dev'));
-app.use(cors({ origin: [/^http:\/\/localhost:\d+$/], credentials: true }));
+// CORS: allow localhost in dev and production frontends
+const allowedOrigins = [
+  /^http:\/\/localhost:\d+$/,
+  'https://samuelindrabastian.me',
+  'https://www.samuelindrabastian.me',
+  process.env.FRONTEND_ORIGIN,
+  process.env.NEXT_PUBLIC_SITE_URL,
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true); // same-origin or curl
+      const ok = allowedOrigins.some((o) => (typeof o === 'string' ? o === origin : o.test(origin)));
+      if (ok) return callback(null, true);
+      return callback(new Error(`Not allowed by CORS: ${origin}`));
+    },
+    credentials: true,
+  })
+);
+// Handle preflight
+app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

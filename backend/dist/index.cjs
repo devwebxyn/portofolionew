@@ -3896,7 +3896,25 @@ var import_meta = {};
 var app = (0, import_express.default)();
 var PORT = process.env.PORT || 4e3;
 app.use((0, import_morgan.default)("dev"));
-app.use((0, import_cors.default)({ origin: [/^http:\/\/localhost:\d+$/], credentials: true }));
+var allowedOrigins = [
+  /^http:\/\/localhost:\d+$/,
+  "https://samuelindrabastian.me",
+  "https://www.samuelindrabastian.me",
+  process.env.FRONTEND_ORIGIN,
+  process.env.NEXT_PUBLIC_SITE_URL
+].filter(Boolean);
+app.use(
+  (0, import_cors.default)({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      const ok = allowedOrigins.some((o) => typeof o === "string" ? o === origin : o.test(origin));
+      if (ok) return callback(null, true);
+      return callback(new Error(`Not allowed by CORS: ${origin}`));
+    },
+    credentials: true
+  })
+);
+app.options("*", (0, import_cors.default)());
 app.use(import_express.default.json());
 app.use(import_express.default.urlencoded({ extended: true }));
 app.use((0, import_cookie_parser.default)());
