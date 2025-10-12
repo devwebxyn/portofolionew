@@ -25,7 +25,7 @@ export default function ProjectsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const base = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
+        const base = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://adminsamuel.vercel.app';
         const res = await fetch(`${base}/api/projects`, { cache: "no-store" });
         const json = await res.json();
         if (!json.ok) throw new Error(json.error || "Gagal memuat data");
