@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Admin</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:#0b0b0f; color:#fff; }
+    header { display:flex; align-items:center; justify-content:space-between; padding:16px; border-bottom:1px solid #2a2d3a; }
+    main { max-width:960px; margin:0 auto; padding:16px; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+    .card { background:#11131a; border:1px solid #2a2d3a; border-radius:12px; padding:16px; }
+    input, textarea, button { width:100%; padding:10px 12px; border-radius:8px; border:1px solid #2a2d3a; background:#0f1117; color:#fff; }
+    button { background:#10b981; border-color:#10b981; cursor:pointer; }
+      .btn-secondary { display:inline-block; padding:8px 12px; border-radius:8px; border:1px solid #2a2d3a; background:#0f1117; color:#fff; text-decoration:none; }
+      .btn-secondary:hover { background:#121420; }
+    label { display:block; font-size:12px; color:#a1a6b4; margin-bottom:6px; }
+    .row { margin:10px 0; }
+    .tag { display:inline-block; font-size:12px; padding:4px 8px; background:#0f1117; border:1px solid #2a2d3a; border-radius:999px; margin-right:6px; }
+    .flex { display:flex; gap:8px; align-items:center; }
+    .list { display:grid; gap:10px; }
+    .project { display:flex; justify-content:space-between; border:1px solid #2a2d3a; border-radius:10px; padding:10px; gap:12px; }
+    .actions { display:flex; align-items:center; gap:8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>Halo, <%= user.username %></div>
+    <div class="flex" style="gap:12px;">
+      <a class="btn-secondary" href="/admin/messages">Pesan Masuk</a>
+      <a href="/admin/logout">Keluar</a>
+    </div>
+  </header>
+  <main>
+    <div class="grid">
+      <div class="card">
+        <h3>Tambah Project</h3>
+        <form method="post" action="/admin/projects" enctype="multipart/form-data">
+          <div class="row">
+            <label>Judul</label>
+            <input name="title" required />
+          </div>
+          <div class="row">
+            <label>Deskripsi</label>
+            <textarea name="description" rows="4" required></textarea>
+          </div>
+          <div class="row">
+            <label>Tags (pisah dengan koma)</label>
+            <input name="tags" placeholder="React, Next.js, Tailwind" />
+          </div>
+          <div class="row">
+            <label>Kategori (Framework)</label>
+            <select name="category">
+              <% (frameworks || []).forEach(function(f){ %>
+                <option value="<%= f.key %>"><%= f.name %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="row">
+            <label>Bahasa Pemrograman</label>
+            <select name="language">
+              <% (languages || []).forEach(function(l){ %>
+                <option value="<%= l.key %>"><%= l.name %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="row">
+            <label>Upload Gambar</label>
+            <input type="file" name="image" accept="image/*" />
+          </div>
+          <div class="row">
+            <label>Live URL (opsional)</label>
+            <input name="liveUrl" placeholder="https://..." />
+          </div>
+          <div class="row">
+            <label>GitHub URL (opsional)</label>
+            <input name="githubUrl" placeholder="https://..." />
+          </div>
+          <div class="row">
+            <button type="submit">Simpan</button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Daftar Project</h3>
+        <p style="margin:6px 0 12px 0; color:#a1a6b4;">Kelola pesan: <a class="btn-secondary" href="/admin/messages">Pesan Masuk</a></p>
+        <div class="list">
+          <% items.forEach(function(p){ %>
+            <div class="project">
+              <div>
+                <div><strong><%= p.title %></strong></div>
+                <div><%= p.description %></div>
+                <div>Kategori: <%= p.category %> • Bahasa: <%= p.language %></div>
+                <div>
+                  <% (p.tags || []).forEach(function(t){ %>
+                    <span class="tag"><%= t %></span>
+                  <% }) %>
+                </div>
+              </div>
+              <div class="actions">
+                <a class="btn-secondary" href="/admin/projects/<%= p.$id %>/edit">Edit</a>
+                <form method="post" action="/admin/projects/<%= p.$id %>/delete">
+                  <button type="submit">Hapus</button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

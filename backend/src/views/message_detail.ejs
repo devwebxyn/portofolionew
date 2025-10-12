@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detail Pesan</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:#0b0b0f; color:#fff; }
+    header { display:flex; align-items:center; justify-content:space-between; padding:16px; border-bottom:1px solid #2a2d3a; }
+    main { max-width:720px; margin:0 auto; padding:16px; }
+    .card { background:#11131a; border:1px solid #2a2d3a; border-radius:12px; padding:16px; }
+    textarea, button { width:100%; padding:10px 12px; border-radius:8px; border:1px solid #2a2d3a; background:#0f1117; color:#fff; }
+    button { background:#10b981; border-color:#10b981; cursor:pointer; }
+    .meta { color:#a1a6b4; font-size:12px; }
+    .badge { display:inline-block; font-size:11px; padding:4px 8px; background:#0f1117; border:1px solid #2a2d3a; border-radius:999px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div style="display:flex; gap:12px; margin-bottom:12px;">
+      <a href="/admin/messages">Kembali</a>
+      <a href="/admin/dashboard">Dashboard</a>
+    </div>
+    <div class="card">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+        <div>
+          <h2 style="margin:0 0 6px 0; font-size:18px; font-weight:700;"><%= m.subject %></h2>
+          <p class="meta">Dari: <%= m.senderEmail %></p>
+        </div>
+        <div><span class="badge">Status: <span id="statusText"><%= m.status %></span></span></div>
+      </div>
+      <pre style="white-space: pre-wrap; line-height:1.6; margin-top:10px; background:#0f1117; border:1px solid #2a2d3a; padding:12px; border-radius:10px;"><%= m.body %></pre>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <form id="replyForm">
+        <input type="hidden" name="originalMessageId" value="<%= m.$id %>" />
+        <label>Balasan</label>
+        <textarea name="replyContent" rows="6" placeholder="Tulis balasan..." required></textarea>
+        <div style="margin-top:10px; display:flex; gap:8px; justify-content:flex-end;">
+          <button id="replyBtn" type="submit">Kirim Balasan</button>
+        </div>
+      </form>
+      <p id="replyError" class="meta" style="color:#fca5a5; display:none; margin-top:8px;"></p>
+    </div>
+  </main>
+  <script>
+    const form = document.getElementById('replyForm');
+    const btn = document.getElementById('replyBtn');
+    const err = document.getElementById('replyError');
+    const statusText = document.getElementById('statusText');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.style.display = 'none';
+      btn.disabled = true;
+      const data = new FormData(form);
+      const payload = {
+        originalMessageId: data.get('originalMessageId'),
+        replyContent: data.get('replyContent')
+      };
+      try {
+        const res = await fetch('/api/admin/reply-message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || json.ok === false) {
+          throw new Error((json && json.error) || 'Gagal mengirim balasan');
+        }
+        if (statusText && statusText.textContent !== 'replied') {
+          statusText.textContent = 'replied';
+        }
+        alert('Balasan terkirim');
+        window.location.href = '/admin/messages';
+      } catch (e) {
+        err.textContent = e.message || 'Terjadi kesalahan.';
+        err.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Project</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:#0b0b0f; color:#fff; }
+    header { display:flex; align-items:center; justify-content:space-between; padding:16px; border-bottom:1px solid #2a2d3a; }
+    main { max-width:720px; margin:0 auto; padding:16px; }
+    .card { background:#11131a; border:1px solid #2a2d3a; border-radius:12px; padding:16px; }
+    input, textarea, button, select { width:100%; padding:10px 12px; border-radius:8px; border:1px solid #2a2d3a; background:#0f1117; color:#fff; }
+    button { background:#10b981; border-color:#10b981; cursor:pointer; }
+    label { display:block; font-size:12px; color:#a1a6b4; margin-bottom:6px; }
+    .row { margin:10px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>Edit Project</div>
+    <a href="/admin/dashboard">Kembali</a>
+  </header>
+  <main>
+    <div class="card">
+      <form method="post" action="/admin/projects/<%= p.$id %>" enctype="multipart/form-data">
+        <div class="row">
+          <label>Judul</label>
+          <input name="title" value="<%= p.title %>" required />
+        </div>
+        <div class="row">
+          <label>Deskripsi</label>
+          <textarea name="description" rows="4" required><%= p.description %></textarea>
+        </div>
+        <div class="row">
+          <label>Tags (pisah dengan koma)</label>
+          <input name="tags" value="<%= (p.tags || []).join(', ') %>" />
+        </div>
+        <div class="row">
+          <label>Kategori (Framework)</label>
+          <select name="category">
+            <% (frameworks || []).forEach(function(f){ %>
+              <option value="<%= f.key %>" <%= p.category === f.key ? 'selected' : '' %>><%= f.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="row">
+          <label>Bahasa Pemrograman</label>
+          <select name="language">
+            <% (languages || []).forEach(function(l){ %>
+              <option value="<%= l.key %>" <%= p.language === l.key ? 'selected' : '' %>><%= l.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="row">
+          <label>Upload Gambar (opsional, untuk mengganti)</label>
+          <input type="file" name="image" accept="image/*" />
+        </div>
+        <div class="row">
+          <label>Live URL</label>
+          <input name="liveUrl" value="<%= p.liveUrl || '' %>" />
+        </div>
+        <div class="row">
+          <label>GitHub URL</label>
+          <input name="githubUrl" value="<%= p.githubUrl || '' %>" />
+        </div>
+        <div class="row">
+          <button type="submit">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

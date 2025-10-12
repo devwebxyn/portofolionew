@@ -1,0 +1,163 @@
+/* /src/app/globals.css (PENDEKATAN BARU & LEBIH SEDERHANA) */
+
+/* LANGKAH 1: Definisikan tema kustom Anda. Ini akan ditemukan
+   dan digunakan secara otomatis oleh @import di bawahnya. */
+@import "tailwindcss/theme" {
+  
+  colors: {
+    background: {
+      dark: #0A0A0A;
+      subtle: #111111;
+    };
+    accent: {
+      primary: #00A9FF;
+      secondary: #9E00FF;
+    };
+    text: {
+      heading: #F5F5F5;
+      body: #A3A3A3;
+    };
+    border: {
+      subtle: #262626;
+    };
+  };
+
+  fontFamily: {
+    body: var(--font-inter);
+    heading: var(--font-sora);
+  };
+  
+}
+
+/* LANGKAH 2: Impor SEMUANYA dari Tailwind dalam satu baris.
+   Ini adalah satu-satunya cara yang diizinkan oleh paket. */
+@import "tailwindcss";
+
+/* Smooth anchor scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Premium rounded gradient scrollbar */
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #00A9FF transparent; /* thumb color, track color */
+}
+/* WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #00A9FF 0%, #9E00FF 60%, #FFD700 100%);
+  border: 2px solid rgba(255, 255, 255, 0); /* create inset gap */
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #1AB6FF 0%, #AE2CFF 60%, #FFD83B 100%);
+}
+
+/* EFEK LATAR BELAKANG UNTUK MENU MEWAH */
+.animated-grid-background {
+  /* Subtle grid lines for a more refined look */
+  background-size: 48px 48px;
+  background-image: linear-gradient(to right, rgba(38, 38, 38, 0.6) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(38, 38, 38, 0.6) 1px, transparent 1px);
+  animation: pan-background 28s linear infinite;
+}
+
+@keyframes pan-background {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+/* Backdrop animation for per-section hover/selection in the overlay */
+.animated-section-blob {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 9999px;
+  filter: blur(64px);
+  opacity: 0.18; /* subtle */
+  pointer-events: none;
+  animation: float-blob 12s ease-in-out infinite alternate;
+}
+
+.blob-projects {
+  background: radial-gradient(circle at 40% 40%, rgba(0, 169, 255, 0.7), transparent 60%);
+}
+.blob-about {
+  background: radial-gradient(circle at 60% 40%, rgba(158, 0, 255, 0.7), transparent 60%);
+}
+.blob-contact {
+  background: radial-gradient(circle at 50% 60%, rgba(255, 255, 255, 0.35), transparent 60%);
+}
+
+@keyframes float-blob {
+  from {
+    transform: translate3d(-10%, -6%, 0) scale(0.95);
+  }
+  to {
+    transform: translate3d(8%, 4%, 0) scale(1.05);
+  }
+}
+
+/* Subtle animated gradient for brand text */
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 8s ease infinite;
+}
+
+@keyframes gradient-x {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Cross-browser gradient text with graceful fallback */
+.gradient-text {
+  /* Fallback color when background-clip: text isn't supported */
+  color: #F5F5F5; /* matches text-heading */
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .gradient-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent; /* Safari/iOS */
+  }
+}
+
+/* Centered accent glow behind heading text (blends with white bg) */
+.heading-highlight {
+  position: relative;
+  display: inline-block;
+}
+.heading-highlight::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%);
+  width: 58%;
+  aspect-ratio: 1 / 1; /* make it perfectly round */
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(circle at center,
+    rgba(0, 169, 255, 0.32) 0%,        /* biru medium */
+    rgba(158, 0, 255, 0.24) 40%,       /* ungu medium */
+    rgba(255, 215, 0, 0.20) 65%,       /* kuning keemasan medium */
+    transparent 72%
+  );
+  filter: blur(28px);
+}

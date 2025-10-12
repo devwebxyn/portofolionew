@@ -1,0 +1,33 @@
+{
+  "name": "portfolio-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "setup": "node scripts/setup-appwrite.js",
+    "clean": "shx rm -rf dist",
+  "build": "npm run clean && esbuild src/index.js --bundle --platform=node --format=cjs --external:ejs --external:express --external:node-appwrite --external:nodemailer --external:bcryptjs --external:multer --external:cookie-parser --external:cors --external:morgan --external:dotenv --outfile=dist/index.cjs && shx mkdir -p dist/scripts && esbuild scripts/setup-appwrite.js --bundle --platform=node --format=cjs --external:node-appwrite --external:bcryptjs --external:dotenv --outfile=dist/scripts/setup-appwrite.cjs && shx cp -r src/views dist/views",
+  "start:prod": "node dist/index.cjs",
+  "setup:prod": "node dist/scripts/setup-appwrite.cjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nanoid": "^5.0.7",
+    "node-appwrite": "^14.0.0",
+    "nodemailer": "^6.10.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "shx": "^0.3.4"
+  }
+}
