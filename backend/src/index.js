@@ -16,28 +16,28 @@ const PORT = process.env.PORT || 4000;
 
 // Middlewares
 app.use(morgan('dev'));
-// CORS: allow localhost in dev and production frontends
+// CORS only for API endpoints; admin pages are same-origin and shouldn't be blocked by CORS middleware
 const allowedOrigins = [
   /^http:\/\/localhost:\d+$/,
   'https://samuelindrabastian.me',
   'https://www.samuelindrabastian.me',
+  'https://adminsamuel.vercel.app',
   process.env.FRONTEND_ORIGIN,
   process.env.NEXT_PUBLIC_SITE_URL,
 ].filter(Boolean);
 
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin) return callback(null, true); // same-origin or curl
-      const ok = allowedOrigins.some((o) => (typeof o === 'string' ? o === origin : o.test(origin)));
-      if (ok) return callback(null, true);
-      return callback(new Error(`Not allowed by CORS: ${origin}`));
-    },
-    credentials: true,
-  })
-);
-// Handle preflight
-app.options('*', cors());
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin) return callback(null, true); // server-to-server or same-origin navigation
+    const ok = allowedOrigins.some((o) => (typeof o === 'string' ? o === origin : o.test(origin)));
+    if (ok) return callback(null, true);
+    return callback(new Error(`Not allowed by CORS: ${origin}`));
+  },
+  credentials: true,
+};
+
+app.use('/api', cors(corsOptions));
+app.options('/api/*', cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

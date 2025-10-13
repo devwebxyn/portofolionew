@@ -3900,21 +3900,21 @@ var allowedOrigins = [
   /^http:\/\/localhost:\d+$/,
   "https://samuelindrabastian.me",
   "https://www.samuelindrabastian.me",
+  "https://adminsamuel.vercel.app",
   process.env.FRONTEND_ORIGIN,
   process.env.NEXT_PUBLIC_SITE_URL
 ].filter(Boolean);
-app.use(
-  (0, import_cors.default)({
-    origin(origin, callback) {
-      if (!origin) return callback(null, true);
-      const ok = allowedOrigins.some((o) => typeof o === "string" ? o === origin : o.test(origin));
-      if (ok) return callback(null, true);
-      return callback(new Error(`Not allowed by CORS: ${origin}`));
-    },
-    credentials: true
-  })
-);
-app.options("*", (0, import_cors.default)());
+var corsOptions = {
+  origin(origin, callback) {
+    if (!origin) return callback(null, true);
+    const ok = allowedOrigins.some((o) => typeof o === "string" ? o === origin : o.test(origin));
+    if (ok) return callback(null, true);
+    return callback(new Error(`Not allowed by CORS: ${origin}`));
+  },
+  credentials: true
+};
+app.use("/api", (0, import_cors.default)(corsOptions));
+app.options("/api/*", (0, import_cors.default)(corsOptions));
 app.use(import_express.default.json());
 app.use(import_express.default.urlencoded({ extended: true }));
 app.use((0, import_cookie_parser.default)());
