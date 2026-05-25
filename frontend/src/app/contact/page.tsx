@@ -102,7 +102,7 @@ export default function ContactPage() {
         {/* Instagram */}
         <motion.a
           initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          href="https://www.instagram.com/xynoos/" target="_blank"
+          href="https://www.instagram.com/samuelindrabastian/" target="_blank"
           className="group relative overflow-hidden rounded-2xl border border-black/10 bg-white p-6 text-black shadow-sm transition hover:shadow-lg"
         >
           <div className="flex items-start gap-4">

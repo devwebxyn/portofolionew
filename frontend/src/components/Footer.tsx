@@ -1,6 +1,6 @@
 // /src/components/Footer.tsx
 import Link from 'next/link';
-import { Github, Linkedin } from 'lucide-react';
+import { Github,} from 'lucide-react';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -16,11 +16,8 @@ export const Footer = () => {
 
         {/* Social Links */}
         <div className="flex items-center gap-4">
-          <Link href="https://github.com/devwebxyn" target="_blank" rel="noopener noreferrer">
+          <Link href="https://github.com/samuelindra123" target="_blank" rel="noopener noreferrer">
             <Github className="h-5 w-5 hover:text-text-heading transition-colors" />
-          </Link>
-          <Link href="https://www.linkedin.com/in/samuel-indra-bastian/" target="_blank" rel="noopener noreferrer">
-            <Linkedin className="h-5 w-5 hover:text-text-heading transition-colors" />
           </Link>
         </div>
       </div>

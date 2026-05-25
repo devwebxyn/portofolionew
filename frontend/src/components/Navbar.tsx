@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Github, Linkedin, X as XIcon } from 'lucide-react';
+import { Github,  X as XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -72,8 +72,7 @@ export const Navbar = () => {
           
           <div className="flex items-center gap-4">
             {/* Tampilkan social links di semua ukuran layar */}
-            <Link href="https://github.com/devwebxyn" target="_blank"><Github size={20} className="text-text-body hover:text-text-heading transition-colors" /></Link>
-            <Link href="https://www.linkedin.com/in/samuel-indra-bastian/" target="_blank"><Linkedin size={20} className="text-text-body hover:text-text-heading transition-colors" /></Link>
+            <Link href="https://github.com/samuelindra123" target="_blank"><Github size={20} className="text-text-body hover:text-text-heading transition-colors" /></Link>
             
             {/* Ikon grid kita sekarang menjadi navigasi utama */}
             <div className="ml-4">
