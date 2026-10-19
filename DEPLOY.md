@@ -9,7 +9,7 @@
 ## 1. Backend Go (`backend/`)
 - Import ke Vercel, root = `backend/`. Framework `go` (sudah di `backend/vercel.json`).
 - Vercel deteksi `go.mod` + `cmd/server/main.go` → jalan sebagai satu server function (listen `PORT`).
-- Set env (lihat `backend/.env.example`): `APPWRITE_*`, `JWT_SECRET`, `SMTP_*`, `ALLOWED_ORIGINS`.
+- Set env (lihat `backend/.env.example`): `APPWRITE_*`, `JWT_SECRET`, `ALLOWED_ORIGINS`.
 - Dapat URL, misal `https://portfolio-backend.vercel.app`.
 
 ## 2. Web admin (`admin/`)
@@ -24,7 +24,7 @@
 ## Alur data
 ```
 Browser → frontend/ (Vercel) ──server-side──▶ backend Go (Vercel) ──▶ Appwrite (DB+storage)
-Browser → admin/ (Vercel)   ──server-side──▶ backend Go (Vercel) ──▶ SMTP + Appwrite
+Browser → admin/ (Vercel)   ──server-side──▶ backend Go (Vercel) ──▶ Appwrite
 ```
 
 ## Env ringkas
