@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"os"
 	"regexp"
-	"strconv"
 	"strings"
 	"time"
 
@@ -28,17 +27,7 @@ type Server struct {
 
 type Config struct {
 	JWTSecret string
-	SMTP      SMTPConfig
 	Origins   []*regexp.Regexp
-}
-
-type SMTPConfig struct {
-	Host   string
-	Port   string
-	Secure bool
-	User   string
-	Pass   string
-	From   string
 }
 
 func NewFromEnv() (*Server, error) {
@@ -51,15 +40,7 @@ func NewFromEnv() (*Server, error) {
 		hc: &http.Client{Timeout: 30 * time.Second},
 		conf: &Config{
 			JWTSecret: os.Getenv("JWT_SECRET"),
-			SMTP: SMTPConfig{
-				Host:   os.Getenv("SMTP_HOST"),
-				Port:   os.Getenv("SMTP_PORT"),
-				Secure: os.Getenv("SMTP_SECURE") == "true",
-				User:   os.Getenv("SMTP_USER"),
-				Pass:   os.Getenv("SMTP_PASS"),
-				From:   os.Getenv("SMTP_FROM"),
-			},
-			Origins: parseOrigins(),
+			Origins:   parseOrigins(),
 		},
 	}, nil
 }
@@ -475,37 +456,14 @@ func (s *Server) HandleAdminMessageReply(w http.ResponseWriter, r *http.Request)
 		errJSON(w, http.StatusBadRequest, "Data tidak lengkap")
 		return
 	}
-	sm := s.conf.SMTP
-	if sm.Host == "" || sm.User == "" || sm.Pass == "" {
-		errJSON(w, http.StatusBadRequest,
-			"SMTP belum dikonfigurasi. Set SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS, SMTP_FROM di env backend.")
-		return
-	}
-	msg, err := s.db.GetDocument("messages", in.OriginalMessageID)
-	if err != nil {
-		errJSON(w, http.StatusInternalServerError, err.Error())
-		return
-	}
-	var m struct {
-		SenderEmail string `json:"senderEmail"`
-		Subject     string `json:"subject"`
-	}
-	_ = json.Unmarshal(msg, &m)
-	port, _ := strconv.Atoi(sm.Port)
-	if port == 0 {
-		port = 587
-	}
-	if err := smtpSend(sm, port, m.SenderEmail, "Re: "+m.Subject, in.ReplyContent); err != nil {
-		errJSON(w, http.StatusInternalServerError, "SMTP gagal: "+err.Error())
-		return
-	}
-	// Mark replied (best-effort on status attribute).
+	// SMTP removed — reply hanya dicatat sebagai balasan, tidak dikirim email.
 	if err := s.db.UpdateDocument("messages", in.OriginalMessageID, map[string]any{
 		"status":       "replied",
 		"repliedAt":    time.Now().UTC().Format(time.RFC3339),
 		"replyContent": in.ReplyContent,
 	}); err != nil {
-		// ignore attribute readiness errors; the email was sent.
+		errJSON(w, http.StatusInternalServerError, err.Error())
+		return
 	}
 	okJSON(w, http.StatusOK, nil)
 }

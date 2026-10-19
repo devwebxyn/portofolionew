@@ -133,7 +133,7 @@ export function MessagesView({ messages }: { messages: Message[] }) {
             {selected.replyContent && (
               <div className="rounded-md border border-accent3/30 bg-accent3/5 p-4">
                 <p className="mb-1 flex items-center gap-1.5 text-xs font-medium text-accent3">
-                  <Reply className="h-3.5 w-3.5" /> Balasan terkirim
+                  <Reply className="h-3.5 w-3.5" /> Balasan dicatat
                 </p>
                 <p className="whitespace-pre-wrap text-sm text-hi/80">{selected.replyContent}</p>
               </div>
@@ -148,7 +148,7 @@ export function MessagesView({ messages }: { messages: Message[] }) {
                 rows={4}
                 value={reply}
                 onChange={(e) => setReply(e.target.value)}
-                placeholder="Tulis balasan email…"
+                placeholder="Tulis balasan… (dicatat di admin, tidak dikirim email)"
                 className="w-full rounded-md border border-line bg-panel px-3 py-2 text-sm text-hi placeholder:text-body/40 focus:border-accent focus:outline-none"
               />
               {error && (
@@ -162,7 +162,7 @@ export function MessagesView({ messages }: { messages: Message[] }) {
                 className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-semibold text-black transition-opacity hover:opacity-90 disabled:opacity-50"
               >
                 <Send className="h-4 w-4" />
-                {busy ? "Mengirim…" : "Kirim Balasan"}
+                {busy ? "Menyimpan…" : "Simpan Balasan"}
               </button>
             </div>
           </div>

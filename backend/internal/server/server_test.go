@@ -10,23 +10,6 @@ func newTestServer() *Server {
 	return &Server{conf: &Config{JWTSecret: "test-secret"}}
 }
 
-func TestBase64(t *testing.T) {
-	if got := base64Encode([]byte("hello")); got != "aGVsbG8=" {
-		t.Fatalf("base64(hello) = %q", got)
-	}
-}
-
-func TestEncodeSubject(t *testing.T) {
-	if got := encodeSubject("Re: Hello"); got != "Re: Hello" {
-		t.Fatalf("short ascii subject changed: %q", got)
-	}
-	for _, s := range []string{"Re: Pembaruan proyek — batas 60 karakter lebih", "replý nonascii"} {
-		if !isASCII(encodeSubject(s)) {
-			t.Fatalf("encodeSubject(%q) not pure ascii: %q", s, encodeSubject(s))
-		}
-	}
-}
-
 func TestOriginAllowed(t *testing.T) {
 	s := newTestServer()
 	s.conf.Origins = parseOrigins() // localhost regex always allowed

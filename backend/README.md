@@ -7,7 +7,7 @@ binary. Deploys to Vercel via the Go Framework Preset (reads `go.mod` +
 ## Local dev
 
 ```sh
-cp .env.example .env   # isi Appwrite + SMTP
+cp .env.example .env   # isi Appwrite
 go run ./cmd/server    # → http://localhost:4000
 ```
 
@@ -31,7 +31,7 @@ go run ./cmd/server    # → http://localhost:4000
 | POST | `/api/admin/projects/delete` | JWT | Delete `{ id }` |
 | GET | `/api/admin/messages` | JWT | List pesan |
 | POST | `/api/admin/messages/read` | JWT | Tandai `{ id }` dibaca |
-| POST | `/api/admin/messages/reply` | JWT | Balas `{ originalMessageId, replyContent }` via SMTP |
+| POST | `/api/admin/messages/reply` | JWT | Catat balasan `{ originalMessageId, replyContent }` (tanpa kirim email) |
 
 Auth token dikirim via header `Authorization: Bearer <token>` atau cookie `auth`.
 

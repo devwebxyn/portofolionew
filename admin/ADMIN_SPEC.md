@@ -49,7 +49,7 @@ Layout: sidebar kiri (logo "Admin", nav: Dashboard, Pesan; bawah: Logout) + kont
 
 3. **`/projects/new`** & **`/projects/[id]/edit`** — form: title, description (textarea), tags (input dipisah koma), liveUrl, githubUrl, category, language, upload image (preview). Submit → POST ke route handler → redirect `/`. Mode edit: prefilled (fetch `GET /api/admin/projects`, cari id).
 
-4. **`/messages`** — daftar pesan (subject, senderEmail, createdAt, status badge unread/read/replied). Klik → buka detail (body lengkap) + textarea balas + tombol "Kirim Balasan" → `POST /api/messages/reply`. Setelah dibuka/dibalas, refresh list.
+4. **`/messages`** — daftar pesan (subject, senderEmail, createdAt, status badge unread/read/replied). Klik → buka detail (body lengkap) + textarea balas + tombol "Simpan Balasan" → `POST /api/messages/reply`. Balasan hanya dicatat di DB (SMTP dihapus, tidak kirim email). Setelah dibuka/dibalas, refresh list.
 
 ## Struktur minimal
 ```
