@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import type { RoleKey } from "./NexusMap";
 
 const roleTitles: Record<RoleKey, string> = {
-  frontend: "Frontend Engineer",
-  backend: "Backend Engineer",
-  fullstack: "Fullstack Engineer",
+  frontend: "Frontend",
+  backend: "Backend",
+  fullstack: "Fullstack",
   devops: "DevOps",
   security: "Cyber Security",
   lead: "Lead Developer",
@@ -26,20 +27,20 @@ type SectionContent = {
 const content: Record<RoleKey, SectionContent> = {
   frontend: {
     analogiFilosofi: [
-      "Frontend bagi saya adalah panggung utama tempat interaksi manusia dan mesin bertemu. Ibarat seorang kurator pengalaman di museum interaktif, tugas saya adalah menuntun perhatian, mengurangi gesekan, dan membuat setiap keputusan pengguna terasa intuitif.",
-      "Filosofi yang saya pegang: kecepatan itu empati, konsistensi itu kepercayaan, dan aksesibilitas adalah hak semua pengguna. Animasi bukan kembang api, melainkan bahasa tubuh antarmuka yang mengkomunikasikan konteks dan niat.",
+      "Frontend itu yang pertama kali dilihat orang. Ibarat etalase, dia yang bikin pengunjung betah atau langsung pergi. Aku belajar ini dari nol, mulai dari meniru tampilan website yang kusuka, sampai akhirnya bisa bikin sendiri.",
+      "Filosofiku sederhana: jangan sampai orang bingung lihat halamanku. Kalau tombol jelas, teks kebaca, dan tidak lemot, itu sudah cukup buatku.",
     ],
     kompetensiNaratif: [
-      "Saya membangun UI yang reaktif dan ringan, meminimalkan re-render, dan memastikan state mengalir jelas. Design system membantu saya menjaga skala: satu sumber kebenaran untuk warna, spacing, dan komponen.",
-      "Saya menguji dari perspektif manusia: fokus, keyboard nav, kontras, preferensi gerak. Teknologi adalah alat; tujuan akhirnya adalah rasa tenang saat pengguna mencapai tujuan dengan usaha paling kecil.",
+      "Aku terbiasa menyusun halaman dari HTML dan CSS, lalu menghidupkannya dengan JavaScript. Awalnya cuma dari YouTube dan tutorial, lalu mencoba bikin ulang tampilan yang kusuka biar paham caranya.",
+      "Sekarang aku mulai pakai framework modern biar rapi dan gampang dirawat. Masih banyak yang kupelajari, tapi yang penting dasar-dasarnya sudah nempel dulu.",
     ],
     metodeNaratif: [
-      "Saya memulai dari sketsa interaksi dan aliran perhatian. Saya pecah antarmuka jadi potongan kecil dengan kontrak prop yang jelas, lalu saya sambungkan dengan state management seperlunya.",
-      "Saya ukur. Time-to-interactive, LCP, CLS, dan metrik aksesibilitas. Iterasi terjadi di tempat yang memberi dampak paling tinggi pada pengalaman nyata pengguna.",
+      "Aku biasanya mulai dari meniru lalu membedah: kenapa tombol di sini, kenapa warna ini, gimana bikin responsif. Dari situ baru kubuat versiku sendiri.",
+      "Aku cek tampilannya di HP dan laptop, perhatikan jarak, ukuran huruf, dan warna biar nyaman dibaca. Kadang masih berantakan, dan itu wajar, namanya juga belajar.",
     ],
     dampakPembelajaran: [
-      "Belajar bahwa visual yang indah belum tentu usable; dan sebaliknya, usable belum tentu menyenangkan. Kuncinya menyeimbangkan. Saat UI menjadi 'tak terlihat', itulah keberhasilan.",
-      "Kolaborasi desain–engineering mengajarkan kompromi: ketika desain ingin 'lebih dalam', saya sediakan batasan yang sehat agar performa dan maintainability tetap terjaga.",
+      "Aku belajar kalau tampilan bagus tidak cukup kalau tidak kebaca atau tidak nyaman. Justru yang simpel dan jelas sering lebih baik daripada yang ramai.",
+      "Bikin UI itu melatih kesabaran. Satu jarak yang bergeser sedikit saja bisa bikin semuanya keliatan beda.",
     ],
     timeline: [
       { tahap: "SMP Kelas 7", isi: "Mengenal HTML/CSS dasar; membuat halaman profil sederhana. Rasa takjub melihat perubahan warna hanya dari satu baris CSS." },
@@ -51,20 +52,20 @@ const content: Record<RoleKey, SectionContent> = {
   },
   backend: {
     analogiFilosofi: [
-      "Backend adalah jantung yang memompa data—tenang, konsisten, bisa diandalkan. Ibarat pengatur lalu lintas di pusat kendali, ia memastikan setiap permintaan mendapat jawaban yang tepat waktu dan akurat.",
-      "Filosofi saya: sederhana lebih tahan lama. Kontrak yang jelas mengurangi asumsi. Observability bukan pelengkap, tetapi indera peraba untuk memahami denyut sistem.",
+      "Kalau frontend itu etalase, backend itu dapurnya. Pengunjung tidak melihatnya, tapi kalau dapurnya rusak, semua ikut kacau. Aku mulai belajar dari pengen tahu gimana data bisa masuk, disimpan, lalu muncul lagi.",
+      "Prinsipku: data harus aman dan tidak gampang hilang. Sebelum menambah fitur, pastikan yang menyimpan data sudah benar.",
     ],
     kompetensiNaratif: [
-      "Saya merancang endpoint yang eksplisit, validasi yang ketat, dan struktur data yang mudah dievolusi. Saya lebih suka pola yang menyeimbangkan keterbacaan dengan kinerja.",
-      "Penyimpanan bukan sekadar 'menaruh data', melainkan memilih bentuk yang mewakili pertanyaan yang paling sering ditanyakan oleh bisnis.",
+      "Aku belajar bikin API sederhana: terima request, simpan data, kasih balasan. Mulai dari file JSON, terus pindah ke database sungguhan. Buatku, bisa bikin CRUD yang jalan itu pencapaian.",
+      "Aku paham konsep dasar request dan response, validasi input, dan gimana menyimpan data dengan rapi. Masih tahap belajar, tapi dasar-dasarnya mulai nempel.",
     ],
     metodeNaratif: [
-      "Mulai dari bahasa domain: siapa aktor, apa tindakan, apa aturan. Saya buat kontrak API yang dapat diuji dan disepakati tim lain.",
-      "Saya bangun jalur observability (log, metrics, trace) sejak hari pertama, supaya setiap anomali bisa dilacak seperti mengikuti jejak roti di hutan.",
+      "Cara belajarku: bikin proyek kecil dulu. Misalnya form yang datanya masuk ke database, lalu bisa ditampilkan dan dihapus. Dari situ aku paham alurnya.",
+      "Kalau ada error, aku baca pesannya, cari di internet, coba-coba sampai jalan. Tidak jarang buntu, tapi justru di situ aku belajar paling banyak.",
     ],
     dampakPembelajaran: [
-      "Belajar bahwa kegagalan itu normal, maka sistem harus antisipatif: timeouts, retry, idempotency. Ketenangan datang dari disiplin mengelola kegagalan.",
-      "Menyadari pentingnya komunikasi antar tim—API bukan hanya untuk mesin, tapi juga untuk manusia yang mengembangkan fitur di atasnya.",
+      "Aku belajar kalau satu kesalahan kecil di backend bisa bikin data kacau. Makanya aku mulai rajin validasi dan berpikir dua kali sebelum mengubah sesuatu.",
+      "Backend mengajari aku sabar dan teliti. Error kadang tidak langsung ketahuan, dan tidak ada yang bisa menolong selain diriku sendiri.",
     ],
     timeline: [
       { tahap: "SMP Kelas 7", isi: "Memahami konsep request/response dan apa itu server lewat analogi pelayan restoran." },
@@ -76,20 +77,20 @@ const content: Record<RoleKey, SectionContent> = {
   },
   fullstack: {
     analogiFilosofi: [
-      "Fullstack adalah jembatan dua pulau—antarmuka dan logika. Seperti insinyur jembatan, saya memastikan pondasi kuat di dua sisi dan sambungan di tengahnya lentur namun kokoh.",
-      "Filosofi: hindari over-orkestrasi. Pilih batas yang jelas agar iterasi cepat tanpa saling menghambat. Shared types adalah kontrak yang menenangkan." ,
+      "Fullstack buatku artinya bisa mengurus dua sisi: tampilan dan datanya. Aku suka karena bisa melihat sendiri gimana sebuah fitur jalan dari halaman depan sampai ke database.",
+      "Aku sadar tidak perlu jago banget di dua-duanya dulu. Yang penting paham alurnya: data dari mana, ke mana, dan gimana ditampilkan.",
     ],
     kompetensiNaratif: [
-      "Saya mereduksi gesekan antar sisi dengan kontrak yang sama: tipe data bersama, skema validasi yang konsisten.",
-      "Trade-off selalu eksplisit: kapan tarik ke frontend demi responsif, kapan tahan di backend demi konsistensi dan keamanan.",
+      "Aku bisa bikin halaman yang nyambung ke database: form, daftar data, edit, dan hapus. Semua dari hasil belajar otodidak dan tugas sekolah.",
+      "Aku mulai paham gimana menyambungkan frontend dan backend biar datanya konsisten. Sering masih kucoba-coba, tapi alurnya sudah kebayang.",
     ],
     metodeNaratif: [
-      "Mulai dari journey pengguna, lalu memetakan titik keputusan yang butuh data. Dari situ kontrak disusun dan dirapikan." ,
-      "Siklus build–measure–learn dilakukan ujung ke ujung: UI diuji dampaknya, API diuji stabilitasnya.",
+      "Belajarku selalu lewat proyek kecil ujung ke ujung: bikin satu fitur lengkap dari nol. Dari situ aku melihat sendiri bagian mana yang sulit dan kenapa.",
+      "Aku catat apa yang bikin buntu, terus cari solusinya. Biasanya jawabannya ada di dokumentasi atau video tutorial.",
     ],
     dampakPembelajaran: [
-      "Belajar mengukur beban mental tim—terlalu banyak context switching melelahkan. Alat dan pola harus mengurangi kompleksitas, bukan menambah." ,
-      "Setiap kompromi dicatat: keputusan saat ini tidak sakral; harus mudah ditinjau ulang.",
+      "Aku belajar kalau bikin fitur itu bukan cuma soal kode, tapi juga memikirkan orang yang memakainya. Fitur canggih tidak ada gunanya kalau bikin bingung.",
+      "Fullstack mengajari aku melihat gambaran besar. Sekarang kalau ada masalah, aku bisa menebak kira-kira di sisi mana.",
     ],
     timeline: [
       { tahap: "SMP Kelas 7", isi: "Menyambungkan form sederhana ke penyimpanan data 'improvisasi'." },
@@ -101,20 +102,20 @@ const content: Record<RoleKey, SectionContent> = {
   },
   devops: {
     analogiFilosofi: [
-      "DevOps adalah logistik dan infrastruktur—seperti sistem metro kota yang harus tepat waktu, aman, dan elastis. Pengguna tidak melihat relnya, tapi merasakan manfaatnya setiap hari.",
-      "Filosofi: otomatisasi untuk mengurangi pekerjaan berulang, observability untuk mengurangi tebak-tebakan, dan budaya kolaboratif untuk mempercepat pembelajaran kolektif.",
+      "DevOps buatku artinya bikin proses rilis yang rapi biar tidak ribet tiap mau update. Aku belajar dari pengalaman manual: upload file satu-satu, sering lupa, sering error.",
+      "Prinsipku: kalau ada pekerjaan yang berulang, cari cara biar otomatis. Tidak harus canggih, yang penting bikin hidup lebih gampang.",
     ],
     kompetensiNaratif: [
-      "Saya membangun pipeline yang dapat dipercaya, mengisolasi lingkungan dengan kontainer, dan mendefinisikan infrastruktur sebagai kode untuk konsistensi." ,
-      "Rilis harus membosankan—inilah pujian tertinggi bagi pipeline yang stabil.",
+      "Aku bisa pakai Git untuk menyimpan dan mengatur versi kode, dan mulai paham deploy sederhana. Dari yang tadinya copy-paste file, sekarang pakai cara yang lebih rapi.",
+      "Aku juga belajar bikin skrip kecil untuk otomatisasi tugas yang berulang. Masih sederhana, tapi lumayan mengurangi lupa.",
     ],
     metodeNaratif: [
-      "Saya mulai dari peta alur rilis: dari commit ke produksi. Saya tempatkan pengaman di titik rawan: test, scan, dan approval yang proporsional." ,
-      "Rollback dan observability bukan opsi, melainkan syarat mutlak—sampai yakin, saya anggap rilis belum selesai.",
+      "Aku belajar dengan mencoba deploy proyek kecil sendiri dan melihat gimana prosesnya. Setiap error kucatat biar lain kali tidak mengulang.",
+      "Mulai dari yang paling simpel: menyimpan kode di Git, terus bikin langkah deploy yang jelas. Baru nanti kalau sudah nyaman, baru otomatisasi.",
     ],
     dampakPembelajaran: [
-      "Belajar bahwa kecepatan tanpa pengaman adalah ilusi. Kepercayaan tim tumbuh ketika proses transparan dan hasil dapat diprediksi." ,
-      "Insiden adalah guru terbaik bila dikelola dengan postmortem yang jujur dan non-blaming.",
+      "Aku belajar kalau proses yang rapi itu menenangkan. Waktu proyekku bisa jalan tanpa drama tiap mau update, rasanya lega banget.",
+      "Kesalahan kecil pas deploy mengajari aku buat cek ulang. Sekarang aku lebih teliti sebelum memberikan perubahan.",
     ],
     timeline: [
       { tahap: "SMP Kelas 7", isi: "Manual deploy 'copy paste' file ke server lokal—merasakan rawan error." },
@@ -126,20 +127,20 @@ const content: Record<RoleKey, SectionContent> = {
   },
   security: {
     analogiFilosofi: [
-      "Keamanan adalah pagar hidup—fleksibel, menyesuaikan lanskap ancaman. Seperti penjaga gerbang yang sopan tapi waspada, tujuannya menjaga aliran tanpa menghalangi yang benar.",
-      "Filosofi: default-deny untuk hal sensitif, minimalkan permukaan serangan, dan selalu asumsikan input bisa berbahaya.",
+      "Security buatku mulai dari kesadaran: jangan asal menyimpan data orang, jangan gampang percaya input dari user. Aku belajar ini karena pengen aplikasiku tidak gampang dijebol.",
+      "Prinsip sederhanaku: perlakukan semua input sebagai sesuatu yang bisa berbahaya, sampai terbukti aman.",
     ],
     kompetensiNaratif: [
-      "Saya menanamkan kontrol dari awal: validasi, sanitasi, kebijakan header, dan manajemen rahasia. Rantai pasokan juga dijaga lewat audit dependensi.",
-      "Keamanan adalah proses, bukan produk; siklusnya berulang dan perlu empati pada developer agar kontrol tidak menjadi beban.",
+      "Aku paham dasar keamanan web: validasi input, password yang baik, dan gimana data sensitif disimpan. Aku juga mulai kenal istilah seperti XSS dan CSRF dari membaca artikel.",
+      "Buatku ini masih tahap pengenalan. Tapi aku sudah terbiasa memikirkan keamanan sejak awal pas bikin fitur, bukan menambahkannya belakangan.",
     ],
     metodeNaratif: [
-      "Mulai dari threat modeling ringan: aset, aktor, vektor. Lalu pilih kontrol yang proporsional dan mudah dirawat.",
-      "Latih tim: cheat-sheet, template, dan guardrail di pipeline supaya praktik aman terjadi otomatis.",
+      "Cara belajarku: baca, coba, dan tanya. Aku baca artikel keamanan sederhana, coba praktikkan di proyek kecil, kalau buntu tanya di komunitas.",
+      "Aku biasakan diri buat tidak pernah menyimpan password asli, selalu validasi input, dan tidak menampilkan data sensitif sembarangan.",
     ],
     dampakPembelajaran: [
-      "Belajar bahwa 'friksi' keamanan harus dikelola—tujuannya menjaga laju tanpa kompromi pada hal-hal prinsipal." ,
-      "Insiden kecil mengajarkan kerendahan hati: log bagus, bukti forensik, dan transparansi adalah sahabat.",
+      "Aku belajar kalau keamanan itu kebiasaan, bukan fitur. Lebih gampang menjaganya dari awal daripada menambal setelah kebobolan.",
+      "Satu pelajaran penting: jangan pernah meremehkan data orang. Walaupun cuma proyek kecil, tetap harus dijaga.",
     ],
     timeline: [
       { tahap: "SMP Kelas 7", isi: "Paham konsep password kuat dan risiko berbagi kredensial." },
@@ -151,20 +152,20 @@ const content: Record<RoleKey, SectionContent> = {
   },
   lead: {
     analogiFilosofi: [
-      "Lead Developer adalah dirigen orkestra: tidak memainkan semua alat, tetapi memastikan harmoni, tempo, dan interpretasi menyatu menjadi musik yang utuh.",
-      "Filosofi: kejelasan lebih penting daripada kecerdasan sesaat. Proses sehat mengalahkan heroics. Dua hal kunci—feedback cepat dan psychological safety.",
+      "Lead buatku bukan soal nyuruh-nyuruh, tapi bantu teman satu tim biar kerjaannya jalan. Aku belajar ini dari tugas kelompok di sekolah.",
+      "Prinsipku: kalau aku bisa bikin orang lain ngerti, berarti aku juga paham. Berbagi itu cara terbaik buat belajar.",
     ],
     kompetensiNaratif: [
-      "Saya menulis standar yang ringan tapi tegas: ukuran PR, definisi selesai, panduan review. Tujuannya mengurangi ambiguitas, bukan menambah birokrasi.",
-      "Mentoring adalah investasi kompaun; dokumentasi yang hidup mengurangi ketergantungan pada individu.",
+      "Aku bisa membagi tugas, bikin checklist, dan merangkum langkah kerja biar tim tidak bingung. Ini sering kupakai di proyek kelas.",
+      "Aku mulai terbiasa membantu teman yang kesulitan: menunjukkan caranya, bukan mengerjakan semuanya. Lumayan melatih kesabaran.",
     ],
     metodeNaratif: [
-      "Saya memulai dari tujuan bisnis, menerjemahkan ke peta teknis. Risiko awal diekspos, rute alternatif disiapkan. Komunikasi konsisten—ritme sinkronisasi jelas.",
-      "Ritualnya sederhana: design review singkat, pairing saat perlu, dan retrospektif tanpa menyalahkan untuk terus membaik.",
+      "Cara kerjaku: pastikan semua paham tujuannya dulu, baru membagi tugas. Aku catat progresnya biar tidak ada yang terlewat.",
+      "Kalau ada masalah, aku ajak diskusi kecil dulu daripada langsung ambil keputusan sendiri. Kadang jawabannya muncul dari teman.",
     ],
     dampakPembelajaran: [
-      "Belajar bahwa keputusan yang lambat seringkali lebih mahal daripada keputusan yang kurang sempurna tapi bisa diperbaiki." ,
-      "Kepercayaan dibangun dari konsistensi kecil setiap hari, bukan pidato besar sesekali.",
+      "Aku belajar kalau ngomong jelas itu penting. Banyak salah paham di tim gara-gara instruksi yang tidak jelas.",
+      "Pernah mikir jadi pemimpin itu soal paling pintar, ternyata bukan. Justru soal bikin semua orang bisa bekerja dengan nyaman.",
     ],
     timeline: [
       { tahap: "SMP Kelas 7", isi: "Belajar kerja tim kecil di tugas sekolah dan membagi peran sederhana." },
@@ -176,20 +177,20 @@ const content: Record<RoleKey, SectionContent> = {
   },
   iot: {
     analogiFilosofi: [
-      "IoT adalah menghubungkan denyut dunia fisik ke sistem digital—seperti menerjemahkan detak jantung ke notasi musik yang bisa dianalisis dan dinikmati.",
-      "Filosofi: keandalan sinyal mengalahkan kemewahan fitur. Protokol ringan, data hemat, dan toleransi gangguan adalah pondasi.",
+      "IoT buatku menarik karena menyambungkan dunia nyata sama komputer. Dari jurusan TEI, aku belajar merakit dan merancang hardware, dan itu kerasa seru banget.",
+      "Prinsipku: sensor boleh murah, tapi datanya harus benar. Tidak ada gunanya alat canggih kalau bacaannya ngaco.",
     ],
     kompetensiNaratif: [
-      "Saya merancang aliran data dari sensor hingga dashboard, meminimalkan overhead, dan memilih format yang efisien." ,
-      "Manajemen perangkat—provisioning, pembaruan, dan keamanan—dipikirkan sejak awal untuk mencegah penumpukan utang teknis.",
+      "Aku belajar Arduino dan ESP32: nyalain LED, baca sensor, sampai ngirim data. Ini yang paling seru buatku karena langsung kelihatan hasilnya.",
+      "Aku juga mulai paham gimana data dari sensor dikirim ke komputer atau server, walaupun masih sering kucoba-coba.",
     ],
     metodeNaratif: [
-      "Mulai dari ketersediaan listrik dan jaringan. Saya desain ulang agar tetap berguna meski koneksi goyah—buffering, retry, dan kompresi." ,
-      "Saya pastikan jalur observasi dari lapangan ke server jelas, supaya anomali bisa cepat diisolasi.",
+      "Aku belajar dengan nyoba langsung: rakit, upload kode, lihat hasilnya. Kalau tidak jalan, cek kabel, cek kode, cari di internet.",
+      "Biasanya aku mulai dari proyek kecil: sensor suhu, lampu otomatis, terus naik level pelan-pelan.",
     ],
     dampakPembelajaran: [
-      "Belajar bahwa batasan hardware memaksa kreativitas. Keputusan kecil soal ukuran paket atau jeda pengiriman menentukan umur baterai." ,
-      "Keamanan fisik sama pentingnya dengan logika aplikasi: akses perangkat, firmware, dan kredensial harus dijaga.",
+      "Aku belajar kalau hardware itu tidak kenal ampun: kalau salah sambung, langsung tidak jalan. Makanya aku jadi lebih teliti.",
+      "IoT mengajari aku buat sabar dan sistematis. Satu kabel lepas saja bisa bikin semua error, dan itu bagian serunya.",
     ],
     timeline: [
       { tahap: "SMP Kelas 7", isi: "Menyusun rangkaian sederhana; menyalakan LED dan membaca sensor dasar." },
@@ -201,20 +202,20 @@ const content: Record<RoleKey, SectionContent> = {
   },
   architect: {
     analogiFilosofi: [
-      "Arsitek Sistem adalah perancang kota digital: menetapkan zona, jalur utama, dan ruang hijau agar kota tumbuh tertib tanpa kehilangan kehidupan.",
-      "Filosofi: desain untuk berubah. Batas konteks yang jelas, kontrak yang stabil, dan kapabilitas yang dapat diganti tanpa mengguncang seluruh sistem.",
+      "Architect buatku bukan soal bikin rencana rumit, tapi memikirkan struktur dulu sebelum nulis kode. Aku belajar dari pengalaman: dulu langsung nulis tanpa rencana, ujung-ujungnya pusing sendiri.",
+      "Prinsipku: atur kode biar rapi dan gampang dicari. Struktur yang jelas bikin aku dan orang lain tidak bingung pas mau mengembangkan.",
     ],
     kompetensiNaratif: [
-      "Saya menyusun peta konteks agar tim paham wilayah kewenangannya. Saya mengutamakan observability agar keputusan bisa dievaluasi berdasarkan data." ,
-      "Saya memilih kesederhanaan progresif: mulai monolit rapi bila cocok, bercabang ketika benar-benar diperlukan.",
+      "Aku mulai paham cara menyusun folder dan file biar rapi, memisahkan bagian-bagian biar tidak numpuk di satu tempat.",
+      "Aku juga belajar berpikir ke depan: kalau nanti fiturnya ditambah, masih gampang tidak mengubahnya? Ini masih terus kulatih.",
     ],
     metodeNaratif: [
-      "Saya mulai dari bahasa domain dan aliran nilai. Saya tandai coupling yang berbahaya dan mencari cara memutuskannya secara bertahap." ,
-      "Saya bawa eksperimen kecil ke lingkungan nyata—spike, canary—supaya opini dibuktikan data, bukan volume suara.",
+      "Cara belajarku: bikin proyek kecil, lihat mana yang berantakan, terus rapikan. Dari situ aku ngerti pentingnya struktur.",
+      "Aku suka bikin catatan sederhana soal keputusan yang kuambil, biar nanti tidak lupa kenapa milih cara ini.",
     ],
     dampakPembelajaran: [
-      "Belajar bahwa ketahanan lahir dari kemampuan menerima perubahan, bukan dari rencana yang 'sempurna'." ,
-      "Komunikasi visual (peta sederhana) sering lebih efektif daripada paragraf panjang dokumentasi.",
+      "Aku belajar kalau merencanakan sedikit di awal itu menghemat banyak waktu di akhir. Dulu sering nulis ulang gara-gara tidak mikir dulu.",
+      "Bikin struktur itu kayak merapikan kamar: tidak kelihatan penting, tapi bikin semua lebih gampang ditemukan.",
     ],
     timeline: [
       { tahap: "SMP Kelas 7", isi: "Memikirkan struktur folder proyek kecil agar mudah dipahami." },
@@ -226,8 +227,25 @@ const content: Record<RoleKey, SectionContent> = {
   },
 };
 
+const SECTIONS: Array<{ label: string; items: (c: SectionContent) => string[] }> = [
+  { label: "Analogi & Filosofi", items: (c) => c.analogiFilosofi },
+  { label: "Kompetensi", items: (c) => c.kompetensiNaratif },
+  { label: "Metode", items: (c) => c.metodeNaratif },
+  { label: "Dampak & Pembelajaran", items: (c) => c.dampakPembelajaran },
+];
+
 export function RoleDossier({ role, onClose, className }: { role: RoleKey; onClose: () => void; className?: string }) {
   const c = content[role];
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
 
   return (
     <motion.aside
@@ -235,6 +253,9 @@ export function RoleDossier({ role, onClose, className }: { role: RoleKey; onClo
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 400, opacity: 0 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Dossier ${roleTitles[role]}`}
       className={cn(
         "fixed right-0 top-0 z-[9000] h-full w-full max-w-xl border-l border-line bg-void/95 backdrop-blur-2xl",
         className
@@ -243,75 +264,52 @@ export function RoleDossier({ role, onClose, className }: { role: RoleKey; onClo
       {/* glow lime di atas */}
       <div aria-hidden className="glow-lime absolute inset-x-0 top-0 h-px bg-accent/70" />
 
-      <div className="flex items-center justify-between border-b border-line bg-panel px-5 py-4">
-        <h3 className="type-display text-lg font-bold text-hi">{roleTitles[role]} — Dossier</h3>
+      <div className="flex items-center justify-between gap-3 border-b border-line bg-panel px-5 py-4">
+        <div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-mut">Dossier Peran</div>
+          <h3 className="type-display mt-0.5 text-lg font-bold text-hi">{roleTitles[role]}</h3>
+        </div>
         <button
+          ref={closeRef}
           onClick={onClose}
-          className="rounded-full border border-line bg-transparent px-4 py-2 font-mono text-xs text-mut transition hover:border-accent/50 hover:text-hi"
+          aria-label="Tutup dossier"
+          className="rounded-full border border-line bg-transparent px-4 py-2 font-mono text-xs text-mut transition hover:border-accent/50 hover:text-hi focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           Tutup
         </button>
       </div>
 
-      <div className="h-[calc(100%-56px)] space-y-6 overflow-y-auto p-5">
-        {/* 1. Analogi & Filosofi */}
-        <section>
-          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-            <span className="mr-2 text-accent">1.</span>Analogi & Filosofi
-          </h4>
-          <div className="mt-2 space-y-2 text-sm text-body">
-            {c.analogiFilosofi.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-        </section>
-
-        {/* 2. Kompetensi Inti (Naratif) */}
-        <section>
-          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-            <span className="mr-2 text-accent">2.</span>Kompetensi Inti
-          </h4>
-          <div className="mt-2 space-y-2 text-sm text-body">
-            {c.kompetensiNaratif.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-        </section>
-
-        {/* 3. Metodologi & Cara Kerja (Naratif) */}
-        <section>
-          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-            <span className="mr-2 text-accent">3.</span>Metodologi & Cara Kerja
-          </h4>
-          <div className="mt-2 space-y-2 text-sm text-body">
-            {c.metodeNaratif.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-        </section>
-
-        {/* 4. Dampak & Pembelajaran */}
-        <section>
-          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-            <span className="mr-2 text-accent">4.</span>Dampak & Pembelajaran
-          </h4>
-          <div className="mt-2 space-y-2 text-sm text-body">
-            {c.dampakPembelajaran.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-        </section>
+      <div className="h-[calc(100%-68px)] space-y-8 overflow-y-auto p-5 sm:p-7">
+        {SECTIONS.map((s, si) => (
+          <section key={s.label}>
+            <h4 className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
+              <span className="text-accent">{si + 1}.</span>
+              {s.label}
+              <span aria-hidden className="h-px flex-1 bg-line" />
+            </h4>
+            <div className="mt-3 space-y-3 text-sm/relaxed text-body">
+              {s.items(c).map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          </section>
+        ))}
 
         {/* 5. Perjalanan Waktu (Kelas 7 SMP → Kelas 2 SMK Semester 1) */}
         <section>
-          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-            <span className="mr-2 text-accent">5.</span>Perjalanan Waktu
+          <h4 className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
+            <span className="text-accent">5.</span>
+            Perjalanan Waktu
+            <span aria-hidden className="h-px flex-1 bg-line" />
           </h4>
-          <ul className="mt-2 space-y-2 text-sm text-body">
+          <ul className="mt-3 space-y-3 text-sm/relaxed text-body">
             {c.timeline.map((t, i) => (
-              <li key={i}>
-                <span className="font-medium text-hi">{t.tahap}: </span>
-                <span>{t.isi}</span>
+              <li key={i} className="flex gap-3">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" />
+                <span>
+                  <span className="font-medium text-hi">{t.tahap}: </span>
+                  <span>{t.isi}</span>
+                </span>
               </li>
             ))}
           </ul>

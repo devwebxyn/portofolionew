@@ -2,13 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, MessageSquare } from "lucide-react";
+import { LayoutDashboard } from "lucide-react";
 import { LogoutButton } from "@/components/LogoutButton";
 
-const nav = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/messages", label: "Pesan", icon: MessageSquare },
-];
+const nav = [{ href: "/", label: "Dashboard", icon: LayoutDashboard }];
 
 export default function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();

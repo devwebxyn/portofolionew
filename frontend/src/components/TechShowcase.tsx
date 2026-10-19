@@ -1,8 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stagger, StaggerItem } from "@/components/ui";
 
 type Kind = "framework" | "language";
@@ -109,6 +110,21 @@ const INFO_LANGUAGE: Record<string, Info> = {
 };
 
 function DetailsModal({ item, onClose }: { item: Item & { info: Info }; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  const sections: Array<{ label: string; body: string }> = [
+    { label: "Pengertian", body: item.info.pengertian },
+    { label: "Kegunaan", body: item.info.kegunaan },
+    { label: "Sejarah", body: item.info.sejarah },
+    { label: "Pembuat", body: item.info.pembuat },
+  ];
+
   return (
     <AnimatePresence>
       <motion.div
@@ -119,47 +135,57 @@ function DetailsModal({ item, onClose }: { item: Item & { info: Info }; onClose:
         onClick={onClose}
       >
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 20, opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          className="w-full max-w-2xl rounded-3xl border border-line bg-elev p-6"
+          initial={{ y: 24, opacity: 0, scale: 0.98 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: 24, opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-line bg-elev"
           onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Detail ${item.name}`}
         >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl bg-white/5">
-                <img src={`/logos/${item.key}.svg`} alt="" className="h-8 w-8 object-contain" />
+          {/* glow hairline */}
+          <div aria-hidden className="glow-lime absolute inset-x-0 top-0 h-px bg-accent/70" />
+
+          {/* header */}
+          <div className="relative flex items-center justify-between gap-4 border-b border-line bg-panel px-5 py-5 sm:px-7">
+            <div className="flex items-center gap-4">
+              <div className="relative grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
+                <img src={`/logos/${item.key}.svg`} alt="" className="h-10 w-10 object-contain" />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(200,255,46,0.12),transparent_70%)]"
+                />
               </div>
               <div>
-                <h4 className="type-display text-lg font-bold text-hi">{item.name}</h4>
-                <p className="font-mono text-xs text-mut uppercase">{item.kind}</p>
+                <h4 className="type-display text-2xl font-bold text-hi">{item.name}</h4>
+                <p className="mt-1 font-mono text-xs uppercase tracking-[0.25em] text-mut">{item.kind}</p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="rounded-full border border-line bg-transparent px-4 py-2 font-mono text-xs text-mut transition hover:border-accent/50 hover:text-hi"
+              aria-label="Tutup"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-white/4 text-mut transition hover:border-accent/50 hover:text-hi focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              Tutup
+              <X size={16} />
             </button>
           </div>
-          <div className="mt-4 space-y-3 text-sm text-body">
-            <div>
-              <span className="font-mono text-xs tracking-[0.25em] uppercase text-mut">Pengertian</span>
-              <p className="mt-1">{item.info.pengertian}</p>
-            </div>
-            <div>
-              <span className="font-mono text-xs tracking-[0.25em] uppercase text-mut">Kegunaan</span>
-              <p className="mt-1">{item.info.kegunaan}</p>
-            </div>
-            <div>
-              <span className="font-mono text-xs tracking-[0.25em] uppercase text-mut">Sejarah</span>
-              <p className="mt-1">{item.info.sejarah}</p>
-            </div>
-            <div>
-              <span className="font-mono text-xs tracking-[0.25em] uppercase text-mut">Pembuat</span>
-              <p className="mt-1">{item.info.pembuat}</p>
-            </div>
+
+          {/* content */}
+          <div className="max-h-[65vh] overflow-y-auto px-5 py-6 sm:px-7">
+            {sections.map((s, i) => (
+              <div
+                key={s.label}
+                className={i > 0 ? "mt-6 border-t border-line pt-6" : ""}
+              >
+                <h5 className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-mut">
+                  <span className="text-accent">0{i + 1}</span>
+                  {s.label}
+                </h5>
+                <p className="mt-2.5 text-sm leading-relaxed text-body sm:text-[15px]">{s.body}</p>
+              </div>
+            ))}
           </div>
         </motion.div>
       </motion.div>

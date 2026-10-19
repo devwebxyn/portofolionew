@@ -1,29 +1,20 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { Folder, Inbox, Mail, Pencil, Plus } from "lucide-react";
+import { Folder, Pencil, Plus } from "lucide-react";
 import { proxy } from "@/lib/proxy";
-import type { Message, Project } from "@/lib/types";
+import type { Project } from "@/lib/types";
 import { DeleteProjectButton } from "@/components/DeleteProjectButton";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const [projectsRes, messagesRes] = await Promise.all([
-    proxy("/api/admin/projects"),
-    proxy("/api/admin/messages"),
-  ]);
-  if (projectsRes.status === 401 || messagesRes.status === 401) redirect("/login");
+  const projectsRes = await proxy("/api/admin/projects");
+  if (projectsRes.status === 401) redirect("/login");
 
   const projects: Project[] = (projectsRes.body?.items as Project[] | undefined) ?? [];
-  const messages: Message[] = (messagesRes.body?.items as Message[] | undefined) ?? [];
-  const unread = messages.filter((m) => m.status === "unread").length;
 
-  const stats = [
-    { label: "Total Project", value: projects.length, icon: Folder, accent: false },
-    { label: "Total Pesan", value: messages.length, icon: Mail, accent: false },
-    { label: "Belum Dibaca", value: unread, icon: Inbox, accent: true },
-  ];
+  const stats = [{ label: "Total Project", value: projects.length, icon: Folder, accent: false }];
 
   return (
     <div className="space-y-8">
@@ -38,7 +29,7 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:max-w-xs">
         {stats.map((s) => (
           <div
             key={s.label}

@@ -58,7 +58,7 @@ export default function ProjectsPage() {
           Yang pernah <span className="serif-accent text-gradient">kubangun</span>
         </h1>
         <p className="relative mt-5 max-w-2xl text-base text-body sm:text-lg">
-          Karya nyata dari ide sampai rilis — diuji, diukur, dan benar-benar dipakai.
+          Karya nyata dari ide sampai rilis: diuji, diukur, dan benar-benar dipakai.
         </p>
       </div>
 
@@ -102,9 +102,9 @@ export default function ProjectsPage() {
         <Stagger className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
           {items.map((p, i) => (
             <StaggerItem key={p.$id}>
-              <SpotlightCard className="group overflow-hidden rounded-3xl border border-line bg-panel">
+              <SpotlightCard className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-panel">
                 {/* media */}
-                <div className="relative aspect-video w-full overflow-hidden border-b border-line">
+                <div className="relative aspect-video w-full shrink-0 overflow-hidden border-b border-line">
                   {p.imageUrl ? (
                     <Image
                       src={p.imageUrl}
@@ -132,49 +132,61 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* body */}
-                <div className="p-6 sm:p-7">
-                  <GhostIndex className="text-6xl">0{i + 1}</GhostIndex>
-                  <h3 className="type-display mt-3 text-2xl font-bold text-hi transition-colors duration-300 group-hover:text-accent">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 text-body">{p.description}</p>
-
-                  <div className="mt-5 flex flex-wrap gap-2">
+                <div className="flex flex-1 flex-col p-6 sm:p-7">
+                  {/* meta row */}
+                  <div className="flex items-center gap-3 font-mono text-xs">
+                    <span className="text-accent">0{i + 1}</span>
+                    <span aria-hidden className="h-px w-5 bg-line" />
                     {p.language && (
-                      <span className="rounded-full border border-line bg-white/4 px-3 py-1 font-mono text-xs text-mut">
+                      <span className="rounded-full border border-line bg-white/4 px-2.5 py-1 text-mut">
                         {p.language}
                       </span>
                     )}
-                    {(p.tags || []).map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-line bg-white/4 px-3 py-1 font-mono text-xs text-mut"
-                      >
-                        {t}
-                      </span>
-                    ))}
                   </div>
 
-                  <div className="mt-6 flex items-center gap-3">
-                    {p.liveUrl && (
-                      <Link
-                        href={p.liveUrl}
-                        target="_blank"
-                        className="rounded-full border border-line px-4 py-2 text-sm text-hi transition-colors hover:border-accent/60"
-                      >
-                        URL
-                      </Link>
-                    )}
-                    {p.githubUrl && (
-                      <Link
-                        href={p.githubUrl}
-                        target="_blank"
-                        className="rounded-full border border-line px-4 py-2 text-sm text-hi transition-colors hover:border-accent/60"
-                      >
-                        GitHub
-                      </Link>
-                    )}
-                  </div>
+                  <h3 className="type-display mt-4 text-2xl font-bold text-hi transition-colors duration-300 group-hover:text-accent">
+                    {p.title}
+                  </h3>
+
+                  <p className="mt-3 leading-relaxed text-body">{p.description}</p>
+
+                  {/* tags */}
+                  {(p.tags || []).length > 0 && (
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {(p.tags || []).map((t) => (
+                        <span
+                          key={t}
+                          className="rounded-full border border-line bg-white/4 px-3 py-1 font-mono text-xs text-mut"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* actions */}
+                  {(p.liveUrl || p.githubUrl) && (
+                    <div className="mt-6 flex items-center gap-3 border-t border-line pt-5">
+                      {p.liveUrl && (
+                        <Link
+                          href={p.liveUrl}
+                          target="_blank"
+                          className="rounded-full border border-line px-4 py-2 text-sm text-hi transition-colors hover:border-accent/60"
+                        >
+                          URL
+                        </Link>
+                      )}
+                      {p.githubUrl && (
+                        <Link
+                          href={p.githubUrl}
+                          target="_blank"
+                          className="rounded-full border border-line px-4 py-2 text-sm text-hi transition-colors hover:border-accent/60"
+                        >
+                          GitHub
+                        </Link>
+                      )}
+                    </div>
+                  )}
                 </div>
               </SpotlightCard>
             </StaggerItem>

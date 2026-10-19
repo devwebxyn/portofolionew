@@ -33,10 +33,10 @@ export function NexusMap({
     client: "Solution-Oriented",
   };
 
-  const branches: Array<{ key: "engineering" | "leadership" | "domains"; label: string; roles: RoleKey[] }> = [
-    { key: "engineering", label: "System Architecture & Engineering", roles: ["fullstack", "frontend", "backend", "devops", "architect"] },
-    { key: "leadership", label: "Leadership & Strategy", roles: ["lead", "security"] },
-    { key: "domains", label: "Specialized Domains", roles: ["iot"] },
+  const branches: Array<{ key: "engineering" | "leadership" | "domains"; label: string; note: string; roles: RoleKey[] }> = [
+    { key: "engineering", label: "Engineering", note: "Membangun & merawat produk", roles: ["fullstack", "frontend", "backend", "devops", "architect"] },
+    { key: "leadership", label: "Kepemimpinan", note: "Mengarahkan & menjaga kualitas", roles: ["lead", "security"] },
+    { key: "domains", label: "Domain Khusus", note: "Perpaduan software & hardware", roles: ["iot"] },
   ];
 
   const roleLabels: Record<RoleKey, string> = {
@@ -59,7 +59,7 @@ export function NexusMap({
       </div>
 
       {/* Branch sections */}
-      <Stagger gap={0.1} className="space-y-16">
+      <Stagger gap={0.1} className="space-y-14">
         {branches.map((b, bi) => (
           <StaggerItem key={b.key}>
             <section className="relative border-t border-line pt-8">
@@ -77,9 +77,26 @@ export function NexusMap({
                 onClick={() => setOpenBranch((prev) => (prev === b.key ? null : b.key))}
                 aria-expanded={openBranch === b.key}
               >
-                <span className="type-display text-2xl font-bold text-hi">{b.label}</span>
-                <span className="shrink-0 font-mono text-xs text-mut transition-colors group-hover:text-accent">
-                  {openBranch === b.key ? "Tutup" : "Buka"}
+                <span className="flex items-baseline gap-3">
+                  <span className="font-mono text-xs text-accent">0{bi + 1}</span>
+                  <span>
+                    <span className="type-display block text-2xl font-bold text-hi sm:text-3xl">{b.label}</span>
+                    <span className="mt-1 block font-mono text-xs text-mut">{b.note}</span>
+                  </span>
+                </span>
+                <span className="flex shrink-0 items-center gap-3">
+                  <span className="hidden font-mono text-xs text-mut transition-colors group-hover:text-accent sm:inline">
+                    {openBranch === b.key ? "Tutup" : `${b.roles.length} peran`}
+                  </span>
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "font-mono text-xs text-accent transition-transform duration-300",
+                      openBranch === b.key ? "rotate-180" : "rotate-0"
+                    )}
+                  >
+                    ▾
+                  </span>
                 </span>
               </button>
 
@@ -97,9 +114,9 @@ export function NexusMap({
                       <li key={r} className="border-t border-line">
                         <button
                           onClick={() => onSelectRole(r)}
-                          className="group flex w-full items-center justify-between gap-4 py-4 text-left"
+                          className="group flex w-full items-center justify-between gap-4 px-2 py-4 text-left transition-colors hover:bg-white/[0.02] sm:px-3"
                         >
-                          <span className="flex items-baseline gap-4">
+                          <span className="flex items-center gap-4">
                             <span className="font-mono text-xs text-accent sm:text-sm">
                               {String(ri + 1).padStart(2, "0")}
                             </span>

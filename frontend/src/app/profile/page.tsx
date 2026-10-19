@@ -1,25 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { NoSQLInfoPanel, type NoSQLIndex } from "@/components/NoSQLInfoPanel";
-import { JetBrainsPanel } from "@/components/JetBrainsPanel";
-import { CodeWindow } from "@/components/CodeWindow";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui";
 
-const FIELDS = [
-  { key: "_id", type: "ObjectId", value: "samuel-indra-bastian" },
-  { key: "nama", type: "string", value: "Samuel Indra Bastian" },
-  { key: "sekolah", type: "string", value: "SMK PGRI 3 Malang" },
-  { key: "kelas", type: "string", value: "Kelas 2 (Semester 1)" },
-  { key: "usia", type: "number", value: 17 },
-  { key: "lahir", type: "date", value: "2008-07-02" },
-  { key: "role", type: "string[]", value: "fullstack, iot, lead" },
+const IDENTITAS = [
+  { label: "Nama", value: "Samuel Indra Bastian" },
+  { label: "Sekolah", value: "SMK PGRI 3 Malang" },
+  { label: "Jurusan", value: "Teknik Elektronika Industri (TEI)" },
+  { label: "Kelas", value: "Kelas 2 (Semester 1)" },
+  { label: "Usia", value: "17 tahun" },
+  { label: "Tanggal Lahir", value: "02 Juli 2008" },
+  { label: "Fokus", value: "Fullstack, IoT, Lead" },
 ];
 
-const INDEXES: NoSQLIndex[] = [
-  { name: "pk_id", fields: ["_id"], type: "unique" },
-  { name: "by_nama", fields: ["nama"], type: "text" },
-  { name: "by_sekolah_kelas", fields: ["sekolah", "kelas"], type: "compound" },
+const PERJALANAN = [
+  {
+    judul: "Awal SMP Kelas 7",
+    isi: "Sekolah memperkenalkan dua hal yang membuat saya tertarik: dasar website dan infrastruktur teknologi. Saya terpikat dunia web, terinspirasi dari Facebook, membayangkan suatu hari bisa membangun seperti itu.",
+  },
+  {
+    judul: "SMP (3 tahun)",
+    isi: "Menekuni web dari UI hingga sistem dasar. Sedikit demi sedikit, saya mampu membangun antarmuka yang rapi dan sistem yang berjalan.",
+  },
+  {
+    judul: "Masuk SMK (Jurusan TEI)",
+    isi: "Arah saya sempat berbelok, namun saya sadar jurusan ini membuka jalan baru, memahami perangkat lunak dan perangkat keras sekaligus. Bukan kegagalan, melainkan perluasan peran.",
+  },
 ];
 
 const TIMELINE = [
@@ -80,57 +86,75 @@ export default function ProfilePage() {
 
       <main className="relative mx-auto max-w-6xl px-5 pb-24 sm:px-8">
         <Stagger className="grid grid-cols-1 gap-6 md:grid-cols-2" gap={0.1}>
-          {/* Informasi Diri - NoSQL Column & Indexes style */}
+          {/* Identitas */}
           <StaggerItem className="md:col-span-2">
-            <NoSQLInfoPanel
-              className="h-full"
-              fields={FIELDS}
-              indexes={INDEXES}
-            />
+            <section className="h-full rounded-3xl border border-line bg-panel transition-colors hover:border-accent/40">
+              <div className="border-b border-line bg-white/4 px-5 py-3">
+                <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
+                  Identitas <span className="text-accent">· Data Diri</span>
+                </div>
+              </div>
+              <dl className="divide-y divide-line">
+                {IDENTITAS.map((f) => (
+                  <div key={f.label} className="flex flex-col gap-1 px-5 py-3.5 sm:flex-row sm:items-baseline sm:gap-6">
+                    <dt className="w-36 shrink-0 font-mono text-xs uppercase tracking-[0.2em] text-mut">{f.label}</dt>
+                    <dd className="text-sm text-hi">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
           </StaggerItem>
 
-          {/* Perjalanan - JetBrains styled panel */}
+          {/* Perjalanan */}
           <StaggerItem>
-            <JetBrainsPanel title="Perjalanan" tabs={["Timeline", "Catatan"]} active={0} className="h-full">
-              <ul className="space-y-2 text-sm/relaxed">
-                <li>
-                  <span className="font-medium text-hi">Awal SMP Kelas 7:</span> Sekolah memperkenalkan dua hal yang membuat saya tertarik: dasar website dan infrastruktur teknologi. Saya terpikat dunia web—terinspirasi dari Facebook—membayangkan suatu hari bisa membangun seperti itu.
-                </li>
-                <li>
-                  <span className="font-medium text-hi">SMP (3 tahun):</span> Menekuni web dari UI hingga sistem dasar. Sedikit demi sedikit, saya mampu membangun antarmuka yang rapi dan sistem yang berjalan.
-                </li>
-                <li>
-                  <span className="font-medium text-hi">Masuk SMK (Jurusan TEI):</span> Arah saya sempat berbelok, namun saya sadar jurusan ini membuka jalan baru—memahami perangkat lunak dan perangkat keras sekaligus. Bukan kegagalan, melainkan perluasan peran.
-                </li>
-              </ul>
-            </JetBrainsPanel>
+            <section className="flex h-full flex-col rounded-3xl border border-line bg-panel p-6 transition-colors hover:border-accent/40">
+              <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
+                Perjalanan <span className="text-accent">· Cerita</span>
+              </div>
+              <div className="mt-4 space-y-4 text-sm/relaxed text-body">
+                {PERJALANAN.map((p) => (
+                  <p key={p.judul}>
+                    <span className="font-medium text-hi">{p.judul}: </span>
+                    {p.isi}
+                  </p>
+                ))}
+              </div>
+            </section>
           </StaggerItem>
 
-          {/* Pengalaman Terbaik - VS Code style window */}
+          {/* Pengalaman Terbaik */}
           <StaggerItem>
-            <CodeWindow title="Pengalaman Terbaik" filename="best-experience.md" language="md" className="h-full">
-              <div>
-                <span className="inline-block rounded bg-white/4 px-1.5 py-0.5 font-mono text-xs text-accent">Momen</span>
-                <p className="mt-2 text-body">Saat pertama kali berhasil menciptakan UI dan sistem backend yang benar‑benar bekerja dari hasil belajar mandiri—itulah momen yang menguatkan tekad saya untuk terus melangkah lebih jauh.</p>
-                <span className="mt-4 inline-block rounded bg-white/4 px-1.5 py-0.5 font-mono text-xs text-accent">Nilai</span>
-                <ul className="mt-1 list-disc pl-6 text-body">
+            <section className="flex h-full flex-col rounded-3xl border border-line bg-panel p-6 transition-colors hover:border-accent/40">
+              <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
+                Pengalaman <span className="text-accent">· Terbaik</span>
+              </div>
+              <div className="mt-4">
+                <span className="inline-block rounded bg-white/4 px-2 py-0.5 font-mono text-xs text-accent">Momen</span>
+                <p className="mt-2 text-sm/relaxed text-body">
+                  Saat pertama kali berhasil menciptakan UI dan sistem backend yang benar-benar bekerja dari hasil belajar mandiri, itulah momen yang menguatkan tekad saya untuk terus melangkah lebih jauh.
+                </p>
+                <span className="mt-5 inline-block rounded bg-white/4 px-2 py-0.5 font-mono text-xs text-accent">Nilai</span>
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm/relaxed text-body">
                   <li>Konsistensi belajar {'>'} kecepatan sesaat</li>
                   <li>Produk nyata sebagai validasi pemahaman</li>
                   <li>UI rapi + backend solid = pengalaman utuh</li>
                 </ul>
               </div>
-            </CodeWindow>
+            </section>
           </StaggerItem>
 
-          {/* Kata-kata - JetBrains styled quote */}
+          {/* Kata-kata */}
           <StaggerItem className="md:col-span-2">
-            <JetBrainsPanel title="Kata-kata" tabs={["Quote"]} className="h-full">
-              <blockquote className="rounded-2xl border border-line bg-white/4 p-5 text-sm/relaxed text-body">
+            <section className="rounded-3xl border border-line bg-panel p-6 transition-colors hover:border-accent/40 sm:p-8">
+              <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
+                Kata-kata <span className="text-accent">· Quote</span>
+              </div>
+              <blockquote className="mt-4 text-base/relaxed text-body sm:text-lg">
                 <span className="font-mono text-accent">“</span>
-                Kesempatan datang pada orang yang ingin menemuinya—bukan kesempatan yang mendatangimu. Ingatlah: semua yang kamu inginkan bisa didapat; semuanya bergantung pada usaha dan kerja kerasmu.
+                Kesempatan datang pada orang yang ingin menemuinya, bukan kesempatan yang mendatangimu. Ingatlah: semua yang kamu inginkan bisa didapat; semuanya bergantung pada usaha dan kerja kerasmu.
               </blockquote>
-              <div className="mt-3 text-xs text-mut">— Samuel Indra Bastian</div>
-            </JetBrainsPanel>
+              <div className="mt-3 text-xs text-mut">- Samuel Indra Bastian</div>
+            </section>
           </StaggerItem>
         </Stagger>
 
