@@ -219,6 +219,10 @@ func (s *Server) HandleLogin(w http.ResponseWriter, r *http.Request) {
 		errJSON(w, http.StatusBadRequest, "Body JSON tidak valid")
 		return
 	}
+	if in.Username == "" || in.Password == "" {
+		errJSON(w, http.StatusBadRequest, "Username dan password wajib diisi")
+		return
+	}
 	docs, err := s.db.ListDocuments("admins", []string{`equal("username", ["` + in.Username + `"])`})
 	if err != nil {
 		errJSON(w, http.StatusInternalServerError, err.Error())
