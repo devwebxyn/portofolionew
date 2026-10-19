@@ -72,7 +72,9 @@ export function MessagesView({ messages }: { messages: Message[] }) {
         <div className="border-b border-line px-4 py-3 text-sm font-medium text-hi">Inbox</div>
         <ul className="max-h-[70vh] divide-y divide-line overflow-y-auto">
           {items.length === 0 && (
-            <li className="px-4 py-10 text-center text-sm text-body">Belum ada pesan.</li>
+            <li className="px-4 py-10 text-center text-sm text-body">
+              Belum ada pesan masuk dari form kontak.
+            </li>
           )}
           {items.map((m) => (
             <li key={m.$id}>

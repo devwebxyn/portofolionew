@@ -223,13 +223,14 @@ func (s *Server) HandleLogin(w http.ResponseWriter, r *http.Request) {
 		errJSON(w, http.StatusBadRequest, "Username dan password wajib diisi")
 		return
 	}
-	docs, err := s.db.ListDocuments("admins", []string{`equal("username", ["` + in.Username + `"])`})
+	docs, err := s.db.ListDocuments("admins", []string{appwrite.Q("equal", "username", []string{in.Username})})
 	if err != nil {
-		errJSON(w, http.StatusInternalServerError, err.Error())
+		errJSON(w, http.StatusInternalServerError,
+			"Gagal memeriksa kredensial. Pastikan collection 'admins' dan koneksi Appwrite benar.")
 		return
 	}
 	if len(docs) == 0 {
-		errJSON(w, http.StatusUnauthorized, "Invalid credentials")
+		errJSON(w, http.StatusUnauthorized, "Username atau password salah")
 		return
 	}
 	var u struct {
@@ -237,7 +238,7 @@ func (s *Server) HandleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	_ = json.Unmarshal(docs[0], &u)
 	if bcrypt.CompareHashAndPassword([]byte(u.PasswordHash), []byte(in.Password)) != nil {
-		errJSON(w, http.StatusUnauthorized, "Invalid credentials")
+		errJSON(w, http.StatusUnauthorized, "Username atau password salah")
 		return
 	}
 	tok, err := s.sign(jwt.MapClaims{"username": in.Username})
@@ -423,7 +424,7 @@ func (s *Server) upload(w http.ResponseWriter, file *multipart.FileHeader) (stri
 
 // ---- Admin: messages ----
 func (s *Server) HandleAdminMessages(w http.ResponseWriter, r *http.Request) {
-	queries := []string{`orderDesc("createdAt")`}
+	queries := []string{appwrite.Q("orderDesc", "$createdAt", nil)}
 	items, err := s.db.ListDocuments("messages", queries)
 	if err != nil {
 		// Fallback without ordering if the index/attribute isn't ready yet.

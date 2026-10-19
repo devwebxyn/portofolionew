@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { Pencil, Plus } from "lucide-react";
+import { Folder, Inbox, Mail, Pencil, Plus } from "lucide-react";
 import { proxy } from "@/lib/proxy";
 import type { Message, Project } from "@/lib/types";
 import { DeleteProjectButton } from "@/components/DeleteProjectButton";
@@ -20,9 +20,9 @@ export default async function DashboardPage() {
   const unread = messages.filter((m) => m.status === "unread").length;
 
   const stats = [
-    { label: "Total Project", value: projects.length, accent: "text-accent" },
-    { label: "Total Pesan", value: messages.length, accent: "text-accent2" },
-    { label: "Belum Dibaca", value: unread, accent: "text-accent3" },
+    { label: "Total Project", value: projects.length, icon: Folder, accent: false },
+    { label: "Total Pesan", value: messages.length, icon: Mail, accent: false },
+    { label: "Belum Dibaca", value: unread, icon: Inbox, accent: true },
   ];
 
   return (
@@ -40,9 +40,21 @@ export default async function DashboardPage() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {stats.map((s) => (
-          <div key={s.label} className="glass rounded-xl p-5">
-            <p className="text-sm text-body">{s.label}</p>
-            <p className={`mt-1 font-display text-3xl font-bold ${s.accent}`}>{s.value}</p>
+          <div
+            key={s.label}
+            className={`glass rounded-xl p-5 ${s.accent ? "border-accent/40" : ""}`}
+          >
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-body">{s.label}</p>
+              <s.icon className={`h-4 w-4 ${s.accent ? "text-accent" : "text-body"}`} />
+            </div>
+            <p
+              className={`mt-2 font-display text-3xl font-bold ${
+                s.accent ? "text-accent" : "text-hi"
+              }`}
+            >
+              {s.value}
+            </p>
           </div>
         ))}
       </div>
@@ -63,7 +75,10 @@ export default async function DashboardPage() {
             {projects.length === 0 && (
               <tr>
                 <td colSpan={6} className="px-4 py-10 text-center text-body">
-                  Belum ada project.
+                  Belum ada project.{" "}
+                  <Link href="/projects/new" className="text-accent hover:underline">
+                    Tambah project pertama
+                  </Link>
                 </td>
               </tr>
             )}

@@ -18,6 +18,22 @@ import (
 // Doc is a raw Appwrite document, passed through to the API untouched.
 type Doc = json.RawMessage
 
+// Q builds an Appwrite v2 query in JSON-object form, e.g.
+// {"method":"equal","attribute":"username","values":["admin"]}.
+// The old string form `equal("username", ["admin"])` is rejected by
+// Appwrite >= 2.5.0 ("Invalid query: Syntax error").
+func Q(method, attribute string, values any) string {
+	m := map[string]any{"method": method}
+	if attribute != "" {
+		m["attribute"] = attribute
+	}
+	if values != nil {
+		m["values"] = values
+	}
+	b, _ := json.Marshal(m)
+	return string(b)
+}
+
 type Client struct {
 	Endpoint string
 	Project  string
