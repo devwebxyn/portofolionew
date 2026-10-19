@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { GhostIndex, SpotlightCard, Stagger, StaggerItem } from "@/components/ui";
 
 type Project = {
   $id: string;
@@ -25,7 +25,7 @@ export default function ProjectsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-  const res = await fetch(`/api/projects`, { cache: "no-store" });
+        const res = await fetch(`/api/projects`, { cache: "no-store" });
         const json = await res.json();
         if (!json.ok) throw new Error(json.error || "Gagal memuat data");
         setItems(json.items || []);
@@ -40,51 +40,147 @@ export default function ProjectsPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-16">
-      <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="inline-block rounded-lg bg-white px-3 py-2 text-3xl font-bold text-black">Projects</motion.h1>
-      {loading && <p className="mt-4 text-white/80">Memuat...</p>}
-      {error && <p className="mt-4 text-red-400">{error}</p>}
+    <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+      {/* ---------- HEADER ---------- */}
+      <div className="relative">
+        <span
+          aria-hidden
+          className="text-outline type-display pointer-events-none absolute -top-10 right-0 select-none text-[8rem] leading-none sm:text-[10rem]"
+        >
+          02
+        </span>
+        <div className="relative flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-mut">
+          <span className="text-accent">02</span>
+          <span className="h-px w-8 bg-line" />
+          <span>Karya</span>
+        </div>
+        <h1 className="type-display relative mt-5 text-5xl font-bold text-hi sm:text-6xl md:text-7xl">
+          Yang pernah <span className="serif-accent text-gradient">kubangun</span>
+        </h1>
+        <p className="relative mt-5 max-w-2xl text-base text-body sm:text-lg">
+          Karya nyata dari ide sampai rilis — diuji, diukur, dan benar-benar dipakai.
+        </p>
+      </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {items.map((p, idx) => (
-          <motion.article key={p.$id}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: idx * 0.05 }}
-            className="group overflow-hidden rounded-2xl border border-white/10 bg-white/90 text-black shadow-sm transition hover:shadow-lg"
-          >
-            {p.imageUrl && (
-              <div className="w-full bg-black/5">
-                <Image
-                  src={p.imageUrl}
-                  alt={p.title}
-                  width={1200}
-                  height={630}
-                  className="h-auto w-full object-contain"
-                  priority={idx < 2}
-                  unoptimized
-                />
-              </div>
-            )}
-            <div className="p-5">
-              <h3 className="text-lg font-bold">{p.title}</h3>
-              <p className="mt-2 text-sm text-black/80">{p.description}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {p.category && <span className="rounded-full border border-black/10 bg-black/5 px-3 py-1 text-xs text-black/70">Framework: {p.category}</span>}
-                {p.language && <span className="rounded-full border border-black/10 bg-black/5 px-3 py-1 text-xs text-black/70">Language: {p.language}</span>}
-                {(p.tags || []).map((t) => (
-                  <span key={t} className="rounded-full border border-black/10 bg-black/5 px-3 py-1 text-xs text-black/70">{t}</span>
-                ))}
-              </div>
-              <div className="mt-4 flex items-center gap-3">
-                {p.liveUrl && <Link href={p.liveUrl} target="_blank" className="rounded-md bg-black px-3 py-1.5 text-xs font-semibold text-white hover:bg-black/90">URL</Link>}
-                {p.githubUrl && <Link href={p.githubUrl} target="_blank" className="rounded-md border border-black/20 px-3 py-1.5 text-xs font-semibold text-black hover:bg-black/5">GitHub</Link>}
+      {/* ---------- LOADING ---------- */}
+      {loading && (
+        <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="animate-pulse rounded-3xl border border-line bg-white/5">
+              <div className="aspect-video w-full bg-white/5" />
+              <div className="space-y-3 p-6 sm:p-7">
+                <div className="h-4 w-1/3 rounded bg-white/5" />
+                <div className="h-7 w-2/3 rounded bg-white/5" />
+                <div className="h-3 w-full rounded bg-white/5" />
+                <div className="h-3 w-4/5 rounded bg-white/5" />
+                <div className="h-8 w-1/2 rounded-full bg-white/5" />
               </div>
             </div>
-          </motion.article>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {/* ---------- ERROR ---------- */}
+      {error && (
+        <div className="mt-14 rounded-3xl border border-line bg-panel p-10">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-red-400">Terjadi kesalahan</p>
+          <p className="mt-3 text-body">Gagal memuat karya. Coba muat ulang halaman.</p>
+          <p className="mt-1 font-mono text-xs text-mut">{error}</p>
+        </div>
+      )}
+
+      {/* ---------- EMPTY ---------- */}
+      {!loading && !error && items.length === 0 && (
+        <div className="mt-14 rounded-3xl border border-line bg-panel p-10 text-center">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-mut">Kosong</p>
+          <p className="mt-3 text-body">Belum ada karya yang bisa kutampilkan. Kembali lagi nanti.</p>
+        </div>
+      )}
+
+      {/* ---------- GRID ---------- */}
+      {!loading && !error && items.length > 0 && (
+        <Stagger className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
+          {items.map((p, i) => (
+            <StaggerItem key={p.$id}>
+              <SpotlightCard className="group overflow-hidden rounded-3xl border border-line bg-panel">
+                {/* media */}
+                <div className="relative aspect-video w-full overflow-hidden border-b border-line">
+                  {p.imageUrl ? (
+                    <Image
+                      src={p.imageUrl}
+                      alt={p.title}
+                      width={1200}
+                      height={630}
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      priority={false}
+                      unoptimized
+                    />
+                  ) : (
+                    <div className="grid h-full w-full place-items-center bg-elev">
+                      <GhostIndex className="text-6xl">0{i + 1}</GhostIndex>
+                    </div>
+                  )}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-gradient-to-t from-void/80 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                  />
+                  {p.category && (
+                    <span className="absolute top-4 right-4 rounded-full bg-accent px-3 py-1 font-mono text-xs font-semibold text-void">
+                      {p.category}
+                    </span>
+                  )}
+                </div>
+
+                {/* body */}
+                <div className="p-6 sm:p-7">
+                  <GhostIndex className="text-6xl">0{i + 1}</GhostIndex>
+                  <h3 className="type-display mt-3 text-2xl font-bold text-hi transition-colors duration-300 group-hover:text-accent">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3 text-body">{p.description}</p>
+
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {p.language && (
+                      <span className="rounded-full border border-line bg-white/4 px-3 py-1 font-mono text-xs text-mut">
+                        {p.language}
+                      </span>
+                    )}
+                    {(p.tags || []).map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-full border border-line bg-white/4 px-3 py-1 font-mono text-xs text-mut"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 flex items-center gap-3">
+                    {p.liveUrl && (
+                      <Link
+                        href={p.liveUrl}
+                        target="_blank"
+                        className="rounded-full border border-line px-4 py-2 text-sm text-hi transition-colors hover:border-accent/60"
+                      >
+                        URL
+                      </Link>
+                    )}
+                    {p.githubUrl && (
+                      <Link
+                        href={p.githubUrl}
+                        target="_blank"
+                        className="rounded-full border border-line px-4 py-2 text-sm text-hi transition-colors hover:border-accent/60"
+                      >
+                        GitHub
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </SpotlightCard>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 // /src/components/JetBrainsPanel.tsx
 "use client";
 
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export function JetBrainsPanel({
@@ -18,30 +17,18 @@ export function JetBrainsPanel({
   className?: string;
 }) {
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className={cn(
-        "relative overflow-hidden rounded-2xl border",
-        "border-white/10 bg-[#0b0b0f]/90 text-white backdrop-blur-xl",
-        "shadow-sm shadow-black/30",
-        className
-      )}
-    >
+    <section className={cn("relative overflow-hidden rounded-3xl border border-line bg-panel", className)}>
       {/* Top toolbar */}
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-2">
-        <div className="text-xs text-white/70">{title ?? "JetBrains Panel"}</div>
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-white/4 px-5 py-3">
+        <div className="font-mono text-sm text-hi">{title ?? "JetBrains Panel"}</div>
         {tabs && tabs.length > 0 && (
           <div className="flex items-center gap-1">
             {tabs.map((t, i) => (
               <span
                 key={t}
                 className={cn(
-                  "inline-flex items-center rounded px-2 py-1 text-xs",
-                  i === active ? "bg-white/15 text-white" : "text-white/70",
-                  "border border-white/10"
+                  "inline-flex items-center rounded px-2.5 py-1 font-mono text-xs",
+                  i === active ? "bg-accent/15 text-accent" : "text-mut"
                 )}
               >
                 {t}
@@ -51,9 +38,7 @@ export function JetBrainsPanel({
         )}
       </div>
       {/* Content */}
-      <div className="p-4 text-sm text-white/90">
-        {children}
-      </div>
-    </motion.section>
+      <div className="p-5 text-sm text-body">{children}</div>
+    </section>
   );
 }

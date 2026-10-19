@@ -2,7 +2,36 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Instagram as InstagramIcon, Mail, ShieldCheck, Sparkles, MessageSquare, Clock } from "lucide-react";
+import { Phone, Instagram as InstagramIcon, Mail, ShieldCheck, Sparkles, MessageSquare, Clock, ArrowRight, ArrowUpRight } from "lucide-react";
+import { Reveal, Stagger, StaggerItem, SpotlightCard, TiltCard } from "@/components/ui";
+
+const CHANNELS = [
+  {
+    icon: Phone,
+    index: "01",
+    title: "WhatsApp",
+    desc: "Chat cepat & praktis. Aku merespons sesegera mungkin.",
+    href: "https://wa.me/62882019494158",
+    cta: "Chat WhatsApp",
+    primary: true,
+  },
+  {
+    icon: InstagramIcon,
+    index: "02",
+    title: "Instagram",
+    desc: "DM Instagram untuk pertanyaan singkat & update terbaru.",
+    href: "https://www.instagram.com/samuelindrabastian/",
+    cta: "Buka Instagram",
+    primary: false,
+  },
+];
+
+const PROPS = [
+  { icon: Clock, title: "Respon Cepat", desc: "Aku berupaya merespons sesegera mungkin sesuai jam kerja." },
+  { icon: ShieldCheck, title: "Privasi & Keamanan", desc: "Pesanmu diproses dengan aman, hanya untuk kebutuhan komunikasi." },
+  { icon: MessageSquare, title: "Solusi yang Relevan", desc: "Aku berusaha memahami konteksmu untuk memberi masukan yang tepat." },
+  { icon: Sparkles, title: "Pendekatan Ramah", desc: "Bahasa yang sederhana, interaksi yang menyenangkan." },
+];
 
 export default function ContactPage() {
   const [openPicker, setOpenPicker] = useState(false);
@@ -52,146 +81,128 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-16">
-      {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-black via-slate-800 to-slate-900 p-10 text-white">
-        <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-extrabold">Kami Siap Membantu Anda</motion.h1>
-        <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mt-2 max-w-2xl text-white/80">
-          Punya pertanyaan, kritik, atau saran? Jangan ragu untuk menghubungi kami. Tim kami akan segera merespons Anda.
-        </motion.p>
-        <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-cyan-500/20 blur-3xl" />
-        <div className="pointer-events-none absolute -left-16 -bottom-16 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl" />
+    <div className="mx-auto max-w-6xl px-5 py-20 sm:px-10">
+      {/* Header */}
+      <Reveal className="relative overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute -top-8 right-0 select-none">
+          <span className="text-outline type-display text-[10rem] leading-none sm:text-[13rem]">03</span>
+        </div>
+        <div className="relative">
+          <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-mut">
+            <span className="text-accent">03</span>
+            <span className="h-px w-8 bg-line" />
+            <span>Kontak</span>
+          </div>
+          <h1 className="type-display mt-5 text-5xl font-bold text-hi sm:text-6xl md:text-7xl">
+            Mari <span className="serif-accent text-gradient">ngobrol</span>
+          </h1>
+          <p className="mt-6 max-w-2xl text-base text-body sm:text-lg">
+            Punya pertanyaan, kritik, atau ide? Pilih kanal yang paling nyaman — aku merespons sesegera mungkin.
+          </p>
+        </div>
+      </Reveal>
 
-        {/* CTA */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mt-8">
-          <button onClick={() => setOpenPicker(true)} className="rounded-xl bg-white px-5 py-3 text-sm font-bold text-black shadow hover:bg-white/90">Hubungi Kami Sekarang</button>
-        </motion.div>
-      </div>
+      {/* Channel cards */}
+      <Stagger className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3" gap={0.1}>
+        {CHANNELS.map((c) => (
+          <StaggerItem key={c.title} className="h-full">
+            <TiltCard max={6} className="h-full">
+              <SpotlightCard className="group h-full rounded-3xl border border-line bg-panel p-8 transition-colors hover:border-accent/40">
+                <div className="relative flex h-full flex-col">
+                  <div aria-hidden className="pointer-events-none absolute top-0 right-0 select-none">
+                    <span className="text-outline type-display text-5xl">{c.index}</span>
+                  </div>
+                  <div className="grid h-14 w-14 place-items-center rounded-2xl bg-accent/12 text-accent">
+                    <c.icon size={24} />
+                  </div>
+                  <h3 className="type-display mt-6 text-xl font-bold text-hi">{c.title}</h3>
+                  <p className="mt-2 text-body">{c.desc}</p>
+                  <a
+                    href={c.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={
+                      c.primary
+                        ? "group/btn mt-8 inline-flex w-fit items-center gap-2 self-start rounded-full bg-accent px-5 py-2.5 font-bold text-void transition-all hover:shadow-[0_0_28px_rgba(200,255,46,0.45)]"
+                        : "group/btn mt-8 inline-flex w-fit items-center gap-2 self-start rounded-full border border-line px-5 py-2.5 font-bold text-hi transition-all hover:border-accent/60 hover:bg-white/5"
+                    }
+                  >
+                    {c.cta}
+                    {c.primary ? (
+                      <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
+                    ) : (
+                      <ArrowUpRight size={16} className="transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                    )}
+                  </a>
+                </div>
+              </SpotlightCard>
+            </TiltCard>
+          </StaggerItem>
+        ))}
 
-      {/* Intro copy */}
-      <div className="mx-auto mt-12 max-w-3xl text-center">
-        <motion.h2 initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-2xl font-bold text-black">
-          Pilih Cara Menghubungi Kami
-        </motion.h2>
-        <motion.p initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }} className="mt-2 text-black/70">
-          Kami menyediakan beberapa kanal agar Anda bisa terhubung dengan nyaman. Pilih yang paling sesuai bagi Anda.
-        </motion.p>
-      </div>
+        {/* Email card */}
+        <StaggerItem className="h-full">
+          <TiltCard max={6} className="h-full">
+            <SpotlightCard className="group h-full rounded-3xl border border-line bg-panel p-8 transition-colors hover:border-accent/40">
+              <button type="button" onClick={() => setOpenEmail(true)} className="flex h-full w-full flex-col text-left">
+                <div className="relative flex h-full flex-col">
+                  <div aria-hidden className="pointer-events-none absolute top-0 right-0 select-none">
+                    <span className="text-outline type-display text-5xl">03</span>
+                  </div>
+                  <div className="grid h-14 w-14 place-items-center rounded-2xl bg-accent/12 text-accent">
+                    <Mail size={24} />
+                  </div>
+                  <h3 className="type-display mt-6 text-xl font-bold text-hi">Email</h3>
+                  <p className="mt-2 text-body">Kirim pesan lebih panjang & detail langsung dari situs ini.</p>
+                  <span className="group/btn mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-2.5 font-bold text-void transition-all hover:shadow-[0_0_28px_rgba(200,255,46,0.45)]">
+                    Tulis Email
+                    <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
+                  </span>
+                </div>
+              </button>
+            </SpotlightCard>
+          </TiltCard>
+        </StaggerItem>
+      </Stagger>
 
-      {/* Method cards */}
-      <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
-        {/* WhatsApp */}
-        <motion.a
-          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          href="https://wa.me/62882019494158" target="_blank"
-          className="group relative overflow-hidden rounded-2xl border border-black/10 bg-white p-6 text-black shadow-sm transition hover:shadow-lg"
-        >
-          <div className="flex items-start gap-4">
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-emerald-700">
-              <Phone size={20} />
+      {/* Value props */}
+      <Stagger className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2" gap={0.08}>
+        {PROPS.map((p) => (
+          <StaggerItem key={p.title}>
+            <div className="flex items-start gap-4 rounded-2xl border border-line bg-panel p-5 transition-colors hover:border-accent/40">
+              <div className="rounded-lg bg-accent/10 p-2 text-accent"><p.icon size={18} /></div>
+              <div>
+                <h4 className="text-sm font-semibold text-hi">{p.title}</h4>
+                <p className="mt-1 text-sm text-body">{p.desc}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base font-bold">WhatsApp</h3>
-              <p className="mt-1 text-sm text-black/70">Chat cepat & praktis. Kami merespons sesegera mungkin.</p>
-              <span className="mt-3 inline-block rounded-lg bg-black px-3 py-1.5 text-xs font-semibold text-white group-hover:bg-black/90">Chat WhatsApp</span>
-            </div>
-          </div>
-          <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-emerald-400/10 blur-2xl" />
-        </motion.a>
-
-        {/* Instagram */}
-        <motion.a
-          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          href="https://www.instagram.com/samuelindrabastian/" target="_blank"
-          className="group relative overflow-hidden rounded-2xl border border-black/10 bg-white p-6 text-black shadow-sm transition hover:shadow-lg"
-        >
-          <div className="flex items-start gap-4">
-            <div className="rounded-xl border border-pink-200 bg-pink-50 p-3 text-pink-700">
-              <InstagramIcon size={20} />
-            </div>
-            <div>
-              <h3 className="text-base font-bold">Instagram</h3>
-              <p className="mt-1 text-sm text-black/70">DM Instagram untuk pertanyaan singkat & update terbaru.</p>
-              <span className="mt-3 inline-block rounded-lg border border-black/20 px-3 py-1.5 text-xs font-semibold text-black group-hover:bg-black/5">Buka Instagram</span>
-            </div>
-          </div>
-          <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-pink-400/10 blur-2xl" />
-        </motion.a>
-
-        {/* Email */}
-        <motion.button
-          type="button"
-          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          onClick={() => setOpenEmail(true)}
-          className="group relative overflow-hidden rounded-2xl border border-black/10 bg-white p-6 text-left text-black shadow-sm transition hover:shadow-lg"
-        >
-          <div className="flex items-start gap-4">
-            <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-3 text-indigo-700">
-              <Mail size={20} />
-            </div>
-            <div>
-              <h3 className="text-base font-bold">Email</h3>
-              <p className="mt-1 text-sm text-black/70">Kirim pesan lebih panjang & detail langsung dari situs ini.</p>
-              <span className="mt-3 inline-block rounded-lg bg-black px-3 py-1.5 text-xs font-semibold text-white group-hover:bg-black/90">Tulis Email</span>
-            </div>
-          </div>
-          <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-indigo-400/10 blur-2xl" />
-        </motion.button>
-      </div>
-
-      {/* Value props / highlights */}
-      <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-black/10 bg-white p-6 text-black shadow-sm">
-          <div className="flex items-start gap-3">
-            <div className="rounded-lg bg-emerald-100 p-2 text-emerald-700"><Clock size={18} /></div>
-            <div>
-              <h4 className="text-sm font-bold">Respon Cepat</h4>
-              <p className="mt-1 text-sm text-black/70">Kami berupaya merespons sesegera mungkin sesuai jam kerja.</p>
-            </div>
-          </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-black/10 bg-white p-6 text-black shadow-sm">
-          <div className="flex items-start gap-3">
-            <div className="rounded-lg bg-blue-100 p-2 text-blue-700"><ShieldCheck size={18} /></div>
-            <div>
-              <h4 className="text-sm font-bold">Privasi & Keamanan</h4>
-              <p className="mt-1 text-sm text-black/70">Pesan Anda diproses dengan aman, hanya untuk kebutuhan komunikasi.</p>
-            </div>
-          </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-black/10 bg-white p-6 text-black shadow-sm">
-          <div className="flex items-start gap-3">
-            <div className="rounded-lg bg-purple-100 p-2 text-purple-700"><MessageSquare size={18} /></div>
-            <div>
-              <h4 className="text-sm font-bold">Solusi yang Relevan</h4>
-              <p className="mt-1 text-sm text-black/70">Kami berusaha memahami konteks Anda untuk memberi masukan yang tepat.</p>
-            </div>
-          </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-black/10 bg-white p-6 text-black shadow-sm">
-          <div className="flex items-start gap-3">
-            <div className="rounded-lg bg-amber-100 p-2 text-amber-700"><Sparkles size={18} /></div>
-            <div>
-              <h4 className="text-sm font-bold">Pendekatan Ramah</h4>
-              <p className="mt-1 text-sm text-black/70">Bahasa yang sederhana, interaksi yang menyenangkan.</p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+          </StaggerItem>
+        ))}
+      </Stagger>
 
       {/* Modal #1: Picker */}
       <AnimatePresence>
         {openPicker && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="w-full max-w-md rounded-2xl border border-white/10 bg-white p-6 text-black">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-void/70 p-4 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="w-full max-w-md rounded-3xl border border-line bg-elev p-8"
+            >
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold">Pilih Metode Kontak</h3>
-                <button onClick={() => setOpenPicker(false)} className="text-black/60">✕</button>
+                <h3 className="type-display text-xl font-bold text-hi">Pilih Metode Kontak</h3>
+                <button onClick={() => setOpenPicker(false)} aria-label="Tutup" className="text-mut transition hover:text-hi">✕</button>
               </div>
-              <div className="mt-4 grid grid-cols-3 gap-3">
-                <a className="rounded-lg border border-black/10 bg-black/5 p-4 text-center hover:bg-black/10" target="_blank" href="https://wa.me/62882019494158">WhatsApp</a>
-                <a className="rounded-lg border border-black/10 bg-black/5 p-4 text-center hover:bg-black/10" target="_blank" href="https://www.instagram.com/xynoos/">Instagram</a>
-                <button className="rounded-lg border border-black/10 bg-black/5 p-4 text-center hover:bg-black/10" onClick={() => { setOpenPicker(false); setOpenEmail(true); }}>Email</button>
+              <div className="mt-6 grid grid-cols-3 gap-3">
+                <a className="rounded-xl border border-line bg-white/4 p-4 text-center font-semibold text-hi transition hover:border-accent/50" target="_blank" rel="noopener noreferrer" href="https://wa.me/62882019494158">WhatsApp</a>
+                <a className="rounded-xl border border-line bg-white/4 p-4 text-center font-semibold text-hi transition hover:border-accent/50" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/xynoos/">Instagram</a>
+                <button className="rounded-xl border border-line bg-white/4 p-4 text-center font-semibold text-hi transition hover:border-accent/50" onClick={() => { setOpenPicker(false); setOpenEmail(true); }}>Email</button>
               </div>
             </motion.div>
           </motion.div>
@@ -201,30 +212,43 @@ export default function ContactPage() {
       {/* Modal #2: Email form */}
       <AnimatePresence>
         {openEmail && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-            <motion.form onSubmit={submit} initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="w-full max-w-md rounded-2xl border border-white/10 bg-white p-6 text-black">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-void/70 p-4 backdrop-blur-sm"
+          >
+            <motion.form
+              onSubmit={submit}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="w-full max-w-md rounded-3xl border border-line bg-elev p-8"
+            >
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold">Kirim Pesan Anda</h3>
-                <button type="button" onClick={() => setOpenEmail(false)} className="text-black/60">✕</button>
+                <h3 className="type-display text-xl font-bold text-hi">Kirim Pesan Anda</h3>
+                <button type="button" onClick={() => setOpenEmail(false)} aria-label="Tutup" className="text-mut transition hover:text-hi">✕</button>
               </div>
-              <div className="mt-4 space-y-3">
+              <div className="mt-6 space-y-4">
                 <div>
-                  <label className="text-xs text-black/60">Judul Pesan</label>
-                  <input value={subject} onChange={(e) => setSubject(e.target.value)} required className="mt-1 w-full rounded-lg border border-black/10 bg-black/5 px-3 py-2" />
+                  <label className="font-mono text-xs text-mut">Judul Pesan</label>
+                  <input value={subject} onChange={(e) => setSubject(e.target.value)} required placeholder="Ringkasan singkat" className="mt-1.5 w-full rounded-xl border border-line bg-void/60 px-3.5 py-3 text-hi placeholder:text-mut focus:border-accent focus:ring-1 focus:ring-accent/40 focus:outline-none" />
                 </div>
                 <div>
-                  <label className="text-xs text-black/60">Email Anda</label>
-                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="mt-1 w-full rounded-lg border border-black/10 bg-black/5 px-3 py-2" />
+                  <label className="font-mono text-xs text-mut">Email Anda</label>
+                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="nama@email.com" className="mt-1.5 w-full rounded-xl border border-line bg-void/60 px-3.5 py-3 text-hi placeholder:text-mut focus:border-accent focus:ring-1 focus:ring-accent/40 focus:outline-none" />
                 </div>
                 <div>
-                  <label className="text-xs text-black/60">Isi Pesan</label>
-                  <textarea value={message} onChange={(e) => setMessage(e.target.value)} required rows={5} className="mt-1 w-full resize-y rounded-lg border border-black/10 bg-black/5 px-3 py-2" />
+                  <label className="font-mono text-xs text-mut">Isi Pesan</label>
+                  <textarea value={message} onChange={(e) => setMessage(e.target.value)} required rows={5} placeholder="Tulis pesanmu di sini..." className="mt-1.5 w-full resize-y rounded-xl border border-line bg-void/60 px-3.5 py-3 text-hi placeholder:text-mut focus:border-accent focus:ring-1 focus:ring-accent/40 focus:outline-none" />
                 </div>
               </div>
-              {feedback && <p className="mt-3 text-sm text-black/70">{feedback}</p>}
-              <div className="mt-4 flex justify-end gap-2">
-                <button type="button" onClick={() => setOpenEmail(false)} className="rounded-lg border border-black/20 px-4 py-2 text-sm">Batal</button>
-                <button disabled={loading} className="rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/90 disabled:opacity-60">
+              {feedback && (
+                <p className={`mt-4 text-sm ${feedback.includes("terkirim") ? "text-ok" : "text-red-400"}`}>{feedback}</p>
+              )}
+              <div className="mt-6 flex justify-end gap-2">
+                <button type="button" onClick={() => setOpenEmail(false)} className="rounded-full border border-line bg-white/4 px-5 py-2.5 text-sm font-semibold text-hi transition hover:border-accent/50">Batal</button>
+                <button disabled={loading} className="rounded-full bg-accent px-5 py-2.5 text-sm font-bold text-void transition-all hover:shadow-[0_0_28px_rgba(200,255,46,0.45)] disabled:opacity-60">
                   {loading ? 'Mengirim...' : 'Kirim Pesan'}
                 </button>
               </div>

@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { Stagger, StaggerItem } from "@/components/ui";
 
 type Kind = "framework" | "language";
 type Item = { key: string; kind: Kind; name: string; color: string };
@@ -12,18 +13,16 @@ function Badge({ item, onClick }: { item: Item; onClick: (it: Item) => void }) {
     <button
       onClick={() => onClick(item)}
       className={cn(
-        "group relative flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition",
-        "hover:scale-[1.02] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2",
-        "ring-black/10"
+        "group flex w-full items-center gap-4 rounded-2xl border border-line bg-panel px-4 py-4 text-left transition-all duration-300",
+        "hover:-translate-y-1 hover:border-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       )}
-      style={{ background: "rgba(255,255,255,0.95)", borderColor: "rgba(0,0,0,0.12)" }}
     >
-      <div className="grid h-10 w-10 place-items-center rounded-lg overflow-hidden" aria-hidden>
-        <img src={`/logos/${item.key}.svg`} alt={`${item.name} logo`} className="h-10 w-10 object-contain" />
+      <div className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-xl bg-white/5" aria-hidden>
+        <img src={`/logos/${item.key}.svg`} alt="" className="h-8 w-8 object-contain" />
       </div>
-      <div>
-        <div className="text-sm font-semibold text-black">{item.name}</div>
-        <div className="text-xs text-black/70 capitalize">{item.kind}</div>
+      <div className="min-w-0">
+        <div className="truncate font-semibold text-hi">{item.name}</div>
+        <div className="font-mono text-xs text-mut uppercase">{item.kind}</div>
       </div>
     </button>
   );
@@ -116,7 +115,7 @@ function DetailsModal({ item, onClose }: { item: Item & { info: Info }; onClose:
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[9000] grid place-items-center bg-black/50 p-4"
+        className="fixed inset-0 z-[9000] grid place-items-center bg-void/80 p-4 backdrop-blur-sm"
         onClick={onClose}
       >
         <motion.div
@@ -124,39 +123,41 @@ function DetailsModal({ item, onClose }: { item: Item & { info: Info }; onClose:
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 20, opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="w-full max-w-2xl rounded-2xl border p-5"
-          style={{ background: "rgba(255,255,255,0.98)", borderColor: "rgba(0,0,0,0.1)" }}
+          className="w-full max-w-2xl rounded-3xl border border-line bg-elev p-6"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 overflow-hidden rounded">
-                <img src={`/logos/${item.key}.svg`} alt={`${item.name} logo`} className="h-10 w-10 object-contain" />
+              <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl bg-white/5">
+                <img src={`/logos/${item.key}.svg`} alt="" className="h-8 w-8 object-contain" />
               </div>
               <div>
-                <h4 className="text-lg font-semibold text-black">{item.name}</h4>
-                <p className="text-xs text-black/70 capitalize">{item.kind}</p>
+                <h4 className="type-display text-lg font-bold text-hi">{item.name}</h4>
+                <p className="font-mono text-xs text-mut uppercase">{item.kind}</p>
               </div>
             </div>
-            <button onClick={onClose} className="rounded-md border px-3 py-1 text-sm text-black hover:bg-black/5">
+            <button
+              onClick={onClose}
+              className="rounded-full border border-line bg-transparent px-4 py-2 font-mono text-xs text-mut transition hover:border-accent/50 hover:text-hi"
+            >
               Tutup
             </button>
           </div>
-          <div className="mt-4 space-y-3 text-sm text-black">
+          <div className="mt-4 space-y-3 text-sm text-body">
             <div>
-              <span className="inline-block rounded bg-black/5 px-2 py-0.5 text-xs font-semibold text-black">Pengertian</span>
+              <span className="font-mono text-xs tracking-[0.25em] uppercase text-mut">Pengertian</span>
               <p className="mt-1">{item.info.pengertian}</p>
             </div>
             <div>
-              <span className="inline-block rounded bg-black/5 px-2 py-0.5 text-xs font-semibold text-black">Kegunaan</span>
+              <span className="font-mono text-xs tracking-[0.25em] uppercase text-mut">Kegunaan</span>
               <p className="mt-1">{item.info.kegunaan}</p>
             </div>
             <div>
-              <span className="inline-block rounded bg-black/5 px-2 py-0.5 text-xs font-semibold text-black">Sejarah</span>
+              <span className="font-mono text-xs tracking-[0.25em] uppercase text-mut">Sejarah</span>
               <p className="mt-1">{item.info.sejarah}</p>
             </div>
             <div>
-              <span className="inline-block rounded bg-black/5 px-2 py-0.5 text-xs font-semibold text-black">Pembuat</span>
+              <span className="font-mono text-xs tracking-[0.25em] uppercase text-mut">Pembuat</span>
               <p className="mt-1">{item.info.pembuat}</p>
             </div>
           </div>
@@ -194,37 +195,49 @@ export function TechShowcase() {
   };
 
   return (
-    <section className="mx-auto w-full max-w-5xl px-6 pb-24">
-      <div className="mb-6">
-        <span className="inline-block rounded-md bg-white px-2 py-1 text-sm font-semibold text-black">Teknologi</span>
-        <h3 className="mt-2 inline-block rounded-md bg-white px-2 py-1 text-2xl font-bold text-black">Framework yang dikuasai</h3>
+    <section className="relative mx-auto w-full max-w-6xl px-5 pb-24 sm:px-8">
+      <div className="relative mb-12">
+        {/* ghost index */}
+        <span
+          aria-hidden
+          className="text-outline type-display pointer-events-none absolute -top-8 right-0 select-none text-[8rem] leading-none sm:text-[11rem]"
+        >
+          02
+        </span>
+        <p className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
+          <span className="text-accent">02 · Teknologi</span>
+          <span className="h-px w-8 bg-line" />
+        </p>
+        <h3 className="type-display mt-5 text-4xl font-bold text-hi sm:text-5xl md:text-6xl">
+          Framework & bahasa yang <span className="serif-accent text-gradient">kukuasai</span>
+        </h3>
       </div>
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4 }}
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3"
-      >
-        {frameworks.map((f) => (
-          <Badge key={f.key} item={f} onClick={open} />
-        ))}
-      </motion.div>
 
-      <div className="mt-10 mb-6">
-        <h3 className="inline-block rounded-md bg-white px-2 py-1 text-2xl font-bold text-black">Bahasa pemrograman</h3>
+      <div className="mb-5 flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
+        <span className="text-accent">A.</span>
+        <span>Framework</span>
+        <span aria-hidden className="h-px flex-1 bg-line" />
       </div>
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4 }}
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3"
-      >
-        {languages.map((l) => (
-          <Badge key={l.key} item={l} onClick={open} />
+      <Stagger gap={0.07} className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        {frameworks.map((f) => (
+          <StaggerItem key={f.key}>
+            <Badge item={f} onClick={open} />
+          </StaggerItem>
         ))}
-      </motion.div>
+      </Stagger>
+
+      <div className="mb-5 mt-12 flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
+        <span className="text-accent">B.</span>
+        <span>Bahasa pemrograman</span>
+        <span aria-hidden className="h-px flex-1 bg-line" />
+      </div>
+      <Stagger gap={0.07} className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        {languages.map((l) => (
+          <StaggerItem key={l.key}>
+            <Badge item={l} onClick={open} />
+          </StaggerItem>
+        ))}
+      </Stagger>
 
       {selected && <DetailsModal item={selected} onClose={() => setSelected(null)} />}
     </section>

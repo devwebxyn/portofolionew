@@ -1,184 +1,168 @@
-// /src/components/Navbar.tsx
 "use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Github,  X as XIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { AnimatedGridIcon } from './AnimatedGridIcon';
-// Removed project teaser for a cleaner, focused menu overlay
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { EASE } from "@/lib/motion";
+
+const LINKS = [
+  { href: "/about", label: "About", index: "01" },
+  { href: "/projects", label: "Projects", index: "02" },
+  { href: "/profile", label: "Profile", index: "03" },
+  { href: "/contact", label: "Contact", index: "04" },
+];
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [selectedMenuLink, setSelectedMenuLink] = useState('');
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  // ... (useEffect tetap sama)
   useEffect(() => {
-    const handleScroll = () => { setScrolled(window.scrollY > 10); };
-    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      document.body.style.overflow = 'auto';
-    };
-  }, [isOpen]);
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  type NavLink = { href: string; label: string; desc?: string };
-  const navLinks: NavLink[] = [
-    { href: '/#home', label: 'Home', desc: 'Kembali ke bagian atas' },
-    { href: '/about', label: 'About', desc: 'About me (EN)' },
-    { href: '/projects', label: 'Projects', desc: 'Koleksi proyek yang saya buat' },
-    { href: '/profile', label: 'Profile', desc: 'Profil pribadi & perjalanan' },
-    { href: '/contact', label: 'Kontak', desc: 'Mari berdiskusi lebih lanjut' },
-  ];
-  
-  const menuVariants = {
-    initial: { scaleY: 0, opacity: 0 },
-    animate: {
-      scaleY: 1,
-      opacity: 1,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-    },
-    exit: { scaleY: 0, opacity: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
-  };
-  const linkVariants = {
-    initial: { y: 24, opacity: 0 },
-    animate: { y: 0, opacity: 1, transition: { duration: 0.45, ease: [0.33, 1, 0.68, 1] } },
-  };
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <>
-      <header className={cn(
-        'fixed inset-x-0 top-0 z-30 transition-all',
-        scrolled ? 'backdrop-blur bg-white/70 border-b border-black/10' : 'bg-transparent'
-      )}>
-        <div className="container mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
-          <Link
-            href="/"
-            className="group relative inline-block text-xl md:text-2xl font-bold tracking-tight leading-none text-black drop-shadow-[0_1px_1px_rgba(255,255,255,0.25)]"
-          >
-            Hi, I&apos;m Samuel
-            <span
-              className="absolute left-0 -bottom-1 h-0.5 w-1/3 rounded-full bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-primary opacity-90 transition-all duration-500 ease-out group-hover:w-full group-hover:opacity-100"
-              aria-hidden
-            />
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+          scrolled ? "border-b border-line bg-void/75 backdrop-blur-xl" : "border-b border-transparent"
+        )}
+      >
+        <nav className="mx-auto flex h-16 max-w-[90rem] items-center justify-between px-5 sm:px-10">
+          <Link href="/" className="group flex items-center gap-2 font-mono text-sm font-semibold text-hi">
+            <span className="grid h-7 w-7 place-items-center rounded-md bg-accent text-[11px] font-bold text-void transition-transform group-hover:-rotate-12">
+              S
+            </span>
+            <span>
+              sib<span className="text-accent">.dev</span>
+              <span className="ml-2 hidden text-mut lg:inline">~/Samuel</span>
+            </span>
           </Link>
 
-          {/* NAVIGASI DESKTOP TRADISIONAL DIHAPUS */}
-          
-          <div className="flex items-center gap-4">
-            {/* Tampilkan social links di semua ukuran layar */}
-            <Link href="https://github.com/samuelindra123" target="_blank"><Github size={20} className="text-text-body hover:text-text-heading transition-colors" /></Link>
-            
-            {/* Ikon grid kita sekarang menjadi navigasi utama */}
-            <div className="ml-4">
-              <AnimatedGridIcon isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
-            </div>
+          {/* Desktop */}
+          <div className="hidden items-center gap-1 md:flex">
+            {LINKS.map((l) => {
+              const active = pathname === l.href;
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={cn(
+                    "group relative px-4 py-2 font-mono text-sm transition-colors",
+                    active ? "text-hi" : "text-mut hover:text-hi"
+                  )}
+                >
+                  <span className="relative">
+                    <span className="mr-1.5 text-accent">{l.index}</span>
+                    {l.label}
+                  </span>
+                  <span
+                    className={cn(
+                      "absolute -bottom-0.5 left-4 h-px bg-accent transition-all duration-300",
+                      active ? "w-[calc(100%-2rem)]" : "w-0 group-hover:w-[calc(100%-2rem)]"
+                    )}
+                  />
+                </Link>
+              );
+            })}
           </div>
-        </div>
+
+          <div className="hidden items-center gap-4 md:flex">
+            <span className="hidden items-center gap-2 font-mono text-xs text-mut xl:flex">
+              <span className="animate-pulse-dot h-2 w-2 rounded-full bg-ok" />
+              open to work
+            </span>
+            <Link
+              href="/contact"
+              className="group inline-flex items-center gap-1.5 rounded-full bg-accent px-5 py-2.5 text-sm font-bold text-void transition-all hover:shadow-[0_0_28px_rgba(200,255,46,0.45)]"
+            >
+              Hire me
+              <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            aria-label={open ? "Tutup menu" : "Buka menu"}
+            onClick={() => setOpen(!open)}
+            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full border border-line md:hidden"
+          >
+            <div className="relative h-3.5 w-5">
+              <span className={cn("absolute left-0 top-0 h-0.5 w-full bg-hi transition-all duration-300", open && "top-1.5 rotate-45")} />
+              <span className={cn("absolute left-0 top-1.5 h-0.5 w-3/4 bg-hi transition-all duration-300", open && "opacity-0")} />
+              <span className={cn("absolute left-0 top-3 h-0.5 w-full bg-hi transition-all duration-300", open && "top-1.5 -rotate-45")} />
+            </div>
+          </button>
+        </nav>
       </header>
 
+      {/* Mobile menu */}
       <AnimatePresence>
-        {isOpen && (
+        {open && (
           <motion.div
-            variants={menuVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            // Professional overlay: subtle grid + blur + tint
-            className="fixed inset-0 z-40 origin-top animated-grid-background bg-background-dark/60 backdrop-blur-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
+            className="fixed inset-0 z-40 flex flex-col justify-center bg-void/95 px-8 backdrop-blur-2xl md:hidden"
           >
-            <div className="container mx-auto relative flex h-full max-w-5xl flex-col items-center justify-center px-4">
-              {/* Close button */}
-              <button
-                aria-label="Tutup menu"
-                onClick={() => setIsOpen(false)}
-                className="absolute right-4 top-4 rounded-full border border-white/20 bg-white/10 p-2 text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-accent-primary/60"
-              >
-                <XIcon size={18} />
-              </button>
-              {/* Animated backdrop blob responding to selection */}
-              <AnimatePresence mode="wait">
-                {selectedMenuLink && (
+            <div className="absolute right-0 top-1/3 -z-0 select-none">
+              <span className="text-outline type-display text-[38vw] leading-none">SI</span>
+            </div>
+            <div className="space-y-1">
+              {LINKS.map((l, i) => {
+                const active = pathname === l.href;
+                return (
                   <motion.div
-                    key={selectedMenuLink}
-                    className={cn(
-                      "animated-section-blob",
-                      selectedMenuLink === '/#home' && 'blob-projects',
-                      selectedMenuLink === '/about' && 'blob-about',
-                      selectedMenuLink === '/contact' && 'blob-contact',
-                      selectedMenuLink === '/profile' && 'blob-about'
-                    )}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 0.18, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    style={{
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                    }}
-                  />
-                )}
-              </AnimatePresence>
-              <motion.nav
-                className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl"
-                variants={{ animate: { transition: { staggerChildren: 0.08 } } }}
-                initial="initial"
-                animate="animate"
-              >
-                {navLinks.map((link) => (
-                  <motion.div
-                    key={`${link.label}-${link.href}`}
-                    variants={linkVariants}
-                    onMouseEnter={() => setSelectedMenuLink(link.href)}
-                    onMouseLeave={() => setSelectedMenuLink('')}
+                    key={l.href}
+                    initial={{ opacity: 0, x: -24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.08 * i, duration: 0.5, ease: EASE }}
+                    className="relative overflow-hidden border-b border-line pb-2"
                   >
                     <Link
-                      href={link.href}
-                      onMouseMove={(e) => {
-                        const rect = (e.currentTarget as HTMLAnchorElement).getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        (e.currentTarget as HTMLAnchorElement).style.setProperty('--x', `${x}px`);
-                        (e.currentTarget as HTMLAnchorElement).style.setProperty('--y', `${y}px`);
-                      }}
-                      onClick={() => {
-                        setSelectedMenuLink(link.href);
-                        setIsOpen(false);
-                      }}
-                      className={`group relative block overflow-hidden rounded-2xl border border-border-subtle bg-background-subtle/70 p-6 backdrop-blur-sm transition-all hover:border-accent-primary/50 hover:shadow-lg hover:shadow-accent-primary/10 ${(selectedMenuLink === '/contact' && link.href === '/contact') || (pathname === link.href) ? 'ring-2 ring-accent-primary/60' : ''}`}
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "type-display flex items-baseline gap-4 py-2 text-5xl font-bold transition-colors",
+                        active ? "text-accent" : "text-hi"
+                      )}
                     >
-                      <div className="relative z-10 flex items-start justify-between">
-                        <div>
-                          <h3 className="text-2xl font-bold text-text-heading group-hover:text-white transition-colors">{link.label}</h3>
-                          {link.desc && (
-                            <p className="mt-2 text-sm text-text-body">{link.desc}</p>
-                          )}
-                        </div>
-                        <motion.span
-                          aria-hidden
-                          className="h-8 w-8 rounded-full bg-accent-primary/20 group-hover:bg-accent-primary/40 transition-colors"
-                          whileHover={{ scale: 1.05 }}
-                        />
-                      </div>
-                      <motion.div
-                        aria-hidden
-                        className="absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{
-                          background:
-                            'radial-gradient(200px circle at var(--x,50%) var(--y,50%), rgba(0,169,255,0.18), transparent 40%)',
-                        }}
-                      />
+                      <span className="font-mono text-sm text-mut">{l.index}</span>
+                      {l.label}
                     </Link>
                   </motion.div>
-                ))}
-              </motion.nav>
+                );
+              })}
             </div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="mt-10"
+            >
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-bold text-void"
+              >
+                Hire me <ArrowUpRight size={16} />
+              </Link>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

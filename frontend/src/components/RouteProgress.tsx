@@ -15,8 +15,8 @@ export function RouteProgress() {
       height: '3px',
       width: '0%',
       zIndex: '9999',
-      background: 'linear-gradient(90deg, #00A9FF, #9E00FF, #FFD700)',
-      boxShadow: '0 0 12px rgba(0,169,255,0.6)',
+      background: 'linear-gradient(90deg, #C8FF2E, #22E0FF)',
+      boxShadow: '0 0 12px rgba(200,255,46,0.6)',
       transition: 'width 0.25s ease-out, opacity 0.4s ease-out',
       opacity: '0',
     } as CSSStyleDeclaration);

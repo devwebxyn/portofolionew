@@ -236,22 +236,30 @@ export function RoleDossier({ role, onClose, className }: { role: RoleKey; onClo
       exit={{ x: 400, opacity: 0 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "fixed right-0 top-0 z-[9000] h-full w-full max-w-xl border-l border-white/10 bg-[#0b0b0f]/95 backdrop-blur-xl",
+        "fixed right-0 top-0 z-[9000] h-full w-full max-w-xl border-l border-line bg-void/95 backdrop-blur-2xl",
         className
       )}
     >
-      <div className="flex items-center justify-between border-b border-white/10 px-5 py-4" style={{ background: "rgba(255,255,255,0.95)" }}>
-        <h3 className="text-lg font-semibold text-black">{roleTitles[role]} — Dossier</h3>
-        <button onClick={onClose} className="rounded-md border px-3 py-1 text-sm text-black hover:bg-black/5" style={{ background: "rgba(255,255,255,0.9)", borderColor: "rgba(0,0,0,0.1)" }}>
+      {/* glow lime di atas */}
+      <div aria-hidden className="glow-lime absolute inset-x-0 top-0 h-px bg-accent/70" />
+
+      <div className="flex items-center justify-between border-b border-line bg-panel px-5 py-4">
+        <h3 className="type-display text-lg font-bold text-hi">{roleTitles[role]} — Dossier</h3>
+        <button
+          onClick={onClose}
+          className="rounded-full border border-line bg-transparent px-4 py-2 font-mono text-xs text-mut transition hover:border-accent/50 hover:text-hi"
+        >
           Tutup
         </button>
       </div>
 
-      <div className="h-[calc(100%-56px)] overflow-y-auto p-5 space-y-6">
+      <div className="h-[calc(100%-56px)] space-y-6 overflow-y-auto p-5">
         {/* 1. Analogi & Filosofi */}
         <section>
-          <h4 className="inline-block rounded-md bg-white px-2 py-1 text-base font-semibold text-black">1. Analogi & Filosofi</h4>
-          <div className="mt-2 space-y-2 text-sm text-white/90">
+          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
+            <span className="mr-2 text-accent">1.</span>Analogi & Filosofi
+          </h4>
+          <div className="mt-2 space-y-2 text-sm text-body">
             {c.analogiFilosofi.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -260,8 +268,10 @@ export function RoleDossier({ role, onClose, className }: { role: RoleKey; onClo
 
         {/* 2. Kompetensi Inti (Naratif) */}
         <section>
-          <h4 className="inline-block rounded-md bg-white px-2 py-1 text-base font-semibold text-black">2. Kompetensi Inti</h4>
-          <div className="mt-2 space-y-2 text-sm text-white/90">
+          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
+            <span className="mr-2 text-accent">2.</span>Kompetensi Inti
+          </h4>
+          <div className="mt-2 space-y-2 text-sm text-body">
             {c.kompetensiNaratif.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -270,8 +280,10 @@ export function RoleDossier({ role, onClose, className }: { role: RoleKey; onClo
 
         {/* 3. Metodologi & Cara Kerja (Naratif) */}
         <section>
-          <h4 className="inline-block rounded-md bg-white px-2 py-1 text-base font-semibold text-black">3. Metodologi & Cara Kerja</h4>
-          <div className="mt-2 space-y-2 text-sm text-white/90">
+          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
+            <span className="mr-2 text-accent">3.</span>Metodologi & Cara Kerja
+          </h4>
+          <div className="mt-2 space-y-2 text-sm text-body">
             {c.metodeNaratif.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -280,8 +292,10 @@ export function RoleDossier({ role, onClose, className }: { role: RoleKey; onClo
 
         {/* 4. Dampak & Pembelajaran */}
         <section>
-          <h4 className="inline-block rounded-md bg-white px-2 py-1 text-base font-semibold text-black">4. Dampak & Pembelajaran</h4>
-          <div className="mt-2 space-y-2 text-sm text-white/90">
+          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
+            <span className="mr-2 text-accent">4.</span>Dampak & Pembelajaran
+          </h4>
+          <div className="mt-2 space-y-2 text-sm text-body">
             {c.dampakPembelajaran.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -290,12 +304,14 @@ export function RoleDossier({ role, onClose, className }: { role: RoleKey; onClo
 
         {/* 5. Perjalanan Waktu (Kelas 7 SMP → Kelas 2 SMK Semester 1) */}
         <section>
-          <h4 className="inline-block rounded-md bg-white px-2 py-1 text-base font-semibold text-black">5. Perjalanan Waktu</h4>
-          <ul className="mt-2 space-y-2 text-sm text-white/90">
+          <h4 className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
+            <span className="mr-2 text-accent">5.</span>Perjalanan Waktu
+          </h4>
+          <ul className="mt-2 space-y-2 text-sm text-body">
             {c.timeline.map((t, i) => (
               <li key={i}>
-                <span className="font-medium text-white">{t.tahap}: </span>
-                <span className="text-white/90">{t.isi}</span>
+                <span className="font-medium text-hi">{t.tahap}: </span>
+                <span>{t.isi}</span>
               </li>
             ))}
           </ul>
