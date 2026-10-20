@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Reveal, Stagger, StaggerItem } from "@/components/ui";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { Counter, Magnetic, Reveal, Stagger, StaggerItem, TiltCard } from "@/components/ui";
+import { EASE, viewportOnce } from "@/lib/motion";
 
 const IDENTITAS = [
   { label: "Nama", value: "Samuel Indra Bastian" },
@@ -11,6 +14,13 @@ const IDENTITAS = [
   { label: "Usia", value: "17 tahun" },
   { label: "Tanggal Lahir", value: "02 Juli 2008" },
   { label: "Fokus", value: "Fullstack, IoT, Lead" },
+];
+
+const FACTS: Array<{ label: string; to?: number; suffix?: string; text?: string }> = [
+  { to: 17, suffix: " tahun", label: "Usia" },
+  { to: 2008, suffix: "", label: "Tanggal lahir" },
+  { text: "Kelas 2", label: "Kelas" },
+  { text: "TEI", label: "Jurusan SMK" },
 ];
 
 const PERJALANAN = [
@@ -35,174 +45,312 @@ const TIMELINE = [
   { title: "SMK Kelas 11 (Semester 1)", desc: "Memperkuat pondasi: membangun UI yang rapi dan backend yang bekerja." },
 ];
 
+const PENGALAMAN = [
+  {
+    tag: "Momen",
+    isi: "Saat pertama kali berhasil menciptakan UI dan sistem backend yang benar-benar bekerja dari hasil belajar mandiri, itulah momen yang menguatkan tekad saya untuk terus melangkah lebih jauh.",
+  },
+  {
+    tag: "Nilai",
+    items: [
+      "Konsistensi belajar {'>'} kecepatan sesaat",
+      "Produk nyata sebagai validasi pemahaman",
+      "UI rapi + backend solid = pengalaman utuh",
+    ],
+  },
+];
+
 export default function ProfilePage() {
   return (
-    <div className="relative w-full min-h-[100svh] overflow-hidden">
-      {/* ghost backdrop */}
-      <div aria-hidden className="pointer-events-none absolute -top-6 right-0 select-none">
-        <span className="text-outline type-display text-[38vw] leading-none sm:text-[30vw]">SIB</span>
-      </div>
-
-      {/* Hero */}
-      <header className="relative mx-auto max-w-6xl px-5 pt-16 pb-6 sm:px-8">
-        <div className="flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
-          <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
+    <div className="relative w-full overflow-hidden">
+      {/* ---------- HERO: nama + identity card ---------- */}
+      <header className="relative mx-auto max-w-[90rem] px-5 pt-24 pb-14 sm:px-10">
+        <div className="grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+          {/* Left: nama */}
+          <div>
             <Reveal>
-              <div className="relative h-24 w-24 overflow-hidden rounded-full ring-gradient">
-                {/* Placeholder avatar: user can replace with /me.jpg later */}
-                <div className="h-full w-full bg-gradient-to-br from-accent to-accent2" />
+              <p className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
+                <span className="text-accent">03</span>
+                <span className="h-px w-8 bg-line" />
+                <span>Profil · Identitas</span>
+              </p>
+            </Reveal>
+
+            <h1 className="type-display relative mt-8 text-6xl font-bold tracking-[-0.03em] text-hi sm:text-7xl xl:text-8xl">
+              <span className="block overflow-hidden">
+                <motion.span
+                  className="block"
+                  initial={{ y: "115%" }}
+                  whileInView={{ y: "0%" }}
+                  viewport={viewportOnce}
+                  transition={{ duration: 0.75, ease: EASE, delay: 0.1 }}
+                >
+                  Samuel Indra
+                </motion.span>
+              </span>
+              <span className="block overflow-hidden">
+                <motion.span
+                  className="serif-accent text-gradient block"
+                  initial={{ y: "115%" }}
+                  whileInView={{ y: "0%" }}
+                  viewport={viewportOnce}
+                  transition={{ duration: 0.75, ease: EASE, delay: 0.22 }}
+                >
+                  Bastian
+                </motion.span>
+              </span>
+              <motion.span
+                aria-hidden
+                className="absolute -bottom-1 left-0 h-px w-full bg-accent/80"
+                style={{ transformOrigin: "left", scaleX: 0 }}
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.9, ease: EASE, delay: 0.45 }}
+              />
+            </h1>
+
+            <Reveal delay={0.3}>
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <Magnetic>
+                  <Link
+                    href="/about"
+                    className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm font-semibold text-hi transition-colors hover:border-accent/60 hover:bg-white/5"
+                  >
+                    About
+                  </Link>
+                </Magnetic>
+                <Magnetic>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-bold text-void transition-all hover:shadow-[0_0_28px_rgba(200,255,46,0.45)]"
+                  >
+                    Contact
+                  </Link>
+                </Magnetic>
               </div>
             </Reveal>
-            <div>
-              <Reveal>
-                <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-                  Profil <span className="text-accent">· Identitas</span>
-                </div>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <h1 className="type-display mt-3 text-5xl font-bold text-hi sm:text-6xl">
-                  Samuel Indra{" "}
-                  <span className="serif-accent text-gradient">Bastian</span>
-                </h1>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <span className="glass rounded-full px-3 py-1.5 font-mono text-xs text-body">SMK PGRI 3 Malang</span>
-                  <span className="glass rounded-full px-3 py-1.5 font-mono text-xs text-body">Kelas 2 (Semester 1)</span>
-                  <span className="glass rounded-full px-3 py-1.5 font-mono text-xs text-body">17 tahun</span>
-                  <span className="glass rounded-full px-3 py-1.5 font-mono text-xs text-body">Lahir 02 Juli 2008</span>
-                </div>
-              </Reveal>
-            </div>
           </div>
-          <Reveal delay={0.2}>
-            <div className="flex items-center gap-3">
-              <Link href="/about" className="rounded-full border border-line px-5 py-2.5 text-sm text-hi transition-colors hover:border-accent/60 hover:bg-white/5">About</Link>
-              <Link href="/contact" className="rounded-full bg-accent px-5 py-2.5 text-sm font-bold text-void transition-all hover:shadow-[0_0_28px_rgba(200,255,46,0.45)]">Contact</Link>
-            </div>
-          </Reveal>
+
+          {/* Right: identity card (tilt) */}
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
+            className="flex justify-center lg:justify-end"
+          >
+            <TiltCard max={7} className="relative w-full max-w-md">
+              <div className="relative rounded-3xl border border-line bg-panel p-7">
+                <span aria-hidden className="absolute right-0 top-0 grid h-14 w-14 place-items-center bg-accent font-mono text-xs font-bold text-void">
+                  ID
+                </span>
+
+                <div className="flex items-center gap-4">
+                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-gradient">
+                    {/* Placeholder avatar: user can replace with /me.jpg later */}
+                    <div className="h-full w-full bg-gradient-to-br from-accent to-accent2" />
+                  </div>
+                  <div>
+                    <div className="font-mono text-xs uppercase tracking-[0.2em] text-mut">Identitas</div>
+                    <div className="type-display mt-1 text-xl font-bold text-hi">Samuel Bastian</div>
+                    <div className="font-mono text-xs text-body">Fullstack · IoT · Student</div>
+                  </div>
+                </div>
+
+                <dl className="mt-6 divide-y divide-line">
+                  {IDENTITAS.slice(1).map((f) => (
+                    <div key={f.label} className="flex items-baseline justify-between gap-4 px-4 py-2.5">
+                      <dt className="font-mono text-xs uppercase tracking-[0.15em] text-mut">{f.label}</dt>
+                      <dd className="text-right font-mono text-sm text-hi">{f.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </TiltCard>
+          </motion.div>
         </div>
       </header>
 
-      <main className="relative mx-auto max-w-6xl px-5 pb-24 sm:px-8">
-        <Stagger className="grid grid-cols-1 gap-6 md:grid-cols-2" gap={0.1}>
-          {/* Identitas */}
-          <StaggerItem className="md:col-span-2">
-            <section className="h-full rounded-3xl border border-line bg-panel transition-colors hover:border-accent/40">
-              <div className="border-b border-line bg-white/4 px-5 py-3">
-                <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-                  Identitas <span className="text-accent">· Data Diri</span>
+      {/* ---------- FACT STRIP (data asli, Counter) ---------- */}
+      <section className="border-y border-line">
+        <div className="grid grid-cols-2 md:grid-cols-4">
+          {FACTS.map((f, i) => (
+            <div key={f.label} className="border-r border-line px-6 py-10 last:border-r-0 [&:nth-child(2)]:border-r-0 md:[&:nth-child(2)]:border-r sm:px-10">
+              <Reveal delay={0.05 * i}>
+                <div className="type-display text-4xl font-bold text-hi sm:text-5xl">
+                  {typeof f.to === "number" ? <Counter to={f.to} suffix={f.suffix} /> : f.text}
                 </div>
-              </div>
-              <dl className="divide-y divide-line">
-                {IDENTITAS.map((f) => (
-                  <div key={f.label} className="flex flex-col gap-1 px-5 py-3.5 sm:flex-row sm:items-baseline sm:gap-6">
-                    <dt className="w-36 shrink-0 font-mono text-xs uppercase tracking-[0.2em] text-mut">{f.label}</dt>
-                    <dd className="text-sm text-hi">{f.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-          </StaggerItem>
-
-          {/* Perjalanan */}
-          <StaggerItem>
-            <section className="flex h-full flex-col rounded-3xl border border-line bg-panel p-6 transition-colors hover:border-accent/40">
-              <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-                Perjalanan <span className="text-accent">· Cerita</span>
-              </div>
-              <div className="mt-4 space-y-4 text-sm/relaxed text-body">
-                {PERJALANAN.map((p) => (
-                  <p key={p.judul}>
-                    <span className="font-medium text-hi">{p.judul}: </span>
-                    {p.isi}
-                  </p>
-                ))}
-              </div>
-            </section>
-          </StaggerItem>
-
-          {/* Pengalaman Terbaik */}
-          <StaggerItem>
-            <section className="flex h-full flex-col rounded-3xl border border-line bg-panel p-6 transition-colors hover:border-accent/40">
-              <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-                Pengalaman <span className="text-accent">· Terbaik</span>
-              </div>
-              <div className="mt-4">
-                <span className="inline-block rounded bg-white/4 px-2 py-0.5 font-mono text-xs text-accent">Momen</span>
-                <p className="mt-2 text-sm/relaxed text-body">
-                  Saat pertama kali berhasil menciptakan UI dan sistem backend yang benar-benar bekerja dari hasil belajar mandiri, itulah momen yang menguatkan tekad saya untuk terus melangkah lebih jauh.
-                </p>
-                <span className="mt-5 inline-block rounded bg-white/4 px-2 py-0.5 font-mono text-xs text-accent">Nilai</span>
-                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm/relaxed text-body">
-                  <li>Konsistensi belajar {'>'} kecepatan sesaat</li>
-                  <li>Produk nyata sebagai validasi pemahaman</li>
-                  <li>UI rapi + backend solid = pengalaman utuh</li>
-                </ul>
-              </div>
-            </section>
-          </StaggerItem>
-
-          {/* Kata-kata */}
-          <StaggerItem className="md:col-span-2">
-            <section className="rounded-3xl border border-line bg-panel p-6 transition-colors hover:border-accent/40 sm:p-8">
-              <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-                Kata-kata <span className="text-accent">· Quote</span>
-              </div>
-              <blockquote className="mt-4 text-base/relaxed text-body sm:text-lg">
-                <span className="font-mono text-accent">“</span>
-                Kesempatan datang pada orang yang ingin menemuinya, bukan kesempatan yang mendatangimu. Ingatlah: semua yang kamu inginkan bisa didapat; semuanya bergantung pada usaha dan kerja kerasmu.
-              </blockquote>
-              <div className="mt-3 text-xs text-mut">- Samuel Indra Bastian</div>
-            </section>
-          </StaggerItem>
-        </Stagger>
-
-        {/* Timeline visual */}
-        <section className="relative mx-auto mt-20 max-w-3xl">
-          <Reveal>
-            <div className="font-mono text-xs tracking-[0.25em] uppercase text-mut">
-              Perjalanan <span className="text-accent">· Timeline</span>
+                <div className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-mut">{f.label}</div>
+              </Reveal>
             </div>
-            <h2 className="type-display mt-3 text-3xl font-bold text-hi sm:text-4xl">
-              Timeline <span className="serif-accent text-gradient">Perjalanan</span>
-            </h2>
-          </Reveal>
+          ))}
+        </div>
+      </section>
 
-          <div className="relative mt-10 pl-10">
-            {/* vertical line with soft glow */}
-            <div className="pointer-events-none absolute top-0 bottom-0 left-5 w-[2px] bg-gradient-to-b from-accent via-accent2 to-accent3">
-              <div className="absolute inset-0 -translate-x-1/2 blur-[6px] bg-gradient-to-b from-accent/40 via-accent2/40 to-accent3/40" />
-            </div>
-
-            {/* items with staggered reveal */}
-            <Stagger gap={0.12} className="space-y-8">
-              {TIMELINE.map((it, i) => (
-                <StaggerItem key={it.title} className="relative">
-                  <span className="absolute -left-[31px] top-1.5 grid h-4 w-4 place-items-center">
-                    <span className="glow-lime relative h-2.5 w-2.5 rounded-full bg-accent" />
-                  </span>
-                  <div className="rounded-2xl border border-line bg-panel p-5 transition-colors hover:border-accent/40">
-                    <div className="font-mono text-xs uppercase tracking-[0.25em] text-accent">Fase 0{i + 1}</div>
-                    <div className="type-display mt-1 text-lg font-bold text-hi">{it.title}</div>
-                    <div className="mt-1.5 text-sm text-body">{it.desc}</div>
-                  </div>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
-        </section>
-
-        {/* Link kembali */}
+      {/* ---------- IDENTITAS: spec sheet ---------- */}
+      <section className="mx-auto max-w-[90rem] px-5 pt-20 sm:px-10">
         <Reveal>
-          <div className="mt-14 text-center">
-            <Link href="/about" className="group inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm text-hi transition-colors hover:border-accent/60 hover:bg-white/5">
-              Lihat Halaman About
-              <span className="text-accent transition-transform group-hover:translate-x-1">→</span>
-            </Link>
-          </div>
+          <h2 className="type-display text-3xl font-bold text-hi sm:text-4xl">
+            Identitas <span className="serif-accent text-gradient">utuh</span>
+          </h2>
+          <p className="mt-2 max-w-2xl text-body">Data utuh dalam satu kolom: sekolah, jurusan, dan perjalanan belajar.</p>
         </Reveal>
-      </main>
+
+        <Reveal delay={0.1} className="mt-10">
+          <dl className="divide-y divide-line rounded-3xl border border-line bg-panel">
+            {IDENTITAS.map((f) => (
+              <div key={f.label} className="group flex items-baseline justify-between gap-6 px-6 py-4 transition-colors hover:bg-white/[0.02] sm:px-8">
+                <dt className="font-mono text-xs uppercase tracking-[0.2em] text-mut">{f.label}</dt>
+                <dd className="text-right font-mono text-sm text-hi">{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+      </section>
+
+      {/* ---------- PERJALANAN + PENGALAMAN (split) ---------- */}
+      <section className="mx-auto max-w-[90rem] px-5 pt-24 sm:px-10">
+        <div className="grid items-start gap-14 lg:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <Reveal>
+              <div className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
+                <span className="text-accent">Cerita</span>
+                <span className="h-px w-8 bg-line" />
+                <span>Perjalanan</span>
+              </div>
+              <h2 className="type-display mt-5 text-3xl font-bold text-hi sm:text-4xl">
+                Cerita <span className="serif-accent text-gradient">belajar</span>
+              </h2>
+            </Reveal>
+
+            <div className="mt-10 space-y-8">
+              <Stagger gap={0.12}>
+                {PERJALANAN.map((p, i) => (
+                  <StaggerItem key={p.judul} className="rounded-2xl border border-line bg-panel px-6 py-5">
+                    <div className="flex items-baseline gap-4">
+                      <span className="font-mono text-sm text-accent">0{i + 1}</span>
+                      <h3 className="type-display text-lg font-bold text-hi">{p.judul}</h3>
+                    </div>
+                    <p className="mt-3 text-sm/relaxed text-body">{p.isi}</p>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </div>
+          </div>
+
+          <div>
+            <Reveal>
+              <div className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
+                <span className="text-accent">Pengalaman</span>
+                <span className="h-px w-8 bg-line" />
+                <span>Terbaik</span>
+              </div>
+            </Reveal>
+
+            <div className="mt-10">
+              <Stagger gap={0.12}>
+                {PENGALAMAN.map((p, i) => (
+                  <StaggerItem key={p.tag} className="rounded-2xl border border-line bg-panel px-6 py-5">
+                    <div className="flex items-baseline gap-4">
+                      <span className="font-mono text-sm text-accent">0{i + 1}</span>
+                      <h3 className="font-mono text-sm font-bold uppercase tracking-[0.15em] text-hi">{p.tag}</h3>
+                    </div>
+                    {p.isi && <p className="mt-3 text-sm/relaxed text-body">{p.isi}</p>}
+                    {p.items && (
+                      <ul className="mt-3 space-y-1.5">
+                        {p.items.map((it) => (
+                          <li key={it} className="flex items-start gap-2 text-sm/relaxed text-body">
+                            <span className="text-accent">-</span>
+                            <span>{it}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- TIMELINE: garis ku-jalur saat scroll ---------- */}
+      <section className="relative mx-auto max-w-3xl px-5 pt-24 sm:px-8">
+        <Reveal>
+          <div className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
+            <span className="text-accent">Timeline</span>
+            <span className="h-px w-8 bg-line" />
+            <span>Perjalanan</span>
+          </div>
+          <h2 className="type-display mt-5 text-3xl font-bold text-hi sm:text-4xl">
+            Dari <span className="serif-accent text-gradient">nul</span> sampai sekarang
+          </h2>
+        </Reveal>
+
+        <div className="relative mt-12 pl-10">
+          {/* garis vertical, draw on scroll */}
+          <motion.span
+            aria-hidden
+            className="absolute left-5 top-0 w-[2px] bg-gradient-to-b from-accent via-accent2 to-accent3"
+            style={{ transformOrigin: "top", scaleY: 0 }}
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={viewportOnce}
+            transition={{ duration: 1.3, ease: EASE }}
+          />
+
+          {TIMELINE.map((it, i) => (
+            <Reveal key={it.title} delay={0.1 + 0.06 * i} className="relative">
+              <span className="absolute -left-[31px] top-3 grid h-4 w-4 place-items-center">
+                <span className="relative h-2.5 w-2.5 rounded-full bg-accent" />
+              </span>
+              <div className="rounded-2xl border border-line bg-panel px-6 py-4">
+                <div className="flex items-baseline gap-4">
+                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Fase 0{i + 1}</span>
+                  <span className="type-display text-lg font-bold text-hi">{it.title}</span>
+                </div>
+                <p className="mt-2 text-sm/relaxed text-body">{it.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------- QUOTE full-width ---------- */}
+      <section className="relative mx-auto max-w-[90rem] px-5 pt-28 sm:px-10">
+        <motion.blockquote
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="relative rounded-3xl border border-line bg-panel px-8 py-12 sm:px-14"
+        >
+          <span aria-hidden className="font-serif text-7xl leading-none text-accent">“</span>
+          <p className="type-display mt-2 text-2xl leading-[1.2] font-bold text-hi sm:text-4xl">
+            Kesempatan datang pada orang yang ingin menemuinya, bukan kesempatan yang mendatangimu.
+          </p>
+          <p className="mt-6 text-sm text-body">
+            Ingatlah: semua yang kamu inginkan bisa didapat; semuanya bergantung pada usaha dan kerja kerasmu.
+          </p>
+          <footer className="mt-4 text-xs text-mut">- Samuel Indra Bastian</footer>
+        </motion.blockquote>
+      </section>
+
+      {/* ---------- CTA bottom ---------- */}
+      <Reveal>
+        <div className="mx-auto mt-20 max-w-[90rem] px-5 text-center sm:px-10">
+          <Magnetic>
+            <Link
+              href="/about"
+              className="group inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-semibold text-hi transition-colors hover:border-accent/60 hover:bg-white/5"
+            >
+              Lihat Halaman About
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Magnetic>
+        </div>
+      </Reveal>
     </div>
   );
 }
