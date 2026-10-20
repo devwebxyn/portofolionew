@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Instrument_Serif, Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { RouteProgress } from "@/components/RouteProgress";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
+
+const GA_ID = "G-DKBEH96EBY";
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -82,6 +85,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="id" className={`${fontInter.variable} ${fontSpace.variable} ${fontSerif.variable} ${fontMono.variable}`}>
       <body className="relative bg-ink font-sans text-body">
+        {/* Google Analytics (gtag.js) — injected once per page via afterInteractive
+            so the inline window.dataLayer code runs in the browser only, not during SSR. */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){window.dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-DKBEH96EBY');`}
+        </Script>
+
         {/* Global ambient background */}
         <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
           <div className="grid-lines absolute inset-0" />

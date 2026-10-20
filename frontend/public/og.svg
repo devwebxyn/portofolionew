@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c8ff2e"/>
+      <stop offset="1" stop-color="#22e0ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- VOID background -->
+  <rect width="1200" height="630" fill="#030304"/>
+
+  <!-- subtle grid lines -->
+  <g stroke="#0c0c10" stroke-width="1" opacity="0.5">
+    <line x1="0" y1="0" x2="0" y2="630"/><line x1="0" y1="0" x2="1200" y2="0"/>
+    <line x1="120" y1="0" x2="120" y2="630"/><line x1="240" y1="0" x2="240" y2="630"/>
+    <line x1="360" y1="0" x2="360" y2="630"/><line x1="480" y1="0" x2="480" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/><line x1="720" y1="0" x2="720" y2="630"/>
+    <line x1="840" y1="0" x2="840" y2="630"/><line x1="960" y1="0" x2="960" y2="630"/>
+    <line x1="1080" y1="0" x2="1080" y2="630"/><line x1="1200" y1="0" x2="1200" y2="630"/>
+    <line x1="0" y1="90" x2="1200" y2="90"/><line x1="0" y1="180" x2="1200" y2="180"/>
+    <line x1="0" y1="270" x2="1200" y2="270"/><line x1="0" y1="360" x2="1200" y2="360"/>
+    <line x1="0" y1="450" x2="1200" y2="450"/><line x1="0" y1="540" x2="1200" y2="540"/>
+  </g>
+
+  <!-- ghost mark -->
+  <text x="1120" y="550" font-family="monospace" font-size="150" fill="#1a1c22" text-anchor="middle" font-weight="bold">SIB</text>
+
+  <!-- monospace eyebrow -->
+  <text x="80" y="120" font-family="monospace" font-size="28" fill="#6b7280" letter-spacing="6">~/PORTFOLIO — FULLSTACK · IOT · STUDENT</text>
+
+  <!-- lime rule -->
+  <rect x="80" y="150" width="70" height="6" fill="#c8ff2e"/>
+
+  <!-- name -->
+  <text x="80" y="250" font-family="sans-serif" font-size="112" font-weight="bold" fill="#f2f1ec">Samuel Indra</text>
+  <text x="80" y="366" font-family="sans-serif" font-size="112" font-weight="bold" fill="url(#brand)" font-style="italic">Bastian</text>
+
+  <!-- status line -->
+  <circle cx="84" cy="450" r="10" fill="#c8ff2e"/>
+  <text x="110" y="458" font-family="monospace" font-size="30" fill="#a7adb8">Backend · Systems · UI — end to end</text>
+</svg>
