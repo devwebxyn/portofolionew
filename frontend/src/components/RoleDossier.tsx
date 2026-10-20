@@ -43,11 +43,11 @@ const content: Record<RoleKey, SectionContent> = {
       "Bikin UI itu melatih kesabaran. Satu jarak yang bergeser sedikit saja bisa bikin semuanya keliatan beda.",
     ],
     timeline: [
-      { tahap: "SMP Kelas 7", isi: "Mengenal HTML/CSS dasar; membuat halaman profil sederhana. Rasa takjub melihat perubahan warna hanya dari satu baris CSS." },
-      { tahap: "SMP Kelas 8", isi: "Mulai JavaScript: manipulasi DOM, event, dan efek transisi kecil. Mencoba membuat navigasi yang halus." },
-      { tahap: "SMP Kelas 9", isi: "Belajar komponenisasi: menyalin pola UI berulang, memahami DRY di sisi UI. Mulai peduli aksesibilitas dan kontras." },
-      { tahap: "SMK Kelas 10", isi: "Masuk ke framework modern. Menyusun design tokens, tipografi, spacing system, dan animasi mikro bermakna." },
-      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Refaktor untuk performa. Mengukur metrik Web Vitals, menerapkan teknik lazy/streaming, dan mengasah UX detail seperti focus ring dan prefer-reduced-motion." },
+      { tahap: "SMP Kelas 7", isi: "Membuka file HTML pertama di Notepad; meniru tampilan website sederhana biar paham gimana page jadi." },
+      { tahap: "SMP Kelas 8", isi: "Mulai JavaScript dari tutorial YouTube; menambahkan efek dan validasi simpel di halaman sendiri." },
+      { tahap: "SMP Kelas 9", isi: "Belajar bikin halaman yang rapi: menu, kartu, dan mengulang pola yang kusuka dari website lain." },
+      { tahap: "SMK Kelas 10", isi: "Mulai pakai framework modern biar gampang dirawat; dari ini aku paham kenapa struktur dan konsistensi itu penting." },
+      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Refaktor proyek sekolah: rapikan kode, mengurangi cuma-cuma, dan pastikan tampilan tetap kebaca di HP." },
     ],
   },
   backend: {
@@ -68,11 +68,9 @@ const content: Record<RoleKey, SectionContent> = {
       "Backend mengajari aku sabar dan teliti. Error kadang tidak langsung ketahuan, dan tidak ada yang bisa menolong selain diriku sendiri.",
     ],
     timeline: [
-      { tahap: "SMP Kelas 7", isi: "Memahami konsep request/response dan apa itu server lewat analogi pelayan restoran." },
-      { tahap: "SMP Kelas 8", isi: "Eksperimen API sederhana; menyimpan data di file, belajar struktur JSON." },
-      { tahap: "SMP Kelas 9", isi: "Mengenal database; merancang tabel sederhana, mencoba query dasar dan relasi." },
-      { tahap: "SMK Kelas 10", isi: "Membangun layanan kecil dengan prinsip REST yang jelas, menambah validasi dan auth dasar." },
-      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Memperdalam observability dan hardening: batasan rate, kebijakan error, dan desain untuk skalabilitas bertahap." },
+      { tahap: "SMP Kelas 9", isi: "Mulai paham gimana website bicara ke server: form yang datanya disimpan dan muncul ulang lewat analogi pelayan restoran." },
+      { tahap: "SMK Kelas 10", isi: "Membangun layanan kecil dengan database sungguhan: form, daftar, edit, hapus, dan query dasar." },
+      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Mulai validasi input biar data kacau tidak masuk; belajar baca pesan error dan cari solusi di dokumentasi." },
     ],
   },
   fullstack: {
@@ -93,11 +91,8 @@ const content: Record<RoleKey, SectionContent> = {
       "Fullstack mengajari aku melihat gambaran besar. Sekarang kalau ada masalah, aku bisa menebak kira-kira di sisi mana.",
     ],
     timeline: [
-      { tahap: "SMP Kelas 7", isi: "Menyambungkan form sederhana ke penyimpanan data 'improvisasi'." },
-      { tahap: "SMP Kelas 8", isi: "Mencoba konsep template di sisi server dan menampilkannya di UI." },
-      { tahap: "SMP Kelas 9", isi: "Mengenalkan routing di UI dan routing di server; melihat kesamaannya." },
-      { tahap: "SMK Kelas 10", isi: "Membuat produk kecil ujung ke ujung: autentikasi, dashboard, dan CRUD yang rapi." },
-      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Menambah ketahanan: cache, fallback, dan loading states yang elegan." },
+      { tahap: "SMK Kelas 10", isi: "Membuat proyek ujung ke ujung pertama: form yang datanya masuk database, bisa ditampilkan, edit, dan hapus." },
+      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Refaktor proyek kecil biar aliri jelas: fitur ujung ke ujung tanpa banyak jalan belakang." },
     ],
   },
   devops: {
@@ -118,11 +113,8 @@ const content: Record<RoleKey, SectionContent> = {
       "Kesalahan kecil pas deploy mengajari aku buat cek ulang. Sekarang aku lebih teliti sebelum memberikan perubahan.",
     ],
     timeline: [
-      { tahap: "SMP Kelas 7", isi: "Manual deploy 'copy paste' file ke server lokal—merasakan rawan error." },
-      { tahap: "SMP Kelas 8", isi: "Menulis skrip kecil untuk otomatisasi tugas berulang." },
-      { tahap: "SMP Kelas 9", isi: "Mengenal control version dan pentingnya build reproducible." },
-      { tahap: "SMK Kelas 10", isi: "Masuk ke container; pipeline CI sederhana dengan test dasar." },
-      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Menambah monitoring dan alarm; deployment bertahap dan strategi rollback." },
+      { tahap: "SMK Kelas 10", isi: "Mulai publish proyek sekolah: copy paste file ke server, sering error, harus ulang." },
+      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Pakai Git biar versi kode jalan; bikin dokumentasi langkah deploy biar bisa dijalankan ulang tanpa konfusi." },
     ],
   },
   security: {
@@ -143,11 +135,8 @@ const content: Record<RoleKey, SectionContent> = {
       "Satu pelajaran penting: jangan pernah meremehkan data orang. Walaupun cuma proyek kecil, tetap harus dijaga.",
     ],
     timeline: [
-      { tahap: "SMP Kelas 7", isi: "Paham konsep password kuat dan risiko berbagi kredensial." },
-      { tahap: "SMP Kelas 8", isi: "Memvalidasi input form dan memahami XSS dasar." },
-      { tahap: "SMP Kelas 9", isi: "Mengenal auth dan sesi; menyadari resiko CSRF dan penyimpanan token." },
-      { tahap: "SMK Kelas 10", isi: "Menerapkan kebijakan header dan audit dependensi rutin." },
-      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Menetapkan standar keamanan dasar di proyek dan review rutin." },
+      { tahap: "SMK Kelas 10", isi: "Mulai paham validasi input form biar data ngaco tidak masuk kode." },
+      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Biasakan diri: validasi kak, simpan rahasia di env, tidak menyimpan password asli, dan tidak menampilkan data sensitif sembarangan." },
     ],
   },
   lead: {
@@ -168,11 +157,9 @@ const content: Record<RoleKey, SectionContent> = {
       "Pernah mikir jadi pemimpin itu soal paling pintar, ternyata bukan. Justru soal bikin semua orang bisa bekerja dengan nyaman.",
     ],
     timeline: [
-      { tahap: "SMP Kelas 7", isi: "Belajar kerja tim kecil di tugas sekolah dan membagi peran sederhana." },
-      { tahap: "SMP Kelas 8", isi: "Mulai merangkum langkah kerja agar teman bisa mengikuti." },
-      { tahap: "SMP Kelas 9", isi: "Memimpin mini-proyek kelas; mencoba membuat checklist dan tenggat." },
-      { tahap: "SMK Kelas 10", isi: "Membuat guideline sederhana untuk PR dan review di proyek sekolah." },
-      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Menginisiasi diskusi arsitektur kecil dan membantu teman memperbaiki test serta naming." },
+      { tahap: "SMP Kelas 9", isi: "Memimpin mini-proyek kelas; mencoba bikin checklist biar teman paham kerjaannya." },
+      { tahap: "SMK Kelas 10", isi: "Bantu teman yang kesulitan; mengajari caranya, bukan mengerjakan semuanya." },
+      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Merangkum tugas kelompok: pastikan semua paham tujuannya dulu, baru membagi kerjaan." },
     ],
   },
   iot: {
@@ -193,11 +180,8 @@ const content: Record<RoleKey, SectionContent> = {
       "IoT mengajari aku buat sabar dan sistematis. Satu kabel lepas saja bisa bikin semua error, dan itu bagian serunya.",
     ],
     timeline: [
-      { tahap: "SMP Kelas 7", isi: "Menyusun rangkaian sederhana; menyalakan LED dan membaca sensor dasar." },
-      { tahap: "SMP Kelas 8", isi: "Mengirim data sensor ke komputer; mencoba serial dan format data sederhana." },
-      { tahap: "SMP Kelas 9", isi: "Eksperimen koneksi nirkabel dan protokol ringan; memahami pentingnya latency." },
-      { tahap: "SMK Kelas 10", isi: "Menguji MQTT end-to-end: perangkat → broker → backend kecil." },
-      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Menstabilkan pengiriman data dan memikirkan pengamanan kredensial perangkat." },
+      { tahap: "SMK Kelas 10", isi: "Masuk jurusan TEI; mulai belajar Arduino dan ESP32: nyalain LED, baca sensor, dan merakit sederhana." },
+      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Ngirim data sensor ke komputer atau server; masih kucoba-coba biar bacaannya stabil dan tidak gampang kehilangan." },
     ],
   },
   architect: {
@@ -218,11 +202,8 @@ const content: Record<RoleKey, SectionContent> = {
       "Bikin struktur itu kayak merapikan kamar: tidak kelihatan penting, tapi bikin semua lebih gampang ditemukan.",
     ],
     timeline: [
-      { tahap: "SMP Kelas 7", isi: "Memikirkan struktur folder proyek kecil agar mudah dipahami." },
-      { tahap: "SMP Kelas 8", isi: "Mencoba memisahkan bagian aplikasi sesuai tanggung jawabnya." },
-      { tahap: "SMP Kelas 9", isi: "Mengenal pola arsitektur; memahami kapan memecah, kapan menyatukan." },
-      { tahap: "SMK Kelas 10", isi: "Membuat peta sistem sederhana dan menandai aliran data utama." },
-      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Menguji desain dengan beban nyata kecil dan menulis catatan trade-off." },
+      { tahap: "SMK Kelas 10", isi: "Mulai paham kenapa kode perlu diorganise: memisahkan bagian aplikasi biar file tidak numpuk." },
+      { tahap: "SMK Kelas 11 (Semester 1)", isi: "Mikira struktur dulu biar proyek mudah dirawat; mengcatat kenapa satu desain dipilih biar tidak terlupa." },
     ],
   },
 };
