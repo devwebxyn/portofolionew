@@ -1,7 +1,9 @@
 "use client";
 
-import { Phone, Instagram as InstagramIcon, ShieldCheck, Sparkles, MessageSquare, Clock, ArrowRight, ArrowUpRight } from "lucide-react";
+import { Phone, Mail, Instagram as InstagramIcon, ShieldCheck, Sparkles, MessageSquare, Clock, ArrowRight, ArrowUpRight } from "lucide-react";
 import { Reveal, Stagger, StaggerItem, SpotlightCard, TiltCard } from "@/components/ui";
+
+const CONTACT_EMAIL = "contact@samuelindrabastian.my.id";
 
 const CHANNELS = [
   {
@@ -92,6 +94,34 @@ export default function ContactPage() {
           </StaggerItem>
         ))}
       </Stagger>
+
+      {/* Email panel: full-width, the one channel that sends mail */}
+      <Reveal className="mt-14">
+        <div className="group relative overflow-hidden rounded-3xl border border-line bg-panel p-8 transition-colors hover:border-accent/40">
+          <div aria-hidden className="pointer-events-none absolute top-0 right-0 select-none">
+            <span className="text-outline type-display text-5xl">03</span>
+          </div>
+          <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-6">
+              <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-accent/12 text-accent">
+                <Mail size={26} />
+              </div>
+              <div className="min-w-0">
+                <h3 className="type-display text-xl font-bold text-hi sm:text-2xl">Email</h3>
+                <p className="mt-1.5 max-w-xl text-body">
+                  Untuk pesan normal atau detail: bakat projekt, kritik, atau kolaborasi.
+                </p>
+              </div>
+            </div>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex shrink-0 items-center gap-2 rounded-full bg-accent px-6 py-3 font-bold text-void transition-all hover:shadow-[0_0_28px_rgba(200,255,46,0.45)]"
+            >
+              {CONTACT_EMAIL}
+            </a>
+          </div>
+        </div>
+      </Reveal>
 
       {/* Value props */}
       <Stagger className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2" gap={0.08}>

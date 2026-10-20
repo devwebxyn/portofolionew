@@ -10,16 +10,16 @@ const IDENTITAS = [
   { label: "Nama", value: "Samuel Indra Bastian" },
   { label: "Sekolah", value: "SMK PGRI 3 Malang" },
   { label: "Jurusan", value: "Teknik Elektronika Industri (TEI)" },
-  { label: "Kelas", value: "Kelas 2 (Semester 1)" },
-  { label: "Usia", value: "17 tahun" },
+  { label: "Kelas", value: "Kelas 3 (Semester 1)" },
+  { label: "Usia", value: "18 tahun" },
   { label: "Tanggal Lahir", value: "02 Juli 2008" },
   { label: "Fokus", value: "Fullstack, IoT, Lead" },
 ];
 
 const FACTS: Array<{ label: string; to?: number; suffix?: string; text?: string }> = [
-  { to: 17, suffix: " tahun", label: "Usia" },
+  { to: 18, suffix: " tahun", label: "Usia" },
   { to: 2008, suffix: "", label: "Tanggal lahir" },
-  { text: "Kelas 2", label: "Kelas" },
+  { text: "Kelas 3", label: "Kelas" },
   { text: "TEI", label: "Jurusan SMK" },
 ];
 
@@ -42,7 +42,8 @@ const TIMELINE = [
   { title: "SMP Kelas 7", desc: "Tertarik dasar website & infrastruktur; terinspirasi untuk membuat seperti Facebook." },
   { title: "SMP Kelas 8–9", desc: "Menekuni web 3 tahun: UI, logika dasar, dan membangun sistem sederhana." },
   { title: "SMK Kelas 10", desc: "Masuk jurusan TEI; mulai melihat peluang lintas software & hardware." },
-  { title: "SMK Kelas 11 (Semester 1)", desc: "Memperkuat pondasi: membangun UI yang rapi dan backend yang bekerja." },
+  { title: "SMK Kelas 11", desc: "Memperkuat pondasi: membangun UI yang rapi dan backend yang bekerja." },
+  { title: "SMK Kelas 12 (Semester 1)", desc: "Hari ini, semester 1: melangkah dari proyek sekolah ke kode sebagai kerja nyata." },
 ];
 
 const PENGALAMAN = [
