@@ -32,9 +32,9 @@ import { EASE } from "@/lib/motion";
 const ROLES = ["Fullstack Developer", "IoT Engineer", "System Architect", "UI/UX Engineer"];
 
 const STATS = [
-  { to: 15, suffix: "+", label: "proyek & eksperimen" },
-  { to: 12, suffix: "+", label: "teknologi dikuasai" },
-  { to: 6, suffix: "+", label: "tahun berkarya" },
+  { to: 7, suffix: "", label: "proyek & eksperimen" },
+  { to: 12, suffix: "", label: "teknologi dikuasai" },
+  { to: 3, suffix: "", label: "tahun berkarya" },
   { to: 8, suffix: "", label: "peran yang dijalani" },
 ];
 
