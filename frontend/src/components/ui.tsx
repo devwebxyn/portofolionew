@@ -288,11 +288,16 @@ export function Counter({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const mv = useMotionValue(0);
+  // Initialize at the final number so the correct value renders even when the
+  // in-view observer is skipped (small screens, reduced motion, early paint).
+  const mv = useMotionValue(to);
   const spring = useSpring(mv, { duration: duration * 1000, bounce: 0 });
 
   useEffect(() => {
-    if (inView) mv.set(to);
+    if (inView) {
+      mv.set(0); // rewind, then animate up for the count effect
+      mv.set(to);
+    }
   }, [inView, to, mv]);
 
   const rounded = useTransform(spring, (v) => Math.round(v).toLocaleString("id-ID"));

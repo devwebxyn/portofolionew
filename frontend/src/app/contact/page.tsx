@@ -109,7 +109,7 @@ export default function ContactPage() {
               <div className="min-w-0">
                 <h3 className="type-display text-xl font-bold text-hi sm:text-2xl">Email</h3>
                 <p className="mt-1.5 max-w-xl text-body">
-                  Untuk pesan normal atau detail: bakat projekt, kritik, atau kolaborasi.
+                  Untuk pesan normal atau detail: bakat proyek, kritik, atau kolaborasi.
                 </p>
               </div>
             </div>
