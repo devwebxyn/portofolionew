@@ -6,8 +6,7 @@ export async function GET() {
   try {
     const base = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000').replace(/\/$/, '')
     const res = await fetch(`${base}/api/projects`, {
-      // Revalidate periodically to keep projects fresh without blocking
-      next: { revalidate: 60 },
+      cache: 'no-store',
       headers: { 'Accept': 'application/json' },
     })
 

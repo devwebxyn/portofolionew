@@ -31,8 +31,8 @@ import { EASE } from "@/lib/motion";
 
 const ROLES = ["Fullstack Developer", "IoT Engineer", "System Architect", "UI/UX Engineer"];
 
-const STATS = [
-  { to: 7, suffix: "", label: "proyek & eksperimen" },
+const STATS: Array<{ to?: number; suffix: string; label: string }> = [
+  { suffix: "", label: "proyek & eksperimen" },
   { to: 12, suffix: "", label: "teknologi dikuasai" },
   { to: 3, suffix: "", label: "tahun berkarya" },
   { to: 8, suffix: "", label: "peran yang dijalani" },
@@ -98,6 +98,27 @@ const PRINCIPLES = [
 
 export default function HomePage() {
   const roleIndex = useRotatingIndex(ROLES.length, 2400);
+  const [projectCount, setProjectCount] = useState<number | null>(null);
+  const [projectCountError, setProjectCountError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProjectCount = async () => {
+      try {
+        const res = await fetch("/api/projects", { cache: "no-store" });
+        const data: { ok?: boolean; items?: unknown[]; error?: string } = await res.json();
+
+        if (!res.ok || !data.ok || !Array.isArray(data.items)) {
+          throw new Error(data.error || "Gagal memuat jumlah proyek");
+        }
+
+        setProjectCount(data.items.length);
+      } catch (error) {
+        setProjectCountError(error instanceof Error ? error.message : String(error));
+      }
+    };
+
+    fetchProjectCount();
+  }, []);
 
   return (
     <>
@@ -225,11 +246,21 @@ export default function HomePage() {
       {/* ---------- STATS ---------- */}
       <section id="stats" className="relative border-y border-line">
         <Stagger className="mx-auto grid max-w-[90rem] grid-cols-2 md:grid-cols-4" gap={0.05}>
-          {STATS.map((s) => (
+          {STATS.map((s, index) => (
             <StaggerItem key={s.label} className="border-r border-line last:border-r-0 [&:nth-child(2)]:border-r-0 md:[&:nth-child(2)]:border-r">
               <div className="px-6 py-10 sm:px-10">
                 <div className="type-display text-5xl font-bold text-gradient sm:text-7xl">
-                  <Counter to={s.to} suffix={s.suffix} />
+                  {index === 0 ? (
+                    projectCount === null ? (
+                      <span title={projectCountError ?? "Memuat jumlah proyek"} aria-label={projectCountError ?? "Memuat jumlah proyek"}>
+                        —
+                      </span>
+                    ) : (
+                      <Counter to={projectCount} suffix={s.suffix} />
+                    )
+                  ) : (
+                    s.to !== undefined && <Counter to={s.to} suffix={s.suffix} />
+                  )}
                 </div>
                 <div className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-mut">{s.label}</div>
               </div>
