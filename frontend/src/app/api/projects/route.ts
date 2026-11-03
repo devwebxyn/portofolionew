@@ -12,8 +12,10 @@ export async function GET() {
 
     const data = await res.json().catch(() => ({}))
     return NextResponse.json(data, { status: res.status })
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e)
-    return NextResponse.json({ ok: false, error: `Proxy error: ${msg}` }, { status: 502 })
+  } catch {
+    return NextResponse.json(
+      { ok: false, error: 'Karya sedang tidak tersedia untuk sementara' },
+      { status: 503 },
+    )
   }
 }
