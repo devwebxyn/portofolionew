@@ -99,7 +99,7 @@ const PRINCIPLES = [
 export default function HomePage() {
   const roleIndex = useRotatingIndex(ROLES.length, 2400);
   const [projectCount, setProjectCount] = useState<number | null>(null);
-  const [projectCountError, setProjectCountError] = useState<string | null>(null);
+  const [projectCountError, setProjectCountError] = useState(false);
 
   useEffect(() => {
     const fetchProjectCount = async () => {
@@ -108,12 +108,12 @@ export default function HomePage() {
         const data: { ok?: boolean; items?: unknown[]; error?: string } = await res.json();
 
         if (!res.ok || !data.ok || !Array.isArray(data.items)) {
-          throw new Error(data.error || "Gagal memuat jumlah proyek");
+          throw new Error("Projects unavailable");
         }
 
         setProjectCount(data.items.length);
-      } catch (error) {
-        setProjectCountError(error instanceof Error ? error.message : String(error));
+      } catch {
+        setProjectCountError(true);
       }
     };
 
@@ -252,7 +252,10 @@ export default function HomePage() {
                 <div className="type-display text-5xl font-bold text-gradient sm:text-7xl">
                   {index === 0 ? (
                     projectCount === null ? (
-                      <span title={projectCountError ?? "Memuat jumlah proyek"} aria-label={projectCountError ?? "Memuat jumlah proyek"}>
+                      <span
+                        title={projectCountError ? "Jumlah karya belum tersedia" : "Memuat jumlah proyek"}
+                        aria-label={projectCountError ? "Jumlah karya belum tersedia" : "Memuat jumlah proyek"}
+                      >
                         —
                       </span>
                     ) : (

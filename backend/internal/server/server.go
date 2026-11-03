@@ -166,7 +166,7 @@ func (s *Server) HandleHealth(w http.ResponseWriter, r *http.Request) {
 func (s *Server) HandleProjects(w http.ResponseWriter, r *http.Request) {
 	items, err := s.db.ListDocuments("projects", nil)
 	if err != nil {
-		errJSON(w, http.StatusInternalServerError, err.Error())
+		errJSON(w, http.StatusServiceUnavailable, "Karya sedang tidak tersedia untuk sementara")
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "items": items})

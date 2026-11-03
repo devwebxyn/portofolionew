@@ -20,24 +20,24 @@ type Project = {
 export default function ProjectsPage() {
   const [items, setItems] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch(`/api/projects`, { cache: "no-store" });
         const json = await res.json();
-        if (!json.ok) throw new Error(json.error || "Gagal memuat data");
+        if (!res.ok || !json.ok) throw new Error("Projects unavailable");
         setItems(json.items || []);
-      } catch (e) {
-        const msg = e instanceof Error ? e.message : String(e);
-        setError(msg);
+      } catch {
+        setError(true);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [retryKey]);
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
@@ -82,10 +82,21 @@ export default function ProjectsPage() {
 
       {/* ---------- ERROR ---------- */}
       {error && (
-        <div className="mt-14 rounded-3xl border border-line bg-panel p-10">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-red-400">Terjadi kesalahan</p>
-          <p className="mt-3 text-body">Gagal memuat karya. Coba muat ulang halaman.</p>
-          <p className="mt-1 font-mono text-xs text-mut">{error}</p>
+        <div className="mt-14 rounded-3xl border border-line bg-panel p-10 sm:p-12">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent">Sebentar, ya</p>
+          <p className="mt-3 text-lg text-hi">Karya sedang diperbarui.</p>
+          <p className="mt-2 max-w-lg text-body">Silakan coba lagi sebentar. Jika masih belum tampil, kunjungi kembali halaman ini nanti.</p>
+          <button
+            type="button"
+            onClick={() => {
+              setError(false);
+              setLoading(true);
+              setRetryKey((key) => key + 1);
+            }}
+            className="mt-6 rounded-full border border-accent/60 px-5 py-2.5 text-sm font-semibold text-hi transition-colors hover:bg-accent hover:text-void"
+          >
+            Coba lagi
+          </button>
         </div>
       )}
 
