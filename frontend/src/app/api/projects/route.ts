@@ -1,21 +1,14 @@
-import { NextResponse } from 'next/server'
+import { publicApi } from "@/lib/public-api";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const base = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000').replace(/\/$/, '')
-    const res = await fetch(`${base}/api/projects`, {
-      cache: 'no-store',
-      headers: { 'Accept': 'application/json' },
-    })
-
-    const data = await res.json().catch(() => ({}))
-    return NextResponse.json(data, { status: res.status })
+    const response = await publicApi("/api/projects", { headers: { Accept: "application/json" } });
+    if (response.ok) return Response.json(await response.json(), { status: response.status });
   } catch {
-    return NextResponse.json(
-      { ok: false, error: 'Karya sedang tidak tersedia untuk sementara' },
-      { status: 503 },
-    )
+    // Sembunyikan detail internal layanan upstream.
   }
+
+  return Response.json({ ok: false, error: "Proyek belum bisa dimuat." }, { status: 503 });
 }

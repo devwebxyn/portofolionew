@@ -1,41 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <defs>
-    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#c8ff2e"/>
-      <stop offset="1" stop-color="#22e0ff"/>
-    </linearGradient>
-  </defs>
-
-  <!-- VOID background -->
-  <rect width="1200" height="630" fill="#030304"/>
-
-  <!-- subtle grid lines -->
-  <g stroke="#0c0c10" stroke-width="1" opacity="0.5">
-    <line x1="0" y1="0" x2="0" y2="630"/><line x1="0" y1="0" x2="1200" y2="0"/>
-    <line x1="120" y1="0" x2="120" y2="630"/><line x1="240" y1="0" x2="240" y2="630"/>
-    <line x1="360" y1="0" x2="360" y2="630"/><line x1="480" y1="0" x2="480" y2="630"/>
-    <line x1="600" y1="0" x2="600" y2="630"/><line x1="720" y1="0" x2="720" y2="630"/>
-    <line x1="840" y1="0" x2="840" y2="630"/><line x1="960" y1="0" x2="960" y2="630"/>
-    <line x1="1080" y1="0" x2="1080" y2="630"/><line x1="1200" y1="0" x2="1200" y2="630"/>
-    <line x1="0" y1="90" x2="1200" y2="90"/><line x1="0" y1="180" x2="1200" y2="180"/>
-    <line x1="0" y1="270" x2="1200" y2="270"/><line x1="0" y1="360" x2="1200" y2="360"/>
-    <line x1="0" y1="450" x2="1200" y2="450"/><line x1="0" y1="540" x2="1200" y2="540"/>
-  </g>
-
-  <!-- ghost mark -->
-  <text x="1120" y="550" font-family="monospace" font-size="150" fill="#1a1c22" text-anchor="middle" font-weight="bold">SIB</text>
-
-  <!-- monospace eyebrow -->
-  <text x="80" y="120" font-family="monospace" font-size="28" fill="#6b7280" letter-spacing="6">~/PORTFOLIO — FULLSTACK · IOT · STUDENT</text>
-
-  <!-- lime rule -->
-  <rect x="80" y="150" width="70" height="6" fill="#c8ff2e"/>
-
-  <!-- name -->
-  <text x="80" y="250" font-family="sans-serif" font-size="112" font-weight="bold" fill="#f2f1ec">Samuel Indra</text>
-  <text x="80" y="366" font-family="sans-serif" font-size="112" font-weight="bold" fill="url(#brand)" font-style="italic">Bastian</text>
-
-  <!-- status line -->
-  <circle cx="84" cy="450" r="10" fill="#c8ff2e"/>
-  <text x="110" y="458" font-family="monospace" font-size="30" fill="#a7adb8">Backend · Systems · UI — end to end</text>
+ <defs>
+  <pattern id="grid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M0 35V0h35" fill="none" stroke="#354239"/></pattern>
+  <radialGradient id="light"><stop stop-color="#3c5141"/><stop offset="1" stop-color="#1a211b"/></radialGradient>
+  <linearGradient id="case" x2=".7" y2="1"><stop stop-color="#e4e6d0"/><stop offset="1" stop-color="#829c84"/></linearGradient>
+ </defs>
+ <path fill="#181a17" d="M0 0h1200v630H0z"/>
+ <path fill="url(#light)" d="M650 55h490v520H650z"/>
+ <path fill="url(#grid)" d="M650 55h490v520H650z"/>
+ <path fill="none" stroke="#6e8470" d="M650 575v-44m0 44h44m446 0h-44m44 0v-44m0-476v44m0-44h-44m-446 0h44m-44 0v44"/>
+ <path stroke="#b0c09d" stroke-width="2" d="M684 443v14l232 98 190-107v-15L879 340z" fill="#293b31"/>
+ <path stroke="#cad9a8" stroke-width="2" d="M684 443l196-102 226 92-190 108z" fill="#486146"/>
+ <g fill="none" stroke="#c4d88f" stroke-width="2"><path d="M706 444h43l49 21h80l48 22h38l49-24h42m-309-5h7l64 28h50l51 31 80-43M758 427h19l60-35h45l53 22h75l51 24h28"/><circle cx="707" cy="444" r="4"/><circle cx="1052" cy="463" r="4"/></g>
+ <path d="M804 377q-4 41 17 51l63 20 55-27 3-57-74-34z" fill="#799082" stroke="#c5d9b8" stroke-width="2"/>
+ <path d="m795 217 68-20 92 25q17 7 16 28l-6 95-45 32-124-34z" fill="#768e7b" stroke="#c7d9b6" stroke-width="2"/>
+ <path d="M796 218q-21-4-24 24l4 84q0 26 27 31l100 23q26 5 26-26l7-77q2-30-26-37z" fill="url(#case)" stroke="#f0f2d7" stroke-width="2"/>
+ <path d="M801 237q-13-2-13 14l5 70q0 15 15 19l91 20q14 3 15-14l6-67q1-17-16-22z" fill="#182b22" stroke="#566f5c" stroke-width="3"/>
+ <path d="M813 288q7-15 17 3m36 5q8-14 17 3m-43 8q8 11 17 4" stroke="#e0fb95" stroke-width="5" fill="none" stroke-linecap="round"/>
+ <path d="M919 218l14-29" stroke="#c7d9b6" stroke-width="3"/><circle cx="935" cy="185" r="5" fill="#e0fb95"/>
+ <ellipse cx="1027" cy="231" rx="68" ry="26" transform="rotate(-25 1027 231)" fill="none" stroke="#b9a8df"/>
+ <circle cx="1027" cy="231" r="30" fill="#796591" stroke="#e4d7fc" stroke-width="2"/>
+ <circle cx="1027" cy="231" r="22" fill="#39304a" stroke="#e4d7fc"/>
+ <path d="M1013 232h7l4-8 5 14 4-7h8" fill="none" stroke="#e4d7fc" stroke-width="2"/>
+ <g font-family="DejaVu Sans,sans-serif" fill="#f2f2e8">
+  <text x="60" y="132" font-size="19" letter-spacing="4" fill="#c0cbb7">LABORATORIUM DIGITAL PRIBADI</text>
+  <text x="56" y="229" font-size="43" font-weight="bold">Samuel Indra Bastian</text>
+  <text x="51" y="355" font-family="DejaVu Serif,serif" font-style="italic" font-size="107" letter-spacing="-6" fill="#dcfa91">Vibe Coder.</text>
+  <text x="60" y="426" font-size="26">Membangun dengan AI sejak Juli 2024.</text>
+  <text x="60" y="546" font-size="17" letter-spacing="3" fill="#c0cbb7">AI / SISTEM / ELEKTRONIKA</text>
+ </g>
+ <path d="M60 472h517" stroke="#5a6958"/>
 </svg>

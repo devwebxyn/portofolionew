@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard } from "lucide-react";
+import { LayoutDashboard, Mail } from "lucide-react";
 import { LogoutButton } from "@/components/LogoutButton";
 
-const nav = [{ href: "/", label: "Dashboard", icon: LayoutDashboard }];
+const nav = [
+  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/messages", label: "Pesan", icon: Mail },
+];
 
 export default function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
@@ -25,7 +28,7 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`flex h-full items-center gap-3 rounded-md px-2.5 text-sm transition-colors md:h-auto md:px-3 md:py-2 ${
+                className={`flex h-full items-center gap-1 rounded-md px-1.5 text-sm md:gap-3 transition-colors md:h-auto md:px-3 md:py-2 ${
                   active
                     ? "bg-white/[0.07] text-hi md:shadow-[inset_2px_0_0_0_var(--color-accent)]"
                     : "text-body hover:bg-white/5 hover:text-hi"

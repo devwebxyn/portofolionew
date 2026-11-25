@@ -1,79 +1,44 @@
-// /src/app/about/page.tsx
-"use client";
+import { PageIntro, TextLink } from "@/components/Editorial";
+import { Workbench } from "@/components/Visuals";
+import { pageMetadata } from "@/lib/site";
 
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { NexusMap } from "@/components/NexusMap";
-import { RoleDossier } from "@/components/RoleDossier";
-import { TechShowcase } from "@/components/TechShowcase";
-import { Reveal } from "@/components/ui";
+export const metadata = pageMetadata("/about", "Tentang saya", "Kenali Samuel Indra Bastian, Vibe Coder sejak Juli 2024 dan pelajar elektronika industri.");
 
-export default function AboutPage() {
-  const [role, setRole] = useState<import("@/components/NexusMap").RoleKey | null>(null);
-
-  return (
-    <div className="relative min-h-[100svh] w-full overflow-hidden">
-      {/* Header intro */}
-      <header className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-        <Reveal>
-          <p className="flex items-center gap-3 font-mono text-xs tracking-[0.25em] uppercase text-mut">
-            <span className="text-accent">01 · Peran</span>
-            <span className="h-px w-8 bg-line" />
-            <span>About</span>
-          </p>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <h1 className="type-display mt-6 max-w-4xl text-5xl font-bold text-hi sm:text-6xl md:text-7xl">
-            Satu kanvas, <span className="serif-accent text-gradient">banyak peran</span>
-          </h1>
-        </Reveal>
-        <Reveal delay={0.16}>
-          <p className="mt-6 max-w-3xl text-base text-body sm:text-lg">
-            Saya bergerak lintas peran: Frontend, Backend, Fullstack, DevOps, Cyber Security, Lead Developer, IoT Engineer, dan System Architect. Tujuan saya sederhana — merancang, membangun, dan merawat solusi end-to-end yang elegan, aman, dan berdampak nyata bagi bisnis.
-          </p>
-        </Reveal>
-
-        {/* ghost index */}
-        <span
-          aria-hidden
-          className="text-outline type-display pointer-events-none absolute top-2 right-2 select-none text-[10rem] leading-none sm:right-8 sm:text-[14rem]"
-        >
-          01
-        </span>
-      </header>
-
-      {/* Nexus Map */}
-      <section className="mx-auto max-w-6xl px-5 pb-24 sm:px-8">
-        <NexusMap persona="developer" onSelectRole={(r) => setRole(r)} />
-      </section>
-
-      {/* Role Dossier */}
-      <AnimatePresence>
-        {role && <RoleDossier role={role} onClose={() => setRole(null)} />}
-      </AnimatePresence>
-
-      {/* Tech Showcase */}
-      <TechShowcase />
-
-      {/* CTA */}
-      <footer className="border-t border-line">
-        <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8">
-          <Reveal className="flex flex-col items-start justify-between gap-5 md:flex-row md:items-center">
-            <div>
-              <h3 className="type-display text-3xl font-bold text-hi">Ada proyek yang menarik?</h3>
-              <p className="mt-1 text-sm text-mut">Diskusi arsitektur, konsultasi teknis, atau sekadar bertukar ide — saya terbuka untuk ngobrol.</p>
-            </div>
-            <a
-              href="/contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-bold text-void transition-all hover:shadow-[0_0_28px_rgba(200,255,46,0.45)]"
-            >
-              Hubungi Saya
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </a>
-          </Reveal>
+export default function About() {
+  return <>
+    <PageIntro label="Tentang saya" title={<>Halo, saya <em>Samuel.</em></>} art={<Workbench pose="about" />}>
+      Saya Samuel Indra Bastian, Vibe Coder, penggemar teknologi, dan pelajar elektronika industri. Saya senang membongkar cara kerja sesuatu, baik di layar maupun di meja solder.
+    </PageIntro>
+    <section className="paper section">
+      <div className="frame editorial">
+        <div className="editorial-aside"><p className="eyebrow">Sejak Juli 2024</p><p className="editorial-note">Satu ide, banyak <em>eksperimen.</em></p></div>
+        <div className="prose">
+          <h2>Berkenalan dengan cara baru untuk membangun</h2>
+          <p>Pada Juli 2024 saya mulai memakai AI untuk membuat perangkat lunak. Istilah <i>vibe coding</i> belum dikenal luas saat itu. Yang membuat saya terus mencoba adalah kesempatan untuk membawa sebuah ide sampai bisa dijalankan, lalu mengamati hasilnya sendiri.</p>
+          <p>Sebutan Vibe Coder terasa pas karena AI menjadi pendamping utama saya dalam mengembangkan perangkat lunak. Saya menentukan arah, memberi konteks kepada agen, menguji hasilnya, dan memutuskan apa yang perlu diperbaiki.</p>
+          <TextLink href="/journey">Lihat bagaimana perjalanan itu dimulai</TextLink>
         </div>
-      </footer>
-    </div>
-  );
+      </div>
+    </section>
+    <section className="frame section editorial">
+      <div className="editorial-aside"><p className="eyebrow">Di luar layar</p><p className="editorial-note">Dari kode ke <em>rangkaian.</em></p></div>
+      <div className="prose">
+        <h2>Belajar lewat hal yang bisa saya coba</h2>
+        <p>Di elektronika industri, saya merancang dan merakit PCB, menyolder komponen SMD dan THT, serta mencari sumber gangguan pada rangkaian. Papan yang tidak berfungsi memberi saya sesuatu yang konkret untuk diperiksa.</p>
+        <p>Rasa ingin tahu yang sama membawa saya ke Linux, sistem operasi, pemrograman low-level, mikrokontroler, dan otomasi pengembangan. Saya ingin memahami apa yang terjadi setelah sebuah program dijalankan dan bagaimana ia memakai sumber daya komputer.</p>
+        <TextLink href="/electronics">Lihat meja kerja elektronika</TextLink>
+      </div>
+    </section>
+    <section className="lilac section">
+      <div className="frame editorial">
+        <div className="editorial-aside"><p className="eyebrow">Cara saya belajar</p><p className="editorial-note">Coba, amati, <em>ulangi.</em></p></div>
+        <div className="prose">
+          <h2>Terbuka tentang prosesnya</h2>
+          <p>Sebagian besar implementasi perangkat lunak dalam proyek saya dikerjakan dengan bantuan AI. Bagian saya adalah mengarahkan pekerjaan, mencoba hasilnya, mengevaluasi keputusan, dan belajar dari proses tersebut.</p>
+          <p>Saat suatu teknologi muncul di arsip proyek, itu berarti teknologi tersebut dipakai di sana. Hal yang sedang saya pelajari dan pekerjaan yang saya lakukan sendiri punya tempatnya masing-masing di situs ini.</p>
+          <TextLink href="/ai">Kenali cara saya bekerja bersama AI</TextLink>
+        </div>
+      </div>
+    </section>
+  </>;
 }

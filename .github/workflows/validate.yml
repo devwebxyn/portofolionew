@@ -1,0 +1,32 @@
+name: Portfolio validation
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.23.0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: backend/go.mod
+          cache-dependency-path: backend/go.sum
+      - run: go test ./...
+        working-directory: backend
+      - run: pnpm install --frozen-lockfile && pnpm lint && pnpm build && pnpm exec tsc --noEmit
+        working-directory: frontend
+      - run: pnpm install --frozen-lockfile && pnpm lint && pnpm build && pnpm exec tsc --noEmit
+        working-directory: admin
+      - run: bash tests/run-smoke.sh
