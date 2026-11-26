@@ -3,7 +3,9 @@ import localFont from "next/font/local";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { channels, name, pageMetadata, siteDescription, siteTitle, siteUrl } from "@/lib/site";
+import { SceneObserver } from "@/components/bare/SceneControls";
 import "./globals.css";
+import "./scenes.css";
 
 const display = localFont({ src: "./fonts/space-grotesk.woff2", variable: "--font-display", weight: "400 700", display: "swap" });
 const serif = localFont({ src: "./fonts/instrument-serif-italic.woff2", variable: "--font-serif", style: "italic", display: "swap" });
@@ -20,7 +22,8 @@ const schema = {
   "@graph": [
     {
       "@type": "Person", "@id": `${siteUrl}/#samuel`, name, url: siteUrl,
-      description: "Vibe Coder sejak Juli 2024, penggemar teknologi, dan pelajar elektronika industri.",
+      description: siteDescription,
+      knowsAbout: ["Pemrograman low-level", "Sistem Linux", "Arsitektur komputer", "Elektronika"],
       sameAs: channels.filter(({ label }) => ["GitHub", "Instagram", "LinkedIn"].includes(label)).map(({ href }) => href),
     },
     {
@@ -37,10 +40,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="skip-link" href="#konten">Lewati ke konten</a>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
         <Navbar />
-        <noscript><style>{`@media (max-width: 875px) {
+        <SceneObserver />
+        <noscript><style>{`@media (max-width: 950px) {
           .header-inner { flex-wrap: wrap; padding-block: 10px; }
           .menu-toggle { display: none; }
-          .navigation { display: flex; position: static; flex-flow: row wrap; gap: 0 16px; max-height: none; padding: 0; overflow: visible; box-shadow: none; }
+          .navigation { display: flex; position: static; flex-flow: row wrap; gap: 0 16px; visibility: visible; opacity: 1; transform: none; padding: 0; overflow: visible; box-shadow: none; }
           .navigation a:last-child { margin-top: 0; }
         }`}</style></noscript>
         <main id="konten" tabIndex={-1}>{children}</main>

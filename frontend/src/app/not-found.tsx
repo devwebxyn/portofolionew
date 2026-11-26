@@ -1,8 +1,11 @@
-import { Action, PageIntro } from "@/components/Editorial";
+import { Action } from "@/components/Editorial";
+import { Chapter } from "@/components/bare/Exhibit";
 
 export default function NotFound() {
-  return <>
-    <PageIntro label="404" title={<>Halaman tidak <em>ditemukan.</em></>}>Alamat ini mungkin berubah atau halamannya sudah tidak tersedia.</PageIntro>
-    <div className="frame section-compact"><Action href="/">Kembali ke beranda</Action></div>
-  </>;
+  return <section className="frame page-top missing-page">
+    <Chapter id="404" label="Alamat tidak ditemukan" />
+    <h1>Halaman ini <em>tidak ditemukan.</em></h1>
+    <p className="lead">Alamat mungkin sudah berubah atau halaman telah dihapus.</p>
+    <Action href="/">Kembali ke beranda</Action>
+  </section>;
 }

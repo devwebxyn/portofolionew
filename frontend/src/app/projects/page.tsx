@@ -1,20 +1,22 @@
 import { Suspense } from "react";
-import { PageIntro } from "@/components/Editorial";
+import { Chapter } from "@/components/bare/Exhibit";
 import { ProjectShowcase, ProjectSkeleton } from "@/components/ProjectShowcase";
 import { pageMetadata } from "@/lib/site";
 
-export const metadata = pageMetadata("/projects", "Proyek", "Arsip proyek Samuel Indra Bastian, dari ide yang dikerjakan bersama AI hingga eksplorasi sistem dan perangkat keras.");
+export const metadata = pageMetadata("/projects", "Proyek", "Arsip proyek Samuel Indra Bastian di bidang perangkat lunak, sistem komputer, dan elektronika.");
 
-async function Results({ searchParams }: { searchParams: Promise<{ q?: string | string[] }> }) {
-  const { q } = await searchParams;
-  return <ProjectShowcase query={typeof q === "string" ? q.trim().slice(0, 120) : ""} />;
+type Props = { searchParams: Promise<{ q?: string | string[]; tech?: string | string[] }> };
+const param = (value: string | string[] | undefined) => typeof value === "string" ? value.trim().slice(0, 120) : "";
+
+async function Results({ searchParams }: Props) {
+  const { q, tech } = await searchParams;
+  return <ProjectShowcase query={param(q)} tech={param(tech)} />;
 }
 
-export default function ProjectsPage({ searchParams }: { searchParams: Promise<{ q?: string | string[] }> }) {
-  return <>
-    <PageIntro label="Arsip proyek" title={<>Dari ide menjadi <em>proyek.</em></>}>Kumpulan hal yang saya buat dan uji selama menjelajahi perangkat lunak, sistem komputer, dan elektronika.</PageIntro>
-    <div className="frame section-compact project-list-section">
-      <Suspense fallback={<ProjectSkeleton />}><Results searchParams={searchParams} /></Suspense>
-    </div>
-  </>;
+export default function ProjectsPage({ searchParams }: Props) {
+  return <section className="frame page-top archive-page">
+    <Chapter id="ARSIP" label="Proyek terbit" />
+    <header className="archive-title entrance"><h1>Sebuah arsip <em>eksperimen.</em></h1><p className="lead">Perangkat lunak, sistem, dan elektronika yang saya bangun dan terbitkan.</p></header>
+    <Suspense fallback={<ProjectSkeleton />}><Results searchParams={searchParams} /></Suspense>
+  </section>;
 }

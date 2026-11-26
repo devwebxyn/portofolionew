@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Chapter } from "@/components/bare/Exhibit";
 import { ProjectImage } from "@/components/ProjectImage";
 import { ProjectState } from "@/components/ProjectShowcase";
 import { getProjects, projectPath, projectTechnologies, validProjectId } from "@/lib/projects";
@@ -20,14 +21,18 @@ async function findProject(params: Props["params"]) {
 
 export async function generateMetadata({ params }: Props) {
   const project = await findProject(params);
-  if (!project) return { title: "Proyek belum bisa dimuat", robots: { index: false } };
-  const description = project.description.replace(/\s+/g, " ").trim().slice(0, 155) || `${project.title}, proyek di laboratorium digital Samuel Indra Bastian.`;
+  if (!project) return { title: "Proyek belum tersedia", robots: { index: false } };
+  const description = project.description.replace(/\s+/g, " ").trim().slice(0, 155) || `${project.title}, proyek Samuel Indra Bastian.`;
   return pageMetadata(projectPath(project.id), project.title, description, project.imageUrl);
 }
 
 export default async function ProjectDetail({ params }: Props) {
   const project = await findProject(params);
-  if (!project) return <div className="frame section"><h1 className="sr-only">Detail proyek</h1><ProjectState state="error" /></div>;
+  if (!project) return <section className="frame page-top archive-page">
+    <Chapter id="ARSIP" label="Detail proyek" />
+    <header className="archive-title entrance"><h1>Detail <em>proyek.</em></h1></header>
+    <ProjectState state="error" />
+  </section>;
   const technologies = projectTechnologies(project);
   const date = project.published !== undefined ? new Date(project.published) : null;
 

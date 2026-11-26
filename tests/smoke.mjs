@@ -23,7 +23,7 @@ await mode({ projects: "normal", contact: "normal" });
 for (const path of ["/", "/about", "/journey", "/projects", "/projects/uji-papan", "/electronics", "/systems", "/ai", "/contact", "/robots.txt", "/sitemap.xml", "/og.png", "/icon.svg"]) {
   assert.equal((await page(path)).status, 200, path);
 }
-assert.match((await page("/")).html, /Vibe Coder/);
+assert.match((await page("/")).html, /Pemrograman low-level/);
 assert.equal((await page("/profile")).status, 308);
 assert.equal((await page("/profile")).headers.get("location"), "/about");
 assert.equal((await page("/projects/hilang")).status, 404);
@@ -33,16 +33,19 @@ const search = await page("/projects?q=Firmware");
 assert.match(search.html, /Papan kendali mini/);
 assert.doesNotMatch(search.html, /Penjelajah memori/);
 assert.match((await page("/projects?q=abcabc")).html, /Proyek tidak ditemukan/);
+const filtered = await page("/projects?tech=Rust");
+assert.match(filtered.html, /Penjelajah memori/);
+assert.doesNotMatch(filtered.html, /Papan kendali mini/);
 const detail = await page("/projects/uji-papan");
 assert.match(detail.html, /<link rel="canonical" href="[^"]+\/projects\/uji-papan"/);
 assert.match(detail.html, /example.com\/demo/);
 assert.doesNotMatch((await page("/projects/uji-catatan")).html, /javascript:alert/);
 
-for (const [projects, message] of [["empty", /Belum ada proyek/], ["malformed", /Proyek belum bisa dimuat/], ["error", /Coba lagi/]]) {
+for (const [projects, message] of [["empty", /Belum ada proyek/], ["malformed", /Proyek belum tersedia/], ["error", /Coba lagi/]]) {
   await mode({ projects });
   assert.match((await page("/projects")).html, message);
 }
-assert.match((await page("/projects/uji-papan")).html, /Proyek belum bisa dimuat/);
+assert.match((await page("/projects/uji-papan")).html, /Proyek belum tersedia/);
 await mode({ projects: "pagination" });
 assert.equal((await fetch(publicSite + "/api/projects").then((r) => r.json())).items.length, 28);
 await mode({ projects: "normal" });

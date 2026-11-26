@@ -10,5 +10,5 @@ export async function GET() {
     // Sembunyikan detail internal layanan upstream.
   }
 
-  return Response.json({ ok: false, error: "Proyek belum bisa dimuat." }, { status: 503 });
+  return Response.json({ ok: false, error: "Proyek belum tersedia." }, { status: 503 });
 }

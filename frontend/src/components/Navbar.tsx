@@ -1,20 +1,26 @@
 "use client";
 
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Cpu, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { navigation } from "@/lib/site";
-import { Signal } from "./Visuals";
 
 export function Navbar() {
   const pathname = usePathname();
   const [openedAt, setOpenedAt] = useState<string | null>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const open = pathname === openedAt;
+  const header = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const sync = () => header.current?.toggleAttribute("data-solid", window.scrollY > 28);
+    sync();
+    window.addEventListener("scroll", sync, { passive: true });
+    return () => window.removeEventListener("scroll", sync);
+  }, []);
 
   return (
-    <header className="site-header" onKeyDown={(event) => {
+    <header ref={header} className="site-header" onKeyDown={(event) => {
       if (event.key === "Escape" && open) {
         setOpenedAt(null);
         toggle.current?.focus();
@@ -22,7 +28,7 @@ export function Navbar() {
     }}>
       <div className="frame header-inner">
         <Link className="brand" href="/" onClick={() => setOpenedAt(null)}>
-          <Signal /><span>Samuel<span className="brand-detail"> Indra Bastian</span></span>
+          <Cpu size={22} aria-hidden /><span>Samuel<span className="brand-detail"> Indra Bastian</span></span>
         </Link>
         <button type="button" ref={toggle} className="menu-toggle" aria-expanded={open} aria-controls="navigasi" onClick={() => setOpenedAt(open ? null : pathname)}>
           {open ? <X size={18} aria-hidden /> : <Menu size={18} aria-hidden />}{open ? "Tutup" : "Menu"}

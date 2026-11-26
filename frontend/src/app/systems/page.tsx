@@ -1,25 +1,50 @@
-import { PageIntro, TextLink } from "@/components/Editorial";
-import { LabDiagram, MemoryDemo } from "@/components/LabExperiments";
-import { Workbench } from "@/components/Visuals";
+import { Chapter, NextChapter } from "@/components/bare/Exhibit";
+import { layers, Logic, Memory, Pipeline, Registers, Stack } from "@/components/bare/Computing";
+import { Explorer } from "@/components/bare/SceneControls";
 import { pageMetadata } from "@/lib/site";
 
-export const metadata = pageMetadata("/systems", "Eksplorasi sistem", "Catatan tentang hal yang dipelajari Samuel Indra Bastian di Linux, sistem operasi, pemrograman low-level, memori, dan embedded systems.");
+export const metadata = pageMetadata("/systems", "Eksplorasi sistem Linux", "Eksplorasi konseptual Samuel Indra Bastian tentang userspace, kernel Linux, memori virtual, register CPU, dan logika digital.");
+
+const pipeline = [
+  ["Fetch", "Mengambil instruksi", "Prosesor mengambil instruksi dari alamat yang ditunjuk program counter."],
+  ["Decode", "Mengenali operasi", "Bagian decode menentukan operasi dan operand dari encoding instruksi."],
+  ["Execute", "Menjalankan operasi", "Unit eksekusi menjalankan operasi, misalnya penjumlahan atau perhitungan alamat."],
+  ["Write-back", "Menyimpan hasil", "Jika operasi menghasilkan nilai register, hasilnya ditulis ke register tujuan."],
+];
 
 export default function Systems() {
   return <>
-    <PageIntro label="Eksplorasi sistem" className="systems-intro" title={<>Di balik <em>program.</em></>} art={<Workbench pose="systems" />}>
-      Saya sedang mempelajari bagaimana perangkat lunak sampai ke mesin yang menjalankannya, dari sistem operasi dan pemrograman low-level hingga prosesor dan mikrokontroler.
-    </PageIntro>
-    <section className="frame section">
-      <div className="section-heading"><p className="eyebrow">Lapisan komputasi</p><h2>Apa yang terjadi saat <em>kode berjalan?</em></h2><p className="lead">Pilih salah satu lapisan untuk melihat pertanyaan yang sedang saya telusuri.</p></div>
-      <LabDiagram kind="chip" />
+    <section className="frame page-top systems-top">
+      <Chapter id="LINUX" label="Arsitektur sistem" />
+      <header className="systems-title entrance"><h1>Di bawah <em>aplikasi.</em></h1><p className="lead">Saya mempelajari bagaimana Linux menjembatani kode aplikasi dengan sumber daya mesin. Pilih lapisan untuk mengikuti jalur tersebut.</p></header>
+      <Explorer label="Pilih lapisan komputasi" views={layers.map((layer, i) => ({ ...layer, art: <Stack active={i} /> }))} className="layer-explorer" />
     </section>
-    <section className="lilac section">
-      <div className="frame editorial">
-        <div className="prose"><p className="eyebrow">Ruang memori</p><h2>Menemukan data lewat alamat</h2><p>Representasi heksadesimal memudahkan saya membaca alamat dalam bentuk yang ringkas. Contoh ini membagi ruang alamat sederhana ke dalam blok-blok kecil.</p></div>
-        <MemoryDemo />
+    <section className="section system-bench">
+      <div className="frame">
+        <Chapter id="01" label="Keadaan mesin" />
+        <div className="section-heading"><h2>Di mana data <em>berada?</em></h2><p className="lead">Di tingkat sistem operasi, data dipetakan ke memori. Di tingkat instruksi, nilai dapat berubah langsung di register.</p></div>
+        <Explorer label="Pilih tampilan memori atau register" views={[
+          {label:"Memori virtual",title:"Alamat virtual diterjemahkan",text:"Page table memetakan halaman virtual ke frame fisik. Skema ini menyederhanakan proses translasi yang dilakukan perangkat keras dengan tabel yang dikelola kernel.",art:<Memory />},
+          {label:"Register awal",title:"Sebelum instruksi dijalankan",text:"Dalam contoh x86 ini, AX menyimpan 0x002A. Instruksi ADD meminta penambahan nilai 0x01.",art:<Registers />},
+          {label:"Hasil instruksi",title:"AX menjadi 0x002B",text:"Operasi memperbarui register tujuan. BX dan CX tidak berubah.",art:<Registers result />},
+        ]} />
       </div>
     </section>
-    <section className="frame section-compact"><TextLink href="/electronics">Lanjut ke meja kerja elektronika</TextLink></section>
+    <section className="section frame">
+      <Chapter id="02" label="Aliran instruksi" />
+      <div className="section-heading"><h2>Empat tahap <em>eksekusi.</em></h2><p className="lead">Model konseptual untuk mengikuti sebuah instruksi. Rincian tahap dan pengurutannya bisa berbeda antarprosesor.</p></div>
+      <Explorer label="Pilih tahap pipeline" className="pipeline-explorer" views={pipeline.map(([label,title,text],i)=>({label,title,text,art:<Pipeline active={i} />}))} />
+    </section>
+    <section className="section frame logic-section">
+      <Chapter id="03" label="Logika digital" />
+      <div className="feature-grid">
+        <div className="feature-copy"><h2>Dari bit <em>ke sinyal.</em></h2><p className="lead">Gerbang logika bekerja pada nilai digital. Ubah masukan B untuk melihat keluaran AND dengan masukan A tetap bernilai satu.</p></div>
+        <Explorer className="logic-explorer" label="Ubah masukan B" views={[
+          {label:"B = 0",title:"Y = 0",text:"Salah satu masukan bernilai nol. Keluaran AND bernilai nol.",art:<Logic high={false} />},
+          {label:"B = 1",title:"Y = 1",text:"Kedua masukan bernilai satu. Keluaran AND bernilai satu.",art:<Logic />},
+        ]} />
+      </div>
+    </section>
+    <NextChapter href="/electronics" title="Di ujung instruksi ada rangkaian.">Jelajahi elektronika</NextChapter>
   </>;
 }

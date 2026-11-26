@@ -2,7 +2,7 @@
 
 # Samuel Indra Bastian — Portfolio Monorepo
 
-**Laboratorium pribadi Samuel Indra Bastian, Vibe Coder sejak Juli 2024** — a three-app production system running on Vercel: a public portfolio site, a protected admin dashboard, and a Go API backend backed by Appwrite.
+**Portofolio Samuel Indra Bastian tentang pemrograman low-level, sistem Linux, dan elektronika** — a three-app production system running on Vercel: a public portfolio site, a protected admin dashboard, and a Go API backend backed by Appwrite.
 
 <!--- badges: keep minimal and honest --->
 ![Next.js](https://img.shields.io/badge/Next.js-16.4-black?logo=nextdotjs&logoColor=white)

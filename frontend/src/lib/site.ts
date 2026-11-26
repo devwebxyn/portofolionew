@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.samuelindrabastian.my.id").replace(/\/+$/, "");
 export const name = "Samuel Indra Bastian";
-export const siteTitle = `${name} — Vibe Coder sejak Juli 2024`;
-export const siteDescription = "Laboratorium pribadi Samuel Indra Bastian. Membangun dengan AI sejak Juli 2024, merakit elektronika, dan mempelajari cara kerja sistem komputer.";
+export const siteTitle = `${name} — Pemrograman low-level & sistem Linux`;
+export const siteDescription = "Portofolio Samuel Indra Bastian. Eksplorasi pemrograman low-level, sistem Linux, arsitektur komputer, dan elektronika.";
 
 export const navigation = [
   { href: "/", label: "Beranda" },
@@ -25,7 +25,7 @@ export const channels = [
 ];
 
 export function pageMetadata(path: string, title: string, description: string, image?: string): Metadata {
-  const images = image ? [{ url: image, alt: `Gambar ${title}` }] : [{ url: "/og.png", width: 1200, height: 630, alt: "Samuel Indra Bastian, Vibe Coder sejak Juli 2024" }];
+  const images = image ? [{ url: image, alt: `Gambar ${title}` }] : [{ url: "/og.png", width: 1200, height: 630, alt: "Samuel Indra Bastian, Pemrograman low-level & sistem Linux" }];
   return {
     title,
     description,

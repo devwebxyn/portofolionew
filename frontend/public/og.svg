@@ -1,32 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
- <defs>
-  <pattern id="grid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M0 35V0h35" fill="none" stroke="#354239"/></pattern>
-  <radialGradient id="light"><stop stop-color="#3c5141"/><stop offset="1" stop-color="#1a211b"/></radialGradient>
-  <linearGradient id="case" x2=".7" y2="1"><stop stop-color="#e4e6d0"/><stop offset="1" stop-color="#829c84"/></linearGradient>
- </defs>
- <path fill="#181a17" d="M0 0h1200v630H0z"/>
- <path fill="url(#light)" d="M650 55h490v520H650z"/>
- <path fill="url(#grid)" d="M650 55h490v520H650z"/>
- <path fill="none" stroke="#6e8470" d="M650 575v-44m0 44h44m446 0h-44m44 0v-44m0-476v44m0-44h-44m-446 0h44m-44 0v44"/>
- <path stroke="#b0c09d" stroke-width="2" d="M684 443v14l232 98 190-107v-15L879 340z" fill="#293b31"/>
- <path stroke="#cad9a8" stroke-width="2" d="M684 443l196-102 226 92-190 108z" fill="#486146"/>
- <g fill="none" stroke="#c4d88f" stroke-width="2"><path d="M706 444h43l49 21h80l48 22h38l49-24h42m-309-5h7l64 28h50l51 31 80-43M758 427h19l60-35h45l53 22h75l51 24h28"/><circle cx="707" cy="444" r="4"/><circle cx="1052" cy="463" r="4"/></g>
- <path d="M804 377q-4 41 17 51l63 20 55-27 3-57-74-34z" fill="#799082" stroke="#c5d9b8" stroke-width="2"/>
- <path d="m795 217 68-20 92 25q17 7 16 28l-6 95-45 32-124-34z" fill="#768e7b" stroke="#c7d9b6" stroke-width="2"/>
- <path d="M796 218q-21-4-24 24l4 84q0 26 27 31l100 23q26 5 26-26l7-77q2-30-26-37z" fill="url(#case)" stroke="#f0f2d7" stroke-width="2"/>
- <path d="M801 237q-13-2-13 14l5 70q0 15 15 19l91 20q14 3 15-14l6-67q1-17-16-22z" fill="#182b22" stroke="#566f5c" stroke-width="3"/>
- <path d="M813 288q7-15 17 3m36 5q8-14 17 3m-43 8q8 11 17 4" stroke="#e0fb95" stroke-width="5" fill="none" stroke-linecap="round"/>
- <path d="M919 218l14-29" stroke="#c7d9b6" stroke-width="3"/><circle cx="935" cy="185" r="5" fill="#e0fb95"/>
- <ellipse cx="1027" cy="231" rx="68" ry="26" transform="rotate(-25 1027 231)" fill="none" stroke="#b9a8df"/>
- <circle cx="1027" cy="231" r="30" fill="#796591" stroke="#e4d7fc" stroke-width="2"/>
- <circle cx="1027" cy="231" r="22" fill="#39304a" stroke="#e4d7fc"/>
- <path d="M1013 232h7l4-8 5 14 4-7h8" fill="none" stroke="#e4d7fc" stroke-width="2"/>
- <g font-family="DejaVu Sans,sans-serif" fill="#f2f2e8">
-  <text x="60" y="132" font-size="19" letter-spacing="4" fill="#c0cbb7">LABORATORIUM DIGITAL PRIBADI</text>
-  <text x="56" y="229" font-size="43" font-weight="bold">Samuel Indra Bastian</text>
-  <text x="51" y="355" font-family="DejaVu Serif,serif" font-style="italic" font-size="107" letter-spacing="-6" fill="#dcfa91">Vibe Coder.</text>
-  <text x="60" y="426" font-size="26">Membangun dengan AI sejak Juli 2024.</text>
-  <text x="60" y="546" font-size="17" letter-spacing="3" fill="#c0cbb7">AI / SISTEM / ELEKTRONIKA</text>
- </g>
- <path d="M60 472h517" stroke="#5a6958"/>
+  <defs>
+    <linearGradient id="metal" x2="100%" y2="80%"><stop stop-color="#ded4c5"/><stop offset=".45" stop-color="#77716a"/><stop offset=".78" stop-color="#bdb2a2"/><stop offset="1" stop-color="#d3b394"/></linearGradient>
+    <radialGradient id="light" cx="74%" cy="47%" r="68%"><stop stop-color="#352821"/><stop offset="1" stop-color="#121314"/></radialGradient>
+    <pattern id="grid" width="31" height="31" patternUnits="userSpaceOnUse"><path d="M31 0H0v31" fill="none" stroke="#d5b39b" stroke-opacity=".12"/></pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#light)"/>
+  <rect x="606" y="64" width="540" height="501" fill="url(#grid)" stroke="#715946"/>
+  <path d="m682 379 191-104 195 107-195 105z" fill="#292b27" stroke="#9c775e"/>
+  <path d="m702 351 172-95 173 95-173 96z" fill="#424d3c" stroke="#a17a5d"/>
+  <path d="m702 351 172 96 173-96v13l-173 95-172-95z" fill="#455041" stroke="#675447"/>
+  <path d="m788 306 87-49 89 49-89 49z" fill="#769283" stroke="#b8b49b"/>
+  <path d="m714 235 160-89 160 89-160 90z" fill="url(#metal)" stroke="#e4cbae"/>
+  <path d="m714 235 160 90 160-90v17l-160 91-160-91z" fill="#716152" stroke="#c3a58a"/>
+  <path d="m734 235 140-78 140 78-140 78z" fill="none" stroke="#e6d7c3" stroke-opacity=".65"/>
+  <path d="M71 160h469M71 475h469" stroke="#746256"/>
+  <g font-family="DejaVu Sans" fill="#eee5db">
+    <text x="71" y="132" fill="#e4b694" font-size="22" letter-spacing="4">SAMUEL INDRA BASTIAN</text>
+    <text x="67" y="260" font-size="68" font-weight="bold">Komputasi</text>
+    <text x="67" y="343" font-size="68" font-weight="bold">hingga ke</text>
+    <text x="67" y="425" fill="#e4b694" font-size="66">lapisan dasar.</text>
+    <text x="71" y="520" fill="#cfc4b6" font-size="21">Pemrograman low-level &amp; sistem Linux</text>
+  </g>
 </svg>

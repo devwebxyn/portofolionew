@@ -1,44 +1,32 @@
-import { PageIntro, TextLink } from "@/components/Editorial";
-import { Workbench } from "@/components/Visuals";
+import { TextLink } from "@/components/Editorial";
+import { Chapter, NextChapter, Scene } from "@/components/bare/Exhibit";
+import { Wafer } from "@/components/bare/Hardware";
+import { Connection } from "@/components/bare/Computing";
 import { pageMetadata } from "@/lib/site";
 
-export const metadata = pageMetadata("/about", "Tentang saya", "Kenali Samuel Indra Bastian, Vibe Coder sejak Juli 2024 dan pelajar elektronika industri.");
+export const metadata = pageMetadata("/about", "Tentang saya", "Samuel Indra Bastian mempelajari pemrograman low-level, sistem Linux, arsitektur komputer, dan elektronika.");
 
 export default function About() {
   return <>
-    <PageIntro label="Tentang saya" title={<>Halo, saya <em>Samuel.</em></>} art={<Workbench pose="about" />}>
-      Saya Samuel Indra Bastian, Vibe Coder, penggemar teknologi, dan pelajar elektronika industri. Saya senang membongkar cara kerja sesuatu, baik di layar maupun di meja solder.
-    </PageIntro>
-    <section className="paper section">
-      <div className="frame editorial">
-        <div className="editorial-aside"><p className="eyebrow">Sejak Juli 2024</p><p className="editorial-note">Satu ide, banyak <em>eksperimen.</em></p></div>
-        <div className="prose">
-          <h2>Berkenalan dengan cara baru untuk membangun</h2>
-          <p>Pada Juli 2024 saya mulai memakai AI untuk membuat perangkat lunak. Istilah <i>vibe coding</i> belum dikenal luas saat itu. Yang membuat saya terus mencoba adalah kesempatan untuk membawa sebuah ide sampai bisa dijalankan, lalu mengamati hasilnya sendiri.</p>
-          <p>Sebutan Vibe Coder terasa pas karena AI menjadi pendamping utama saya dalam mengembangkan perangkat lunak. Saya menentukan arah, memberi konteks kepada agen, menguji hasilnya, dan memutuskan apa yang perlu diperbaiki.</p>
-          <TextLink href="/journey">Lihat bagaimana perjalanan itu dimulai</TextLink>
-        </div>
+    <section className="frame page-top about-top">
+      <Chapter id="PROFIL" label="Samuel Indra Bastian" />
+      <div className="about-composition">
+        <header className="entrance"><h1>Di balik<br /> <em>rasa ingin tahu.</em></h1><p className="lead">Saya Samuel Indra Bastian. Saya tertarik pada apa yang terjadi di antara kode yang kita tulis dan sinyal yang bergerak di papan rangkaian.</p></header>
+        <Scene art={<Wafer />} label="Permukaan silikon" className="wafer-scene" />
       </div>
     </section>
-    <section className="frame section editorial">
-      <div className="editorial-aside"><p className="eyebrow">Di luar layar</p><p className="editorial-note">Dari kode ke <em>rangkaian.</em></p></div>
-      <div className="prose">
-        <h2>Belajar lewat hal yang bisa saya coba</h2>
-        <p>Di elektronika industri, saya merancang dan merakit PCB, menyolder komponen SMD dan THT, serta mencari sumber gangguan pada rangkaian. Papan yang tidak berfungsi memberi saya sesuatu yang konkret untuk diperiksa.</p>
-        <p>Rasa ingin tahu yang sama membawa saya ke Linux, sistem operasi, pemrograman low-level, mikrokontroler, dan otomasi pengembangan. Saya ingin memahami apa yang terjadi setelah sebuah program dijalankan dan bagaimana ia memakai sumber daya komputer.</p>
-        <TextLink href="/electronics">Lihat meja kerja elektronika</TextLink>
+    <section className="section paper">
+      <div className="frame about-essay">
+        <p className="eyebrow">Cara saya belajar</p>
+        <div><h2>Saya mengikuti <em>jalur sebuah instruksi.</em></h2><p>Saya mempelajari pemrograman low-level dan fondasi kernel Linux lewat pertanyaan konkret. Apa yang terjadi saat sebuah program membuka berkas? Siapa yang menentukan lokasi data di memori? Bagaimana perangkat memberi tahu CPU bahwa ada pekerjaan baru?</p><p>Di elektronika, saya bisa mengikuti pertanyaan itu hingga ke rangkaian. Saya mendesain dan merakit PCB, menyolder komponen SMD dan THT, serta mencari penyebab kegagalan pada sambungan dan jalur sinyal.</p><TextLink href="/electronics">Lihat praktik elektronika saya</TextLink></div>
       </div>
     </section>
-    <section className="lilac section">
-      <div className="frame editorial">
-        <div className="editorial-aside"><p className="eyebrow">Cara saya belajar</p><p className="editorial-note">Coba, amati, <em>ulangi.</em></p></div>
-        <div className="prose">
-          <h2>Terbuka tentang prosesnya</h2>
-          <p>Sebagian besar implementasi perangkat lunak dalam proyek saya dikerjakan dengan bantuan AI. Bagian saya adalah mengarahkan pekerjaan, mencoba hasilnya, mengevaluasi keputusan, dan belajar dari proses tersebut.</p>
-          <p>Saat suatu teknologi muncul di arsip proyek, itu berarti teknologi tersebut dipakai di sana. Hal yang sedang saya pelajari dan pekerjaan yang saya lakukan sendiri punya tempatnya masing-masing di situs ini.</p>
-          <TextLink href="/ai">Kenali cara saya bekerja bersama AI</TextLink>
-        </div>
+    <section className="frame section">
+      <div className="feature-grid">
+        <Scene art={<Connection />} label="Dari ide menuju sinyal" />
+        <div className="feature-copy"><h2>Membangun sambil <em>memahami.</em></h2><p className="lead">Sejak Juli 2024, saya memakai AI untuk membantu mengembangkan perangkat lunak. Ide berawal dari pertanyaan saya, dan saya menguji hasilnya untuk melihat cara kerjanya.</p><TextLink href="/ai">Cara saya bekerja bersama AI</TextLink></div>
       </div>
     </section>
+    <NextChapter href="/journey" title="Awal perjalanan saya.">Baca linimasa</NextChapter>
   </>;
 }
