@@ -1,6 +1,8 @@
 name: Portfolio validation
 on:
+  workflow_dispatch:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     branches: [main]
   push:
     branches: [main, redesign/ai-native-personal-portfolio]
