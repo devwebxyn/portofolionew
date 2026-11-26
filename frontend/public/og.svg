@@ -1,41 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#c8ff2e"/>
-      <stop offset="1" stop-color="#22e0ff"/>
-    </linearGradient>
+    <linearGradient id="metal" x2="100%" y2="80%"><stop stop-color="#ded4c5"/><stop offset=".45" stop-color="#77716a"/><stop offset=".78" stop-color="#bdb2a2"/><stop offset="1" stop-color="#d3b394"/></linearGradient>
+    <radialGradient id="light" cx="74%" cy="47%" r="68%"><stop stop-color="#352821"/><stop offset="1" stop-color="#121314"/></radialGradient>
+    <pattern id="grid" width="31" height="31" patternUnits="userSpaceOnUse"><path d="M31 0H0v31" fill="none" stroke="#d5b39b" stroke-opacity=".12"/></pattern>
   </defs>
-
-  <!-- VOID background -->
-  <rect width="1200" height="630" fill="#030304"/>
-
-  <!-- subtle grid lines -->
-  <g stroke="#0c0c10" stroke-width="1" opacity="0.5">
-    <line x1="0" y1="0" x2="0" y2="630"/><line x1="0" y1="0" x2="1200" y2="0"/>
-    <line x1="120" y1="0" x2="120" y2="630"/><line x1="240" y1="0" x2="240" y2="630"/>
-    <line x1="360" y1="0" x2="360" y2="630"/><line x1="480" y1="0" x2="480" y2="630"/>
-    <line x1="600" y1="0" x2="600" y2="630"/><line x1="720" y1="0" x2="720" y2="630"/>
-    <line x1="840" y1="0" x2="840" y2="630"/><line x1="960" y1="0" x2="960" y2="630"/>
-    <line x1="1080" y1="0" x2="1080" y2="630"/><line x1="1200" y1="0" x2="1200" y2="630"/>
-    <line x1="0" y1="90" x2="1200" y2="90"/><line x1="0" y1="180" x2="1200" y2="180"/>
-    <line x1="0" y1="270" x2="1200" y2="270"/><line x1="0" y1="360" x2="1200" y2="360"/>
-    <line x1="0" y1="450" x2="1200" y2="450"/><line x1="0" y1="540" x2="1200" y2="540"/>
+  <rect width="1200" height="630" fill="url(#light)"/>
+  <rect x="606" y="64" width="540" height="501" fill="url(#grid)" stroke="#715946"/>
+  <path d="m682 379 191-104 195 107-195 105z" fill="#292b27" stroke="#9c775e"/>
+  <path d="m702 351 172-95 173 95-173 96z" fill="#424d3c" stroke="#a17a5d"/>
+  <path d="m702 351 172 96 173-96v13l-173 95-172-95z" fill="#455041" stroke="#675447"/>
+  <path d="m788 306 87-49 89 49-89 49z" fill="#769283" stroke="#b8b49b"/>
+  <path d="m714 235 160-89 160 89-160 90z" fill="url(#metal)" stroke="#e4cbae"/>
+  <path d="m714 235 160 90 160-90v17l-160 91-160-91z" fill="#716152" stroke="#c3a58a"/>
+  <path d="m734 235 140-78 140 78-140 78z" fill="none" stroke="#e6d7c3" stroke-opacity=".65"/>
+  <path d="M71 160h469M71 475h469" stroke="#746256"/>
+  <g font-family="DejaVu Sans" fill="#eee5db">
+    <text x="71" y="132" fill="#e4b694" font-size="22" letter-spacing="4">SAMUEL INDRA BASTIAN</text>
+    <text x="67" y="260" font-size="68" font-weight="bold">Komputasi</text>
+    <text x="67" y="343" font-size="68" font-weight="bold">hingga ke</text>
+    <text x="67" y="425" fill="#e4b694" font-size="66">lapisan dasar.</text>
+    <text x="71" y="520" fill="#cfc4b6" font-size="21">Pemrograman low-level &amp; sistem Linux</text>
   </g>
-
-  <!-- ghost mark -->
-  <text x="1120" y="550" font-family="monospace" font-size="150" fill="#1a1c22" text-anchor="middle" font-weight="bold">SIB</text>
-
-  <!-- monospace eyebrow -->
-  <text x="80" y="120" font-family="monospace" font-size="28" fill="#6b7280" letter-spacing="6">~/PORTFOLIO — FULLSTACK · IOT · STUDENT</text>
-
-  <!-- lime rule -->
-  <rect x="80" y="150" width="70" height="6" fill="#c8ff2e"/>
-
-  <!-- name -->
-  <text x="80" y="250" font-family="sans-serif" font-size="112" font-weight="bold" fill="#f2f1ec">Samuel Indra</text>
-  <text x="80" y="366" font-family="sans-serif" font-size="112" font-weight="bold" fill="url(#brand)" font-style="italic">Bastian</text>
-
-  <!-- status line -->
-  <circle cx="84" cy="450" r="10" fill="#c8ff2e"/>
-  <text x="110" y="458" font-family="monospace" font-size="30" fill="#a7adb8">Backend · Systems · UI — end to end</text>
 </svg>

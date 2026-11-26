@@ -1,118 +1,60 @@
 import type { Metadata } from "next";
-import Script from "next/script";
-import { Instrument_Serif, Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
-import "./globals.css";
-import { Navbar } from "@/components/Navbar";
+import localFont from "next/font/local";
 import { Footer } from "@/components/Footer";
-import { RouteProgress } from "@/components/RouteProgress";
-import { SEOJsonLd } from "@/components/SEOJsonLd";
+import { Navbar } from "@/components/Navbar";
+import { channels, name, pageMetadata, siteDescription, siteTitle, siteUrl } from "@/lib/site";
+import { SceneObserver } from "@/components/bare/SceneControls";
+import "./globals.css";
+import "./scenes.css";
+import "./exhibition.css";
+import "./workflows.css";
+import "./industry.css";
+import "./research.css";
 
-const GA_ID = "G-DKBEH96EBY";
-
-const fontInter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-const fontSpace = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space",
-});
-const fontSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: "italic",
-  variable: "--font-serif",
-});
-const fontMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-
+const display = localFont({ src: "./fonts/space-grotesk.woff2", variable: "--font-display", weight: "400 700", display: "swap" });
+const serif = localFont({ src: "./fonts/instrument-serif-italic.woff2", variable: "--font-serif", style: "italic", display: "swap" });
 export const metadata: Metadata = {
+  ...pageMetadata("/", siteTitle, siteDescription),
   metadataBase: new URL(siteUrl),
-  title: {
-    default: "Samuel Indra Bastian — Fullstack & IoT Developer",
-    template: "%s · Samuel Indra Bastian",
-  },
-  description:
-    "Fullstack & IoT developer. Merancang dan membangun produk digital end-to-end — dari antarmuka yang halus hingga sistem yang kokoh dan aman.",
-  keywords: [
-    "Samuel Indra Bastian",
-    "Fullstack Developer",
-    "Web Engineer",
-    "IoT Engineer",
-    "DevOps",
-    "System Architect",
-    "Portfolio",
-  ],
-  authors: [{ name: "Samuel Indra Bastian", url: siteUrl }],
-  creator: "Samuel Indra Bastian",
-  publisher: "Samuel Indra Bastian",
-  openGraph: {
-    type: "website",
-    url: siteUrl,
-    title: "Samuel Indra Bastian — Fullstack & IoT Developer",
-    description:
-      "Merancang dan membangun produk digital end-to-end — antarmuka halus, sistem kokoh.",
-    siteName: "Samuel Indra Bastian",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Samuel Indra Bastian Portfolio" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Samuel Indra Bastian — Fullstack & IoT Developer",
-    description:
-      "Merancang dan membangun produk digital end-to-end — antarmuka halus, sistem kokoh.",
-    images: ["/og.png"],
-  },
-  alternates: { canonical: siteUrl },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-snippet": -1,
-      "max-image-preview": "large",
-      "max-video-preview": -1,
+  title: { default: siteTitle, template: "%s · Samuel Indra Bastian" },
+  authors: [{ name, url: siteUrl }],
+  creator: name,
+};
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person", "@id": `${siteUrl}/#samuel`, name, url: siteUrl,
+      description: siteDescription,
+      knowsAbout: ["Pemrograman low-level", "Sistem Linux", "Arsitektur komputer", "Elektronika"],
+      sameAs: channels.filter(({ label }) => ["GitHub", "Instagram", "LinkedIn"].includes(label)).map(({ href }) => href),
     },
-  },
-  category: "technology",
+    {
+      "@type": "WebSite", "@id": `${siteUrl}/#situs`, name, url: siteUrl,
+      description: siteDescription, inLanguage: "id-ID", author: { "@id": `${siteUrl}/#samuel` },
+    },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="id" className={`${fontInter.variable} ${fontSpace.variable} ${fontSerif.variable} ${fontMono.variable}`}>
-      <body className="relative bg-ink font-sans text-body">
-        {/* Google Analytics (gtag.js) — injected once per page via afterInteractive
-            so the inline window.dataLayer code runs in the browser only, not during SSR. */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-function gtag(){window.dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-DKBEH96EBY');`}
-        </Script>
-
-        {/* Global ambient background */}
-        <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
-          <div className="grid-lines absolute inset-0" />
-          <div className="aurora animate-drift -top-40 left-1/4 h-[36rem] w-[36rem] bg-accent/14" />
-          <div className="aurora animate-drift top-1/3 -right-40 h-[30rem] w-[30rem] bg-accent2/10" style={{ animationDelay: "-8s" }} />
-          <div className="aurora animate-drift -bottom-40 left-10 h-[28rem] w-[28rem] bg-accent3/10" style={{ animationDelay: "-14s" }} />
-        </div>
-
-        <div className="grain relative z-10 min-h-screen">
-          <SEOJsonLd siteUrl={siteUrl} />
-          <RouteProgress />
-          <Navbar />
-          <main className="relative">{children}</main>
-          <Footer />
-        </div>
+    <html lang="id" className={`${display.variable} ${serif.variable}`}>
+      <body>
+        <a className="skip-link" href="#konten">Lewati ke konten</a>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
+        <Navbar />
+        <SceneObserver />
+        <noscript><style>{`@media (max-width: 950px) {
+          .header-inner { flex-wrap: wrap; padding-block: 10px; }
+          .menu-toggle { display: none; }
+          .navigation { display: flex; position: static; flex-flow: row wrap; gap: 0 16px; visibility: visible; opacity: 1; transform: none; padding: 0; overflow: visible; box-shadow: none; }
+          .navigation a:last-child { margin-top: 0; }
+        }
+        .navigation .world-panel { position: static; display: flex; flex-wrap: wrap; visibility: visible; opacity: 1; transform: none; min-width: 0; gap: 8px; }
+        .world-menu > button { display: none; }`}</style></noscript>
+        <main id="konten" tabIndex={-1}>{children}</main>
+        <Footer />
       </body>
     </html>
   );

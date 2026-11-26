@@ -2,7 +2,7 @@
 
 # Samuel Indra Bastian — Portfolio Monorepo
 
-**Fullstack & IoT Developer portfolio** — a three-app production system running on Vercel: a public portfolio site, a protected admin dashboard, and a Go API backend backed by Appwrite.
+**Portofolio Samuel Indra Bastian tentang pemrograman low-level, sistem Linux, dan elektronika** — a three-app production system running on Vercel: a public portfolio site, a protected admin dashboard, and a Go API backend backed by Appwrite.
 
 <!--- badges: keep minimal and honest --->
 ![Next.js](https://img.shields.io/badge/Next.js-16.4-black?logo=nextdotjs&logoColor=white)
@@ -36,7 +36,7 @@ This repository contains the complete source for three independently deployable 
 
 | # | App | Folder | Framework | Purpose |
 |---|-----|--------|-----------|---------|
-| 1 | **Portfolio (public)** | `frontend/` | Next.js 16 (App Router) | Public site — projects, about, profile, contact |
+| 1 | **Portfolio (public)** | `frontend/` | Next.js 16 (App Router) | Public laboratory, journal, project archive, and contact |
 | 2 | **Admin dashboard** | `admin/` | Next.js 16 (App Router) | Authenticated content management |
 | 3 | **Backend API** | `backend/` | Go 1.23 (`net/http`) | REST API + Appwrite integration, image upload |
 
@@ -53,7 +53,7 @@ Browser ──▶ frontend (Vercel) ──server-side proxy──▶ backend Go 
 Browser ──▶ admin   (Vercel) ──server-side proxy──▶ backend Go (Vercel) ──▶ Appwrite (DB + Storage)
 ```
 
-- **Frontend** fetches `/api/projects` relative to itself; a Next.js **route handler** on the frontend proxies that request to the Go backend using `NEXT_PUBLIC_BACKEND_URL`.
+- **Frontend** reads the Go project collection in Server Components through `NEXT_PUBLIC_BACKEND_URL` and retains the public `GET /api/projects` proxy. The browser posts contact messages through its own Next.js app.
 - **Admin** never exposes the Go URL: every mutation goes through server-side route handlers (`/api/...`) that read the signed session cookie and forward it to the backend as `Authorization: Bearer <token>`. A **middleware** guards all pages except `/login`.
 - **Backend** validates JWT, enforces a CORS allow-list, and talks to Appwrite with a minimal typed REST client.
 
@@ -65,7 +65,7 @@ This design keeps API keys and admin credentials entirely server-side and allows
 
 ```
 ├── frontend/          # Public portfolio (Next.js 16)
-│   ├── src/app/       # pages: /, /about, /projects, /profile, /contact
+│   ├── src/app/       # public routes and compatibility redirect
 │   ├── src/app/api/projects/route.ts   # server-side proxy → Go backend
 │   ├── src/components/
 │   └── src/lib/
@@ -86,18 +86,18 @@ This design keeps API keys and admin credentials entirely server-side and allows
 ## Apps
 
 ### 1. Frontend — public portfolio
-Next.js 16 (App Router, Turbopack), TypeScript, Tailwind CSS v4, Framer Motion.
+Next.js 16 (App Router, Turbopack), TypeScript, Tailwind CSS v4, SVG, CSS 3D, and motion activated in the viewport.
 
-- Pages: home, about, projects, profile, contact.
+- Pages: `/`, `/about`, `/journey`, `/projects`, `/projects/[identifier]`, `/electronics`, `/systems`, `/embedded`, `/semiconductor`, `/computing`, `/lab`, `/ai`, `/contact`. `/profile` redirects to `/about`.
 - SEO: `metadata`, `sitemap.xml`, `robots.txt`, JSON-LD.
-- Data: projects fetched server-side by a `/api/projects` proxy route, rendered client-side with loading / empty / error states.
+- Data: live reads from Go and Appwrite, stable Appwrite IDs for project detail, streamed project loading states, and server-side search. The API paginates Appwrite internally.
 
 ### 2. Admin — dashboard
 Next.js 16, TypeScript, Tailwind v4.
 
 - Login with Appwrite-stored admins (bcrypt), session via httpOnly cookie.
 - Performant CRUD: create / edit / delete projects, with optional image upload.
-- Auth protected by middleware + server-side JWT forwarding.
+- Auth protected by middleware + server-side JWT forwarding. The inbox at `/messages` uses the existing Go message endpoints.
 
 ### 3. Backend — Go API
 Go 1.23, single `net/http` server, runs as one Vercel function.
@@ -131,7 +131,7 @@ Go 1.23, single `net/http` server, runs as one Vercel function.
 
 ## Local development
 
-Prerequisites: **Node 18+ / pnpm 9+**, **Go 1.22+**, and an Appwrite project.
+Prerequisites: **Node 24 / pnpm 12**, **Go 1.23+**, and an Appwrite project.
 
 ```bash
 # 1) Backend
@@ -167,7 +167,7 @@ Deploy each folder as its **own** Vercel project. The full runbook with per-proj
 | Frontend | `frontend/` | Next.js (auto) |
 
 ```
-Frontend URL  https://samuelindrabastian.me  → NEXT_PUBLIC_BACKEND_URL = backend URL
+Frontend URL  https://www.samuelindrabastian.my.id  → NEXT_PUBLIC_BACKEND_URL = backend URL
 Admin URL     https://admin.vercel.app      → API_URL                = backend URL
 Backend URL   https://backend.vercel.app    → Appwrite + JWT + CORS  = configured
 ```

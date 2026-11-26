@@ -164,10 +164,28 @@ func (s *Server) HandleHealth(w http.ResponseWriter, r *http.Request) {
 
 // ---- Public: projects ----
 func (s *Server) HandleProjects(w http.ResponseWriter, r *http.Request) {
-	items, err := s.db.ListDocuments("projects", nil)
-	if err != nil {
-		errJSON(w, http.StatusServiceUnavailable, "Karya sedang tidak tersedia untuk sementara")
-		return
+	const pageSize = 25
+	items := make([]appwrite.Doc, 0)
+	limit := appwrite.Q("limit", "", []int{pageSize})
+	queries := []string{limit}
+	seenCursors := make(map[string]bool)
+	for {
+		page, err := s.db.ListDocuments("projects", queries)
+		if err != nil {
+			errJSON(w, http.StatusServiceUnavailable, "Karya sedang tidak tersedia untuk sementara")
+			return
+		}
+		items = append(items, page...)
+		if len(page) < pageSize {
+			break
+		}
+		cursor := docID(page[len(page)-1])
+		if cursor == "" || seenCursors[cursor] {
+			errJSON(w, http.StatusServiceUnavailable, "Karya sedang tidak tersedia untuk sementara")
+			return
+		}
+		seenCursors[cursor] = true
+		queries = []string{limit, appwrite.Q("cursorAfter", "", []string{cursor})}
 	}
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "items": items})
 }
