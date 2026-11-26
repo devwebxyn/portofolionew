@@ -2,13 +2,13 @@ import { useId } from "react";
 import type { CSSProperties } from "react";
 
 type Point = [number, number, number];
-const project = ([x, y, z]: Point) => [(400 + (x - y) * .88).toFixed(1), (269 + (x + y) * .43 - z).toFixed(1)];
-const shape = (points: Point[]) => points.map((p) => project(p).join(",")).join(" ");
-const square = (x: number, y: number, w: number, d: number, z: number): Point[] =>
+export const project = ([x, y, z]: Point) => [(400 + (x - y) * .88).toFixed(1), (269 + (x + y) * .43 - z).toFixed(1)];
+export const shape = (points: Point[]) => points.map((p) => project(p).join(",")).join(" ");
+export const square = (x: number, y: number, w: number, d: number, z: number): Point[] =>
   [[x,y,z],[x+w,y,z],[x+w,y+d,z],[x,y+d,z]];
-const trace = (points: Point[]) => "M" + points.map((p) => project(p).join(",")).join("L");
+export const trace = (points: Point[]) => "M" + points.map((p) => project(p).join(",")).join("L");
 
-function Slab({ x, y, w, d, z, depth, top, side, edge = "#fff4" }: {
+export function Slab({ x, y, w, d, z, depth, top, side, edge = "#fff4" }: {
   x: number; y: number; w: number; d: number; z: number; depth: number; top: string; side: string; edge?: string;
 }) {
   const t = square(x,y,w,d,z);

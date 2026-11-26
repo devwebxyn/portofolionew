@@ -5,15 +5,23 @@ export const name = "Samuel Indra Bastian";
 export const siteTitle = `${name} — Pemrograman low-level & sistem Linux`;
 export const siteDescription = "Portofolio Samuel Indra Bastian. Eksplorasi pemrograman low-level, sistem Linux, arsitektur komputer, dan elektronika.";
 
+export const worlds = [
+  { href: "/electronics", label: "Elektronika" },
+  { href: "/embedded", label: "Embedded & firmware" },
+  { href: "/semiconductor", label: "Silikon & fabrikasi" },
+  { href: "/systems", label: "Sistem komputer" },
+  { href: "/computing", label: "GPU, CUDA & AI" },
+  { href: "/lab", label: "Laboratorium" },
+];
+
 export const navigation = [
   { href: "/", label: "Beranda" },
-  { href: "/about", label: "Tentang" },
+  { href: "/about", label: "Tentang saya" },
   { href: "/journey", label: "Perjalanan" },
   { href: "/projects", label: "Proyek" },
-  { href: "/electronics", label: "Elektronika" },
-  { href: "/systems", label: "Sistem" },
   { href: "/ai", label: "Bersama AI" },
   { href: "/contact", label: "Kontak" },
+  ...worlds,
 ];
 
 export const channels = [

@@ -6,6 +6,7 @@ import { channels, name, pageMetadata, siteDescription, siteTitle, siteUrl } fro
 import { SceneObserver } from "@/components/bare/SceneControls";
 import "./globals.css";
 import "./scenes.css";
+import "./exhibition.css";
 
 const display = localFont({ src: "./fonts/space-grotesk.woff2", variable: "--font-display", weight: "400 700", display: "swap" });
 const serif = localFont({ src: "./fonts/instrument-serif-italic.woff2", variable: "--font-serif", style: "italic", display: "swap" });
@@ -46,7 +47,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           .menu-toggle { display: none; }
           .navigation { display: flex; position: static; flex-flow: row wrap; gap: 0 16px; visibility: visible; opacity: 1; transform: none; padding: 0; overflow: visible; box-shadow: none; }
           .navigation a:last-child { margin-top: 0; }
-        }`}</style></noscript>
+        }
+        .navigation .world-panel { position: static; display: flex; flex-wrap: wrap; visibility: visible; opacity: 1; transform: none; min-width: 0; gap: 8px; }
+        .world-menu > button { display: none; }`}</style></noscript>
         <main id="konten" tabIndex={-1}>{children}</main>
         <Footer />
       </body>

@@ -16,7 +16,7 @@ async function Results({ searchParams }: Props) {
 export default function ProjectsPage({ searchParams }: Props) {
   return <section className="frame page-top archive-page">
     <Chapter id="ARSIP" label="Proyek terbit" />
-    <header className="archive-title entrance"><h1>Sebuah arsip <em>eksperimen.</em></h1><p className="lead">Perangkat lunak, sistem, dan elektronika yang saya bangun dan terbitkan.</p></header>
+    <header className="archive-title entrance"><h1>Sebuah arsip <em>eksperimen.</em></h1><p className="lead">Di sini saya mengarsipkan karya yang sudah saya terbitkan. Buka detail untuk melihat teknologi, catatan, dan tautan yang tersedia pada setiap proyek.</p></header>
     <Suspense fallback={<ProjectSkeleton />}><Results searchParams={searchParams} /></Suspense>
   </section>;
 }

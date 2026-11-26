@@ -1,0 +1,69 @@
+import { Chapter, NextChapter, Scene } from "@/components/bare/Exhibit";
+import { Essay, Index, Note, sources } from "@/components/exhibition/Editorial";
+import { Gpu, ArtBoard } from "@/components/exhibition/Machines";
+import { Workload, Turntable } from "@/components/exhibition/InteractiveBoards";
+import { TransferArt } from "@/components/exhibition/Diagrams";
+import { Sequence, type Step } from "@/components/exhibition/Sequence";
+import { pageMetadata } from "@/lib/site";
+import type { CSSProperties } from "react";
+
+export const metadata=pageMetadata("/computing","GPU computing, CUDA dan AI","Arsitektur GPU, pekerjaan paralel, model CUDA, hierarki memori, dan alur pengembangan AI.");
+
+function GridArt({level}:{level:number}) {
+  return <ArtBoard className="cuda-art">
+    <path d="m91 88 369-45 75 77-367 53-77-85v176l77 70 367-63V120m-367 53v161" fill="#303c48" stroke="#7c8a91" />
+    <g transform="matrix(1 -.125 .46 .74 95 91)">
+      {Array.from({length:level===0?1:level===1?2:6},(_,i)=><g key={i} className="cuda-block" style={{"--n":i} as CSSProperties} transform={`translate(${(i%3)*113+10} ${Math.floor(i/3)*113+9})`}>
+        <rect width={level===0?190:96} height={level===0?140:97} fill="#32615f" stroke="#93c8b3"/>
+        {Array.from({length:level===0?1:9},(_,j)=><rect key={j} className="cuda-thread" x={j%3*27+9} y={Math.floor(j/3)*28+8} width={level===0?164:23} height={level===0?119:22} fill={j===0?"#edba91":"#7ea69b"} stroke="#293c3d"/>)}
+      </g>)}
+    </g>
+    <text x="92" y="355" className="art-label" fill="#cdddcf">{["THREAD · SATU INDEKS","BLOCK · SEKUMPULAN THREAD","GRID · BEBERAPA BLOCK"][level]}</text>
+  </ArtBoard>;
+}
+
+function TensorArt() {
+  return <div className="tensor-art" aria-hidden="true">
+    {[0,1,2].map(g=><div className="tensor-sheet" key={g} style={{"--n":g} as CSSProperties}>{Array.from({length:16},(_,i)=><i key={i} style={{"--n":i} as CSSProperties}>{(i*7+g*11)%13}</i>)}</div>)}
+    <p>MATRIKS A × MATRIKS B → C</p>
+  </div>;
+}
+const pipeline:Step[]=[
+  {label:"Data",text:"Kumpulkan data sesuai tujuan. Periksa sumber, izin penggunaan, distribusi contoh, dan definisi label sebelum membuat keputusan model.",art:<TransferArt from="SUMBER" to="DATASET" units={["A","B","C"]}/>},
+  {label:"Preprocessing",text:"Data diubah menjadi representasi numerik dan dibagi dengan cara yang mengurangi kebocoran antarset. Tensor menyimpan nilai dan bentuk multidimensi.",art:<TransferArt from="CONTOH" to="TENSOR" units={["[N]","[H]","[W]"]}/>},
+  {label:"Model",text:"Arsitektur menentukan operasi dan parameter yang terhubung. Perkalian matriks adalah contoh operasi umum yang bisa memanfaatkan banyak unit komputasi.",art:<TensorArt/>},
+  {label:"Training",text:"Prediksi dibandingkan dengan target melalui fungsi loss. Gradien membantu memperbarui parameter. Memori sering juga menyimpan aktivasi dan keadaan optimizer.",art:<TransferArt from="LOSS" to="BOBOT" units={["∂L","ΔW","W'"]}/>},
+  {label:"Evaluasi",text:"Ukur perilaku pada data yang disisihkan. Periksa pola kegagalan dan kecocokan metrik dengan tugas, termasuk contoh yang kurang terwakili.",art:<TransferArt from="PREDIKSI" to="METRIK" units={["UJI","REF","SEL"]}/>},
+  {label:"Inferensi",text:"Model menggunakan parameter yang sudah ditetapkan untuk menghasilkan keluaran baru. Latensi, throughput, memori, serta perpindahan data dapat membatasi pengalaman pengguna.",art:<TransferArt from="INPUT" to="OUTPUT" units={["X","F(X)","Y"]}/>},
+];
+
+export default function Computing(){
+  return <>
+    <section className="world-hero gpu-hero"><div className="frame page-top">
+      <Chapter id="KOMPUTASI" label="GPU, CUDA, dan kecerdasan buatan"/>
+      <header className="world-title entrance"><h1>Bekerja <em>secara paralel.</em></h1><p className="lead">Ketika banyak elemen menjalani operasi serupa, cara membagi kerja dan memindahkan data menjadi sama pentingnya dengan operasi itu sendiri.</p></header>
+      <Turntable label="Sudut rakitan GPU"><Gpu/></Turntable>
+      <Index items={[["beban","Pembagian pekerjaan"],["cuda","Model CUDA"],["model-ai","Jalur model AI"]]}/>
+    </div></section>
+    <Essay id="beban" number="01" title="Latensi dan throughput">
+      <h2>Satu pekerjaan, <em>banyak unit.</em></h2>
+      <div><p>CPU dan GPU sama-sama bisa menjalankan pekerjaan paralel, dengan penekanan berbeda. CPU dirancang untuk tugas yang bervariasi dan respons cepat pada alur kontrol yang rumit. GPU menekankan throughput ketika banyak operasi dapat berjalan bersamaan, misalnya pemrosesan elemen gambar atau matriks.</p><p>Yang ingin saya pahami adalah kapan pembagian itu menguntungkan. Jika setiap langkah bergantung pada hasil sebelumnya, hanya sebagian pekerjaan yang dapat dibagi. Jika data perlu bolak-balik antara host dan perangkat, keuntungan komputasi dapat hilang karena waktu transfer.</p><p>Model berikut membagikan item bebas ke satu atau empat unit dengan durasi per item yang sama. Jumlah putaran memberi gambaran sederhana tentang pembagian pekerjaan, dengan asumsi tanpa overhead dan tanpa ketergantungan data.</p></div>
+    </Essay>
+    <div className="frame"><Workload/></div>
+    <section className="section frame" id="cuda"><Chapter id="02" label="Model eksekusi NVIDIA CUDA"/><div className="section-heading"><h2>Dari thread <em>ke grid.</em></h2><p className="lead">CUDA memberi cara untuk menulis sebuah kernel dan menentukan bagaimana banyak thread memproses bagian data yang berbeda.</p></div>
+      <Sequence label="Hierarki eksekusi" steps={[
+        {label:"Thread",text:"Thread menjalankan instance kernel. Indeksnya dapat digunakan untuk memilih elemen data. Register biasanya menyimpan nilai yang dekat dengan eksekusi thread.",art:<GridArt level={0}/>},
+        {label:"Block",text:"Sejumlah thread membentuk satu block. Thread dalam block dapat bekerja sama melalui shared memory dan sinkronisasi yang didukung. Register dan shared memory memakai sumber daya perangkat.",art:<GridArt level={1}/>},
+        {label:"Grid",text:"Seluruh block dari satu peluncuran membentuk grid. Perangkat menjadwalkan block pada unit eksekusi yang tersedia; posisi grid tidak menentukan urutan eksekusi.",art:<GridArt level={2}/>},
+      ]}/>
+      <Note label="Mengapa hierarki memori penting?"><p>GPU memiliki ruang memori dengan kegunaan berbeda. Global memory dapat dijangkau luas, tetapi pola akses dan locality berpengaruh pada throughput. Shared memory dapat membantu kerja sama di dalam block. Cache serta register mengurangi sebagian perjalanan data, bergantung arsitektur, konfigurasi, dan kernel.</p></Note>
+      <Note label="Apa yang terjadi ketika thread berbeda jalur?"><p>Pada GPU NVIDIA, thread dalam warp dijalankan dengan model SIMT. Jalur cabang berbeda dapat mengurangi efisiensi jika kelompok perlu mengerjakan jalur bergantian. Visual grid menggambarkan pengorganisasian kerja, bukan pemetaan fisik tiap thread.</p></Note>
+      <p className="reference">Rujukan <a href={sources.cuda}>NVIDIA CUDA Programming Guide</a>.</p>
+    </section>
+    <section className="section gpu-band" id="model-ai"><div className="frame"><Chapter id="03" label="Jalur komputasi model AI"/><div className="section-heading"><h2>Dari data <em>hingga inferensi.</em></h2><p className="lead">Tahapan ini memberi kerangka untuk mempelajari cara sebuah model dibangun dan digunakan. Eksplorasi saya berfokus pada hubungan operasi matematika, memori, dan verifikasi hasil.</p></div>
+      <Sequence label="Pengembangan model" steps={pipeline}/>
+      <Scene art={<TensorArt/>} label="Operasi matriks konseptual" className="tensor-scene"/>
+    </div></section>
+    <NextChapter href="/ai" title="AI juga bagian dari cara saya bekerja.">Baca perjalanan bersama AI</NextChapter>
+  </>;
+}

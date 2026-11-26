@@ -86,9 +86,9 @@ This design keeps API keys and admin credentials entirely server-side and allows
 ## Apps
 
 ### 1. Frontend — public portfolio
-Next.js 16 (App Router, Turbopack), TypeScript, Tailwind CSS v4, SVG and CSS motion.
+Next.js 16 (App Router, Turbopack), TypeScript, Tailwind CSS v4, SVG, CSS 3D, and motion activated in the viewport.
 
-- Pages: `/`, `/about`, `/journey`, `/projects`, `/projects/[identifier]`, `/electronics`, `/systems`, `/ai`, `/contact`. `/profile` redirects to `/about`.
+- Pages: `/`, `/about`, `/journey`, `/projects`, `/projects/[identifier]`, `/electronics`, `/systems`, `/embedded`, `/semiconductor`, `/computing`, `/lab`, `/ai`, `/contact`. `/profile` redirects to `/about`.
 - SEO: `metadata`, `sitemap.xml`, `robots.txt`, JSON-LD.
 - Data: live reads from Go and Appwrite, stable Appwrite IDs for project detail, streamed project loading states, and server-side search. The API paginates Appwrite internally.
 

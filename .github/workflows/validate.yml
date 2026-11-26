@@ -29,4 +29,5 @@ jobs:
         working-directory: frontend
       - run: pnpm install --frozen-lockfile && pnpm lint && pnpm build && pnpm exec tsc --noEmit
         working-directory: admin
+      - run: node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/circuit-models.mjs
       - run: bash tests/run-smoke.sh

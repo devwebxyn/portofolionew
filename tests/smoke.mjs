@@ -20,7 +20,7 @@ async function ready(url) {
 
 await Promise.all([ready(fixture + "/status"), ready(publicSite + "/robots.txt"), ready(admin + "/login")]);
 await mode({ projects: "normal", contact: "normal" });
-for (const path of ["/", "/about", "/journey", "/projects", "/projects/uji-papan", "/electronics", "/systems", "/ai", "/contact", "/robots.txt", "/sitemap.xml", "/og.png", "/icon.svg"]) {
+for (const path of ["/", "/about", "/journey", "/projects", "/projects/uji-papan", "/electronics", "/systems", "/embedded", "/semiconductor", "/computing", "/lab", "/ai", "/contact", "/robots.txt", "/sitemap.xml", "/og.png", "/icon.svg"]) {
   assert.equal((await page(path)).status, 200, path);
 }
 assert.match((await page("/")).html, /Pemrograman low-level/);
@@ -28,7 +28,9 @@ assert.equal((await page("/profile")).status, 308);
 assert.equal((await page("/profile")).headers.get("location"), "/about");
 assert.equal((await page("/projects/hilang")).status, 404);
 assert.equal((await page("/tidak-ada")).status, 404);
-assert.match((await page("/sitemap.xml")).html, /projects\/uji-papan/);
+const sitemap=(await page("/sitemap.xml")).html;
+assert.match(sitemap, /projects\/uji-papan/);
+for (const path of ["embedded","semiconductor","computing","lab"]) assert.match(sitemap, new RegExp(`/${path}</loc>`));
 const search = await page("/projects?q=Firmware");
 assert.match(search.html, /Papan kendali mini/);
 assert.doesNotMatch(search.html, /Penjelajah memori/);

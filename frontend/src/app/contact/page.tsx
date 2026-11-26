@@ -9,7 +9,7 @@ export const metadata = pageMetadata("/contact", "Kontak", "Hubungi Samuel Indra
 export default function Contact() {
   return <section className="frame page-top contact-page">
     <Chapter id="KONTAK" label="Buka sambungan" />
-    <header className="contact-title entrance"><h1>Mari <em>terhubung.</em></h1><p className="lead">Ada pertanyaan tentang Linux, elektronika, atau eksperimen yang ingin kamu bahas? Kirim pesan atau temui saya lewat kanal berikut.</p></header>
+    <header className="contact-title entrance"><h1>Mari <em>terhubung.</em></h1><p className="lead">Saya senang berdiskusi tentang Linux, elektronika, atau hubungan keduanya. Jika menghubungi saya soal rangkaian atau program, sertakan konteks singkat dan pertanyaan yang sedang kamu telusuri.</p></header>
     <div className="contact-layout">
       <Scene art={<Connection />} label="Jalur sinyal" />
       <div className="contact-panel"><h2>Tulis pesan</h2><p>Alamat emailmu saya gunakan untuk membalas pesan.</p><ContactForm /><noscript><p>Gunakan kanal lain di halaman ini untuk mengirim pesan.</p><style>{".contact-form { display: none; }"}</style></noscript></div>

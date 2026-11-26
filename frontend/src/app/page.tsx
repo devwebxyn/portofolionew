@@ -5,7 +5,8 @@ import { Action, TextLink } from "@/components/Editorial";
 import { ProjectShowcase, ProjectSkeleton } from "@/components/ProjectShowcase";
 import { Abstraction, Connection, Logic, Memory, Registers, Stack } from "@/components/bare/Computing";
 import { Chapter, Scene } from "@/components/bare/Exhibit";
-import { Board, Processor } from "@/components/bare/Hardware";
+import { Processor } from "@/components/bare/Hardware";
+import { AtlasFirmware, AtlasIndex, AtlasMaterial, AtlasParallel } from "@/components/exhibition/HomeAtlas";
 import { ProcessorStage } from "@/components/bare/SceneControls";
 
 const languages = [
@@ -24,24 +25,27 @@ export default function Home() {
           <p className="eyebrow"><span className="status-dot" /> Samuel Indra Bastian</p>
           <h1><span><b>Komputasi</b></span><span><b>hingga ke</b></span><span><b><em>lapisan dasar.</em></b></span></h1>
           <p className="opening-role">Penggemar pemrograman low-level &amp; sistem Linux</p>
-          <p className="lead">Saya mempelajari bagaimana kode menjadi instruksi, bagaimana Linux menjalankannya, dan bagaimana rangkaian membuatnya bekerja.</p>
-          <div className="opening-actions"><Action href="/systems">Jelajahi sistem</Action><Link className="text-link opening-scroll" href="#lapisan"><ArrowDown size={16} aria-hidden /> Lihat lapisan</Link></div>
+          <p className="lead">Saya pelajar Teknik Elektronika Industri di SMK PGRI 3 Malang. Saya mengikuti jalur dari material dan rangkaian hingga firmware, Linux, serta aplikasi.</p>
+          <div className="opening-actions"><Action href="/systems">Jelajahi sistem</Action><Link className="text-link opening-scroll" href="#material"><ArrowDown size={16} aria-hidden /> Mulai dari silikon</Link></div>
         </div>
         <ProcessorStage><Processor /></ProcessorStage>
       </div>
-      <div className="frame opening-index"><span>PERANGKAT LUNAK <i /> PERANGKAT KERAS</span><span>01—05 / EKSPLORASI</span></div>
+      <div className="frame opening-index"><span>PERANGKAT LUNAK <i /> PERANGKAT KERAS</span><span>SILIKON → APLIKASI</span></div>
     </section>
 
+    <AtlasIndex/>
+    <AtlasMaterial/>
+    <AtlasFirmware/>
     <section className="section frame" id="lapisan">
-      <Chapter id="01" label="Lapisan komputasi" />
+      <Chapter id="03" label="Dari kernel ke aplikasi" />
       <div className="feature-grid stack-feature">
         <div className="feature-copy"><h2>Apa yang terjadi <em>setelah klik?</em></h2><p className="lead">Sebuah aksi di aplikasi bisa melintasi runtime, userspace, dan kernel sebelum mencapai perangkat keras. Setiap lapisan punya tanggung jawabnya sendiri.</p><TextLink href="/systems">Telusuri arsitektur Linux</TextLink></div>
         <Scene art={<Stack />} label="Aplikasi → Perangkat keras" className="stack-scene" />
       </div>
     </section>
-    <section className="section language-section">
+    <section className="section language-section" id="bahasa">
       <div className="frame">
-        <Chapter id="02" label="Bahasa & logika" />
+        <Chapter id="04" label="Bahasa & logika" />
         <div className="section-heading"><h2>Lima cara membaca <em>mesin.</em></h2><p className="lead">Bahasa yang saya pelajari memberi cara berbeda untuk menelusuri data, instruksi, dan logika digital.</p></div>
         <div className="language-grid">
           {languages.map(({name, keyword, art, text}, i) => <article className={`language language-${i}`} data-scene key={name}>
@@ -51,22 +55,14 @@ export default function Home() {
         </div>
       </div>
     </section>
-    <section className="section frame">
-      <Chapter id="03" label="Arsip proyek" />
+    <AtlasParallel/>
+    <section className="section frame" id="arsip">
+      <Chapter id="06" label="Arsip proyek" />
       <div className="section-heading"><h2>Eksperimen <em>yang terbit.</em></h2><TextLink href="/projects">Lihat arsip proyek</TextLink></div>
       <Suspense fallback={<ProjectSkeleton compact />}><ProjectShowcase preview /></Suspense>
     </section>
-    <section className="section board-band">
-      <div className="frame">
-        <Chapter id="04" label="Meja kerja elektronika" />
-        <div className="feature-grid reverse-feature">
-          <Scene art={<Board />} label="Substrat / tembaga / komponen" className="board-scene" />
-          <div className="feature-copy"><h2>Ketika sinyal <em>menjadi fisik.</em></h2><p className="lead">Dari desain PCB hingga penyolderan SMD dan THT, saya mengikuti jalur sinyal dan memeriksa sambungan yang membuat rangkaian bekerja.</p><TextLink href="/electronics">Masuk ke meja kerja</TextLink></div>
-        </div>
-      </div>
-    </section>
     <section className="section frame">
-      <Chapter id="05" label="Perjalanan" />
+      <Chapter id="07" label="Perjalanan" />
       <div className="journey-preview" data-scene><p className="date-display"><span>Juli</span> 2024</p><div><h2>Bermula dari <em>sebuah pertanyaan.</em></h2><p className="lead">Saya mulai membangun perangkat lunak bersama AI pada Juli 2024. Dari sana, saya semakin ingin memahami sistem yang memberi instruksi itu tempat untuk bekerja.</p><TextLink href="/journey">Baca perjalanan</TextLink></div></div>
     </section>
     <section className="closing" data-scene>
