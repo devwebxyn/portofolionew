@@ -1,14 +1,22 @@
 name: Portfolio validation
 on:
   pull_request:
+    branches: [main]
+  push:
+    branches: [main, redesign/ai-native-personal-portfolio]
+
+concurrency:
+  group: portfolio-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
   validation:
+    name: Lint, builds, unit and integration tests
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
     env:
       NEXT_TELEMETRY_DISABLED: 1
     steps:
@@ -23,11 +31,16 @@ jobs:
         with:
           go-version-file: backend/go.mod
           cache-dependency-path: backend/go.sum
-      - run: go test ./...
+      - name: Test Go backend
+        run: go test ./...
         working-directory: backend
-      - run: pnpm install --frozen-lockfile && pnpm lint && pnpm build && pnpm exec tsc --noEmit
+      - name: Validate and build the portfolio
+        run: pnpm install --frozen-lockfile && pnpm lint && pnpm build && pnpm exec tsc --noEmit
         working-directory: frontend
-      - run: pnpm install --frozen-lockfile && pnpm lint && pnpm build && pnpm exec tsc --noEmit
+      - name: Validate and build the admin app
+        run: pnpm install --frozen-lockfile && pnpm lint && pnpm build && pnpm exec tsc --noEmit
         working-directory: admin
-      - run: node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/circuit-models.mjs
-      - run: bash tests/run-smoke.sh
+      - name: Test circuit models
+        run: node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/circuit-models.mjs
+      - name: Run project and contact integration smoke tests
+        run: bash tests/run-smoke.sh

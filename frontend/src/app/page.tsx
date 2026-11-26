@@ -2,6 +2,7 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Action, TextLink } from "@/components/Editorial";
+import { ResearchPreview } from "@/components/ResearchFocus";
 import { ProjectShowcase, ProjectSkeleton } from "@/components/ProjectShowcase";
 import { Abstraction, Connection, Logic, Memory, Registers, Stack } from "@/components/bare/Computing";
 import { Chapter, Scene } from "@/components/bare/Exhibit";
@@ -59,6 +60,7 @@ export default function Home() {
     <section className="section frame" id="arsip">
       <Chapter id="06" label="Arsip proyek" />
       <div className="section-heading"><h2>Eksperimen <em>yang terbit.</em></h2><TextLink href="/projects">Lihat arsip proyek</TextLink></div>
+      <ResearchPreview />
       <Suspense fallback={<ProjectSkeleton compact />}><ProjectShowcase preview /></Suspense>
     </section>
     <section className="section frame">

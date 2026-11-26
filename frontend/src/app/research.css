@@ -1,0 +1,68 @@
+.research-focus { margin: clamp(2.5rem, 7vw, 6rem) 0; }
+.research-focus h2 { scroll-margin-top: calc(var(--header) + 20px); }
+.research-case {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+  border-block: 1px solid var(--line);
+  margin-top: 20px;
+  background: #182020;
+}
+.research-model { background: #1c1c25; }
+.research-model .research-diagram { order: 2; }
+.research-copy { padding: clamp(20px, 4vw, 52px); align-self: center; }
+.research-copy h3 { font-size: clamp(1.7rem, 3vw, 2.65rem); }
+.research-copy > p { margin: 12px 0; }
+.research-copy .research-status {
+  border-left: 2px solid #9ba6a3;
+  padding-left: 14px;
+  color: var(--muted);
+  font-size: .9rem;
+}
+.research-links { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 20px; }
+.research-links a, .research-preview a { display: inline-flex; align-items: center; gap: 6px; color: #f2bf9a; }
+.research-links a:hover { text-decoration: underline; }
+.research-diagram {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: clamp(18px, 4vw, 50px);
+  background: radial-gradient(ellipse at 50% 45%, #29423e, #17201f 75%);
+  perspective: 680px;
+  font: .82rem/1.45 var(--mono);
+}
+.research-diagram figcaption { text-align: center; max-width: 38ch; color: #c0ccc1; }
+.hyper-sources, .hyper-split, .tensor-input, .tensor-return { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.hyper-sources span, .hyper-split span, .tensor-return span { padding: 6px 10px; border: 1px solid #678b80; }
+.hyper-probe, .tensor-block {
+  width: min(100%, 310px);
+  display: grid;
+  gap: 5px;
+  padding: 18px;
+  text-align: center;
+  border: 1px solid #a0c6ad;
+  background: #345950;
+  box-shadow: 0 8px #193931, 0 16px #14221f;
+  transform: rotateX(17deg);
+}
+.cyber-diagram { background: radial-gradient(ellipse at 50% 45%, #433b53, #211f29 74%); }
+.tensor-block { background: #574768; border-color: #c9accf; box-shadow: 0 8px #43304a, 0 16px #261f32; }
+.tensor-input { align-items: center; }
+.tensor-input i { width: 16px; height: 16px; background: #ba9ecc; border: 1px solid #dfc6e5; }
+.tensor-return span { border-color: #917c9c; }
+.research-preview {
+  margin-bottom: 26px;
+  padding: 18px 0;
+  border-block: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+@media (max-width: 720px) {
+  .research-case { grid-template-columns: 1fr; }
+  .research-model .research-diagram { order: 0; }
+}

@@ -26,7 +26,7 @@ export const navigation = [
 
 export const channels = [
   { label: "Email", href: "mailto:contact@samuelindrabastian.my.id", detail: "contact@samuelindrabastian.my.id" },
-  { label: "GitHub", href: "https://github.com/devwebxyn", detail: "devwebxyn" },
+  { label: "GitHub", href: "https://github.com/samuelindra123", detail: "samuelindra123" },
   { label: "Instagram", href: "https://www.instagram.com/samuelindrabastian/", detail: "@samuelindrabastian" },
   { label: "WhatsApp", href: "https://wa.me/62882019494158", detail: "Kirim pesan" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/samuel-indra-bastian/", detail: "Samuel Indra Bastian" },
