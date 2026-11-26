@@ -64,13 +64,6 @@ export function Abstraction() {
   </div>;
 }
 
-export function Workflow({ active }: { active: number }) {
-  return <div className="workflow-art" aria-hidden="true">
-    <svg viewBox="0 0 400 260" preserveAspectRatio="none"><path d="M66 65H334v130H66V65" fill="none" stroke="#a8836e" strokeWidth="1.4" strokeDasharray="5 7"/><path className="workflow-signal" d="M66 65H334v130H66V65" fill="none" stroke="#deab84" strokeWidth="2" pathLength="1"/></svg>
-    {["Ide","Instruksi","Implementasi AI","Pengujian","Evaluasi","Iterasi"].map((step,i)=><div className={i === active ? "workflow-active" : ""} key={step} style={index(i)}><small>0{i+1}</small><span>{step}</span></div>)}
-  </div>;
-}
-
 export function Connection() {
   return <svg className="connection-art" viewBox="0 0 510 280" aria-hidden="true">
     <defs><pattern id="connection-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0v20" fill="none" stroke="#a7a19a" strokeOpacity=".14"/></pattern></defs>

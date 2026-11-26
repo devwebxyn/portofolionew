@@ -1,5 +1,5 @@
 import { Chapter, NextChapter } from "@/components/bare/Exhibit";
-import { Workflow } from "@/components/bare/Computing";
+import { Workflow } from "@/components/exhibition/Workflow";
 import { Explorer } from "@/components/bare/SceneControls";
 import { Essay, Index, Note } from "@/components/exhibition/Editorial";
 import { pageMetadata } from "@/lib/site";
@@ -21,6 +21,7 @@ export default function AI() {
       <Chapter id="METODE" label="Bersama AI" />
       <header className="ai-header entrance"><h1>Saya mengarahkan. <em>AI membantu membangun.</em></h1><p className="lead">Sejak Juli 2024, AI menjadi alat utama dalam pengembangan perangkat lunak saya. Saya menentukan tujuan, membaca perubahan, dan menguji hasil sebelum melanjutkan.</p></header>
       <Index items={[["praktik-ai","Praktik pengembangan"],["verifikasi-ai","Menguji hasil"],["batas-ai","Batas dan arah"]]}/>
+      <p className="workflow-intro">Ikuti satu contoh dari awal hingga akhir: cara arsip merespons saat API proyek mengembalikan HTTP 503.</p>
       <Explorer label="Pilih langkah kerja" className="workflow-explorer" views={steps.map(([label,title,text],i)=>({label,title,text,art:<Workflow active={i} />}))} />
     </section>
     <Essay id="praktik-ai" number="01" title="Praktik pengembangan" tone="paper">

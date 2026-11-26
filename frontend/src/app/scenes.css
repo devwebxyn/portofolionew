@@ -96,14 +96,6 @@
 .wafer-scene, .journey-wafer { background: radial-gradient(ellipse at 50% 57%,#393438,#212124 64%); }
 .workflow-explorer { background: #212023; }
 .workflow-explorer .explorer-art { background: radial-gradient(ellipse at 53% 45%,#3c3433,#1b1b1f 69%); }
-.workflow-art { display: grid; width: min(91%,555px); aspect-ratio: 1.58; grid-template: 1fr 1fr / repeat(3,minmax(0,1fr)); place-items: center; position: relative; isolation: isolate; perspective: 620px; }
-.workflow-art svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
-.workflow-art > div { display: grid; gap: 4px; width: 90%; max-width: 136px; min-height: 60px; align-content: center; background: #393335; border: 1px solid #7b6964; box-shadow: 0 7px #161417; transform: rotateX(8deg) skewY(-4deg); padding: 5px 8px; font: clamp(.57rem,1.1vw,.8rem) var(--mono); }
-.workflow-art > div:nth-of-type(4) { grid-area: 2/3; }
-.workflow-art > div:nth-of-type(5) { grid-area: 2/2; }
-.workflow-art > div:nth-of-type(6) { grid-area: 2/1; }
-.workflow-art .workflow-active { border-color: #d5a485; background: #5c4037; }
-.workflow-art small { font-size: .67rem; color: #e1b9a2; }
 
 @media (max-width: 710px) {
   .explorer { grid-template-columns: minmax(0,1fr); }
@@ -117,7 +109,6 @@
   .inspect { min-height: 36px; }
   .object-art { min-height: 110px; height: 68%; }
   .stack-plane { font-size: .68rem; }
-  .workflow-art > div { padding-inline: 5px; }
 }
 
 /* Motion only adds to the settled composition. */
@@ -151,7 +142,7 @@
   [data-onscreen] .register-result .register-bank > div:first-child b { animation: register-cycle 700ms var(--ease) both; }
   [data-onscreen] .pipeline-track i { animation: instruction-pass 1200ms var(--ease) both; }
   [data-onscreen] .logic-signal { animation: logic-edge 1250ms var(--ease) both; }
-  [data-onscreen] :is(.workflow-signal,.connection-pulse) { animation: signal-loop 1250ms var(--ease) both; }
+  [data-onscreen] .connection-pulse { animation: signal-loop 1250ms var(--ease) both; }
   [data-onscreen] .timeline-dot { animation: timeline-mark 610ms var(--ease) both; }
   .timeline li[data-seen]::after { content: ""; position: absolute; inset: 28px auto 0 -1px; width: 1px; background: var(--copper); animation: timeline-line 850ms var(--ease) both; }
   [data-onscreen] .date-display { animation: date-press 950ms var(--ease) both; }

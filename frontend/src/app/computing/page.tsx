@@ -32,7 +32,7 @@ function TensorArt() {
 const pipeline:Step[]=[
   {label:"Data",text:"Kumpulkan data sesuai tujuan. Periksa sumber, izin penggunaan, distribusi contoh, dan definisi label sebelum membuat keputusan model.",art:<ModelFlow stage={0}/>},
   {label:"Preprocessing",text:"Data diubah menjadi representasi numerik dan dibagi dengan cara yang mengurangi kebocoran antarset. Tensor menyimpan nilai dan bentuk multidimensi.",art:<ModelFlow stage={1}/>},
-  {label:"Model",text:"Arsitektur menentukan operasi dan parameter yang terhubung. Perkalian matriks adalah contoh operasi umum yang bisa memanfaatkan banyak unit komputasi.",art:<TensorArt/>},
+  {label:"Model",text:"Arsitektur menentukan operasi dan parameter yang terhubung. Perkalian matriks adalah contoh operasi umum yang bisa memanfaatkan banyak unit komputasi.",art:<ModelFlow stage={2}/>},
   {label:"Training",text:"Prediksi dibandingkan dengan target melalui fungsi loss. Gradien membantu memperbarui parameter. Memori sering juga menyimpan aktivasi dan keadaan optimizer.",art:<ModelFlow stage={3}/>},
   {label:"Evaluasi",text:"Ukur perilaku pada data yang disisihkan. Periksa pola kegagalan dan kecocokan metrik dengan tugas, termasuk contoh yang kurang terwakili.",art:<ModelFlow stage={4}/>},
   {label:"Inferensi",text:"Model menggunakan parameter yang sudah ditetapkan untuk menghasilkan keluaran baru. Latensi, throughput, memori, serta perpindahan data dapat membatasi pengalaman pengguna.",art:<ModelFlow stage={5}/>},

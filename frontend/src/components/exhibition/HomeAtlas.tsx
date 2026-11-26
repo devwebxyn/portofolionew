@@ -1,6 +1,7 @@
 import { Chapter, Scene } from "@/components/bare/Exhibit";
 import { Render } from "./Render";
-import { Logic, Memory, Workflow } from "@/components/bare/Computing";
+import { Logic, Memory } from "@/components/bare/Computing";
+import { Workflow } from "./Workflow";
 import { TextLink } from "@/components/Editorial";
 import { Index } from "./Editorial";
 import { CrystalArt, TransistorCutaway } from "./Machines";

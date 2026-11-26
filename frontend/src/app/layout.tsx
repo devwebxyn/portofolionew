@@ -7,6 +7,7 @@ import { SceneObserver } from "@/components/bare/SceneControls";
 import "./globals.css";
 import "./scenes.css";
 import "./exhibition.css";
+import "./workflows.css";
 
 const display = localFont({ src: "./fonts/space-grotesk.woff2", variable: "--font-display", weight: "400 700", display: "swap" });
 const serif = localFont({ src: "./fonts/instrument-serif-italic.woff2", variable: "--font-serif", style: "italic", display: "swap" });

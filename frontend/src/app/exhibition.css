@@ -291,14 +291,7 @@
 @media (max-width:720px) {
   .lab-hero .world-title h1 { font-size: clamp(2.85rem,10vw,5.6rem); }
 }
-.firmware-flow { width: min(90%, 570px); background: #111719; border: 1px solid #52645c; box-shadow: 14px 18px 0 #101416, 0 28px 70px #0008; padding: clamp(20px,4vw,42px); font-family: monospace; color: #d9e7d9; }
-.firmware-flow-top { display:flex; justify-content:space-between; color:#8ba49a; border-bottom:1px solid #42554d; padding-bottom:15px; font-size:11px; letter-spacing:.12em; }
-.firmware-flow-content { min-height:200px; padding:28px 0; }
-.firmware-flow-kind { display:block; color:#d4a17b; margin-bottom:16px; letter-spacing:.15em; font-size:12px; }
-.firmware-flow-line { white-space:pre-wrap; line-height:1.7; animation: firmware-line .45s both; }
-.firmware-flow-output { border-top:1px solid #42554d; padding-top:16px; color:#a9c8b0; font-size:12px; }
 @keyframes firmware-line { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:translateX(0); } }
-@media (prefers-reduced-motion: reduce) { .firmware-flow-line { animation:none; } }
 
 .exhibit-render {
   position: relative;
@@ -338,10 +331,6 @@
 .processor-camera > div { grid-area: 1 / 1; transition: opacity .4s ease, transform .5s ease; }
 .processor-camera > [aria-hidden="true"] { opacity: 0; transform: scale(.93); visibility: hidden; transition: opacity .4s ease, transform .5s ease, visibility .4s; }
 .processor-assembled { transform: translateY(calc(var(--split, 0) * -14px)); }
-.assembly-comparison { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; padding: 12px; text-align: center; }
-.assembly-comparison figcaption { color: var(--muted); font-size: .8rem; }
-.assembly-comparison figure:nth-child(2) { animation: firmware-line .65s .14s both; }
-@media (prefers-reduced-motion: reduce) { .assembly-comparison figure:nth-child(2) { animation: none; } }
 .specimen-cutout { width: 100%; overflow: hidden; }
 .specimen-cutout img { max-width: 520px; margin-inline: auto; transition: transform .32s ease; }
 .specimen-cutout[data-zoom="true"] img { transform: scale(1.35); }
