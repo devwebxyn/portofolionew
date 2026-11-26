@@ -12,7 +12,7 @@ function Toggle({on,change,children}:{on:boolean;change:()=>void;children:ReactN
   return <button type="button" className="action action-outline lab-toggle" aria-pressed={on} onClick={change}>{children}</button>;
 }
 function Bench({art,children,results,note,announce=true}:{art:ReactNode;children:ReactNode;results:ReactNode;note:string;announce?:boolean}) {
-  return <div className="lab-bench" data-scene><div className="lab-display">{art}<span className="signal-label">Model virtual · konseptual</span></div><div className="lab-readout"><div className="lab-inputs">{children}</div><div className="lab-results" aria-live={announce ? "polite" : "off"}>{results}</div><p>{note}</p></div></div>;
+  return <div className="lab-bench" data-scene><div className="lab-display lab-instrument"><div className="lab-instrument-head"><span>Meja ukur virtual</span><i aria-hidden="true"/></div>{art}<span className="signal-label">Model konseptual</span></div><div className="lab-readout"><div className="lab-inputs">{children}</div><div className="lab-results" aria-live={announce ? "polite" : "off"}>{results}</div><p>{note}</p></div></div>;
 }
 function Circuit({voltage="5 V",label="BEBAN",on=true,extra,brightness=1}:{voltage?:string;label?:string;on?:boolean;extra?:ReactNode;brightness?:number}) {
   return <ArtBoard className="circuit-art">
@@ -43,7 +43,7 @@ const f=(n:number,max=2)=>new Intl.NumberFormat("id-ID",{maximumFractionDigits:m
 function Dc() {
   const [v,sv]=useState(5),[r,sr]=useState(100);
   const {amps,watts}=ohm(v,r);
-  return <Bench art={<Circuit voltage={v+" V"} label={r+" Ω"} on={v>0} brightness={Math.min(1,.27+amps*4)} />} results={<><strong>{f(amps*1000)} mA</strong><span>{f(watts*1000)} mW</span></>} note="I = V/R dan P = V²/R. Model sumber DC serta resistor ideal. Skala cahaya hanya membantu membaca perubahan.">
+  return <Bench art={<Circuit voltage={v+" V"} label={r+" Ω"} on={v>0} brightness={Math.min(1,.27+amps*4)} />} results={<><strong>{f(amps*1000)} mA</strong><span>{f(watts*1000)} mW</span><div className="lab-measure-bar" aria-hidden="true"><i style={{width:`${Math.min(100,amps*100/0.6)}%`}}/></div></>} note="I = V/R dan P = V²/R. Model sumber DC serta resistor ideal. Skala cahaya hanya membantu membaca perubahan.">
     <Range label="Tegangan" value={v} min={0} max={12} unit="V" set={sv}/><Range label="Resistansi" value={r} min={20} max={1000} step={20} unit="Ω" set={sr}/>
   </Bench>;
 }

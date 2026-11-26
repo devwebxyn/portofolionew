@@ -1,6 +1,6 @@
 import { Chapter, NextChapter, Scene } from "@/components/bare/Exhibit";
 import { Essay, Index, Note, sources } from "@/components/exhibition/Editorial";
-import { ArtBoard } from "@/components/exhibition/Machines";
+import { CudaScene } from "@/components/exhibition/CudaScene";
 import { Workload } from "@/components/exhibition/InteractiveBoards";
 import { Render } from "@/components/exhibition/Render";
 import { ModelFlow } from "@/components/exhibition/ModelFlow";
@@ -9,19 +9,6 @@ import { pageMetadata } from "@/lib/site";
 import type { CSSProperties } from "react";
 
 export const metadata=pageMetadata("/computing","GPU computing, CUDA dan AI","Arsitektur GPU, pekerjaan paralel, model CUDA, hierarki memori, dan alur pengembangan AI.");
-
-function GridArt({level}:{level:number}) {
-  return <ArtBoard className="cuda-art">
-    <path d="m91 88 369-45 75 77-367 53-77-85v176l77 70 367-63V120m-367 53v161" fill="#303c48" stroke="#7c8a91" />
-    <g transform="matrix(1 -.125 .46 .74 95 91)">
-      {Array.from({length:level===0?1:level===1?2:6},(_,i)=><g key={i} className="cuda-block" style={{"--n":i} as CSSProperties} transform={`translate(${(i%3)*113+10} ${Math.floor(i/3)*113+9})`}>
-        <rect width={level===0?190:96} height={level===0?140:97} fill="#32615f" stroke="#93c8b3"/>
-        {Array.from({length:level===0?1:9},(_,j)=><rect key={j} className="cuda-thread" x={j%3*27+9} y={Math.floor(j/3)*28+8} width={level===0?164:23} height={level===0?119:22} fill={j===0?"#edba91":"#7ea69b"} stroke="#293c3d"/>)}
-      </g>)}
-    </g>
-    <text x="92" y="355" className="art-label" fill="#cdddcf">{["THREAD · SATU INDEKS","BLOCK · SEKUMPULAN THREAD","GRID · BEBERAPA BLOCK"][level]}</text>
-  </ArtBoard>;
-}
 
 function TensorArt() {
   return <div className="tensor-art" aria-hidden="true">
@@ -53,9 +40,9 @@ export default function Computing(){
     <div className="frame"><Workload/></div>
     <section className="section frame" id="cuda"><Chapter id="02" label="Model eksekusi NVIDIA CUDA"/><div className="section-heading"><h2>Dari thread <em>ke grid.</em></h2><p className="lead">CUDA memberi cara untuk menulis sebuah kernel dan menentukan bagaimana banyak thread memproses bagian data yang berbeda.</p></div>
       <Sequence label="Hierarki eksekusi" steps={[
-        {label:"Thread",text:"Thread menjalankan instance kernel. Indeksnya dapat digunakan untuk memilih elemen data. Register biasanya menyimpan nilai yang dekat dengan eksekusi thread.",art:<GridArt level={0}/>},
-        {label:"Block",text:"Sejumlah thread membentuk satu block. Thread dalam block dapat bekerja sama melalui shared memory dan sinkronisasi yang didukung. Register dan shared memory memakai sumber daya perangkat.",art:<GridArt level={1}/>},
-        {label:"Grid",text:"Seluruh block dari satu peluncuran membentuk grid. Perangkat menjadwalkan block pada unit eksekusi yang tersedia; posisi grid tidak menentukan urutan eksekusi.",art:<GridArt level={2}/>},
+        {label:"Thread",text:"Thread menjalankan instance kernel. Indeksnya dapat digunakan untuk memilih elemen data. Register biasanya menyimpan nilai yang dekat dengan eksekusi thread.",art:<CudaScene level={0}/>},
+        {label:"Block",text:"Sejumlah thread membentuk satu block. Thread dalam block dapat bekerja sama melalui shared memory dan sinkronisasi yang didukung. Register dan shared memory memakai sumber daya perangkat.",art:<CudaScene level={1}/>},
+        {label:"Grid",text:"Seluruh block dari satu peluncuran membentuk grid. Perangkat menjadwalkan block pada unit eksekusi yang tersedia; posisi grid tidak menentukan urutan eksekusi.",art:<CudaScene level={2}/>},
       ]}/>
       <Note label="Mengapa hierarki memori penting?"><p>GPU memiliki ruang memori dengan kegunaan berbeda. Global memory dapat dijangkau luas, tetapi pola akses dan locality berpengaruh pada throughput. Shared memory dapat membantu kerja sama di dalam block. Cache serta register mengurangi sebagian perjalanan data, bergantung arsitektur, konfigurasi, dan kernel.</p></Note>
       <Note label="Apa yang terjadi ketika thread berbeda jalur?"><p>Pada GPU NVIDIA, thread dalam warp dijalankan dengan model SIMT. Jalur cabang berbeda dapat mengurangi efisiensi jika kelompok perlu mengerjakan jalur bergantian. Visual grid menggambarkan pengorganisasian kerja, bukan pemetaan fisik tiap thread.</p></Note>

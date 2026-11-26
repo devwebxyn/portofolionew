@@ -1,3 +1,4 @@
+import { PcbIndustry } from "./PcbIndustry";
 import { WorkflowVolume } from "./Workflow";
 import { Render } from "./Render";
 import { FirmwareFlow } from "./FirmwareFlow";
@@ -17,7 +18,7 @@ function AssemblyComparison() {
 }
 
 const steps:Step[]=[
-  {label:"Konsep rangkaian",text:"Tentukan fungsi, kondisi masukan, keluaran, kebutuhan daya, dan batas fisik sebelum memilih susunan komponen.",art:<WorkflowVolume variant="pcb-concept" summary="Contoh konsep pengendali suhu: sensor mengirim pembacaan ke pengendali, lalu sakelar mengatur kipas."><div className="flow-map"><div className="flow-node">Sensor suhu</div><div className="flow-node">Keputusan pengendali</div><div className="flow-branch"><div className="flow-node good">Kipas menyala</div><div className="flow-node bad">Kipas mati</div></div></div><p className="volume-caption">Tentukan dulu perilaku masukan dan keluaran.</p></WorkflowVolume>},
+  {label:"Konsep rangkaian",text:"Tentukan fungsi, kondisi masukan, keluaran, kebutuhan daya, dan batas fisik sebelum memilih susunan komponen.",art:<WorkflowVolume variant="pcb-concept" summary="Contoh konsep filter RC untuk masukan analog sebelum ADC."><div className="flow-map"><div className="flow-node">Masukan analog</div><div className="flow-node">Filter RC</div><div className="flow-branch"><div className="flow-node good">OUT ke ADC</div><div className="flow-node bad">GND referensi</div></div></div><p className="volume-caption">Tentukan dulu perilaku masukan dan keluaran.</p></WorkflowVolume>},
   {label:"Skematik",text:"Gambarkan jaringan (net) antar-pin. Skematik menyatakan hubungan listrik yang harus diwujudkan oleh layout.",art:<PcbLayout mode="schematic"/>},
   {label:"Seleksi komponen",text:"Pilih nilai, rating, toleransi, dan ketersediaan yang sesuai. Baca datasheet untuk orientasi dan batas operasi.",art:<Render name="ic" alt="Contoh kemasan IC dengan kaki untuk pemasangan permukaan"/>},
   {label:"Footprint",text:"Cocokkan pad, pitch, dimensi paket, dan penanda pin satu dengan komponen fisik.",art:<WorkflowVolume variant="pcb-footprint" summary="Paket IC disejajarkan dengan bantalan footprint. Posisi kaki pertama dan jarak antarpad harus cocok."><div className="footprint-scene"><div className="footprint-pads"><span>PIN 1</span></div><Render name="ic" alt=""/></div><p className="volume-caption">Paket fisik di atas footprint. Cocokkan orientasi dan pitch dengan datasheet.</p></WorkflowVolume>},
@@ -38,5 +39,5 @@ const steps:Step[]=[
 ];
 
 export function PcbJourney(){
-  return <><Sequence label="Perjalanan PCB" steps={steps}/><div className="pcb-layer-section"><h3>Telusuri lapisan fisik</h3><LayerConsole/></div></>;
+  return <><Sequence label="Perjalanan PCB" steps={steps.map((step,index)=>({...step,art:<PcbIndustry step={index}>{step.art}</PcbIndustry>}))}/><div className="pcb-layer-section"><h3>Telusuri lapisan fisik</h3><LayerConsole/></div></>;
 }

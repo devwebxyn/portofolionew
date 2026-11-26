@@ -1,7 +1,8 @@
 import { Chapter, NextChapter } from "@/components/bare/Exhibit";
-import { layers, Logic, Memory, Pipeline, Registers, Stack } from "@/components/bare/Computing";
+import { layers, Logic, Memory, Registers, Stack } from "@/components/bare/Computing";
 import { Explorer } from "@/components/bare/SceneControls";
 import { Index } from "@/components/exhibition/Editorial";
+import { InstructionScene } from "@/components/exhibition/InstructionScene";
 import { BootChapter, RuntimeChapter } from "@/components/exhibition/SystemJourney";
 import { pageMetadata } from "@/lib/site";
 
@@ -37,7 +38,7 @@ export default function Systems() {
     <section className="section frame" id="instruksi">
       <Chapter id="02" label="Aliran instruksi" />
       <div className="section-heading"><h2>Empat tahap <em>eksekusi.</em></h2><p className="lead">Model konseptual untuk mengikuti sebuah instruksi. Rincian tahap dan pengurutannya bisa berbeda antarprosesor.</p></div>
-      <Explorer label="Pilih tahap pipeline" className="pipeline-explorer" views={pipeline.map(([label,title,text],i)=>({label,title,text,art:<Pipeline active={i} />}))} />
+      <Explorer label="Pilih tahap pipeline" className="pipeline-explorer" views={pipeline.map(([label,title,text],i)=>({label,title,text,art:<InstructionScene index={i} />}))} />
     </section>
     <RuntimeChapter/>
     <section className="section frame logic-section" id="logika">
