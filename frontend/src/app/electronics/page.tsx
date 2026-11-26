@@ -1,5 +1,5 @@
 import { Chapter, NextChapter, Scene } from "@/components/bare/Exhibit";
-import { Board, ComponentsArt, Microcontroller } from "@/components/bare/Hardware";
+import { Render } from "@/components/exhibition/Render";
 import { Explorer } from "@/components/bare/SceneControls";
 import { LazyExhibit } from "@/components/exhibition/LazyExhibit";
 import { Essay, Index, Note, sources } from "@/components/exhibition/Editorial";
@@ -14,7 +14,7 @@ export default function Electronics() {
       <div className="frame page-top">
         <Chapter id="PCB" label="Meja kerja elektronika" />
         <header className="workbench-title entrance"><h1>Di luar <em>kode.</em></h1><p className="lead">Merancang jalur, memasang komponen, dan memeriksa sinyal. Di meja kerja, cara kerja sistem bisa saya telusuri dengan tangan.</p></header>
-        <Scene art={<Board />} label="Rakitan PCB" className="board-scene workbench-board" />
+        <Scene art={<Render name="pcb-populated" alt="Papan rangkaian dengan IC dan komponen SMD" priority/>} label="Rakitan PCB" className="board-scene workbench-board" />
         <Index items={[["praktek","Dari meja kerja"],["komponen-galeri","Galeri komponen"],["manufaktur-pcb","Pembuatan PCB"],["mikrokontroler","Mikrokontroler"]]}/>
       </div>
     </section>
@@ -38,8 +38,8 @@ export default function Electronics() {
       <Chapter id="04" label="Pemasangan komponen" />
       <div className="section-heading"><h2>Di atas dan <em>menembus papan.</em></h2><p className="lead">Saya menggunakan penyolderan SMD dan THT sesuai jenis komponen dan kebutuhan perakitan.</p></div>
       <Explorer label="Pilih jenis pemasangan" className="component-explorer" views={[
-        {label:"SMD",title:"Sambungan di permukaan",text:"Terminasi komponen bertemu pad di permukaan PCB. Saat menyolder, saya memeriksa posisi, pembasahan timah, dan kemungkinan jembatan antar-pad.",art:<ComponentsArt />},
-        {label:"THT",title:"Kaki melewati lubang",text:"Kaki komponen masuk melalui lubang PCB. Setelah menyolder, saya memeriksa apakah sambungannya terbentuk dengan baik dan kaki terpotong rapi.",art:<ComponentsArt throughHole />},
+        {label:"SMD",title:"Sambungan di permukaan",text:"Terminasi komponen bertemu pad di permukaan PCB. Saat menyolder, saya memeriksa posisi, pembasahan timah, dan kemungkinan jembatan antar-pad.",art:<Render name="smd" alt="Resistor SMD dengan terminasi logam di kedua ujung"/>},
+        {label:"THT",title:"Kaki melewati lubang",text:"Kaki komponen masuk melalui lubang PCB. Setelah menyolder, saya memeriksa apakah sambungannya terbentuk dengan baik dan kaki terpotong rapi.",art:<Render name="r" alt="Resistor through-hole dengan kaki kawat di kedua ujung"/>},
       ]} />
     </section>
     <section className="section paper">
@@ -55,7 +55,7 @@ export default function Electronics() {
     </section>
     <section className="section frame" id="mikrokontroler">
       <div className="feature-grid">
-        <Scene art={<Microcontroller />} label="Paket mikrokontroler" className="mcu-scene" />
+        <Scene art={<Render name="mcu" alt="IC mikrokontroler dengan kontak mengelilingi kemasan"/>} label="Paket mikrokontroler" className="mcu-scene" />
         <div className="feature-copy"><h2>Di tempat kode <em>bertemu pin.</em></h2><p className="lead">Mikrokontroler menghubungkan firmware dengan perangkat melalui periferal seperti GPIO dan timer. Fungsi tiap pin bergantung pada konfigurasi dan chip yang dipakai.</p><details className="hotspot"><summary>GPIO</summary><p>Pin digital yang bisa dibaca sebagai masukan atau dikendalikan sebagai keluaran.</p></details><details className="hotspot"><summary>Timer dan bus</summary><p>Timer menangani pengukuran atau penjadwalan yang bergantung waktu. Bus menghubungkan CPU dengan periferal atau perangkat lain.</p></details></div>
       </div>
     </section>

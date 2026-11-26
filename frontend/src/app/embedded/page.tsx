@@ -1,9 +1,10 @@
 import { Chapter, NextChapter } from "@/components/bare/Exhibit";
 import { Essay, Index, Note, sources } from "@/components/exhibition/Editorial";
-import { BoardModel, type BoardName } from "@/components/exhibition/Machines";
-import { SignalDiagram, TransferArt } from "@/components/exhibition/Diagrams";
+import type { BoardName } from "@/components/exhibition/Machines";
+import { SignalDiagram } from "@/components/exhibition/Diagrams";
+import { FirmwareFlow } from "@/components/exhibition/FirmwareFlow";
 import { Sequence, type Step } from "@/components/exhibition/Sequence";
-import { Turntable } from "@/components/exhibition/InteractiveBoards";
+import { Render } from "@/components/exhibition/Render";
 import { pageMetadata } from "@/lib/site";
 
 export const metadata=pageMetadata("/embedded","Embedded systems dan firmware","Eksplorasi ESP32, ESP32-S3, Raspberry Pi, Pico, Orange Pi, komunikasi periferal, dan alur firmware.");
@@ -42,16 +43,16 @@ const firmware:[string,string,string,string,string?][]=[
 export default function Embedded(){
  return <>
   <section className="world-hero embedded-hero"><div className="frame page-top"><Chapter id="EMBEDDED" label="Papan pengembangan dan firmware"/>
-    <div className="world-split"><header className="world-title entrance"><h1>Kode yang <em>menyentuh pin.</em></h1><p className="lead">Sebuah program dapat hidup di perangkat kecil yang mengukur, mengatur waktu, dan mengirim sinyal. Di sini saya mengikuti jalurnya, dari file sumber hingga GPIO.</p></header><Turntable label="Sudut papan"><BoardModel board="s3"/></Turntable></div>
+    <div className="world-split"><header className="world-title entrance"><h1>Kode yang <em>menyentuh pin.</em></h1><p className="lead">Sebuah program dapat hidup di perangkat kecil yang mengukur, mengatur waktu, dan mengirim sinyal. Di sini saya mengikuti jalurnya, dari file sumber hingga GPIO.</p></header><Render name="s3" alt="Ilustrasi ESP32-S3 dengan modul radio dan dua konektor USB" priority/></div>
     <Index items={[["papan","Papan pengembangan"],["bus","Sinyal dan periferal"],["firmware","Jalur firmware"]]}/>
   </div></section>
   <Essay id="papan" number="01" title="Komputer dalam sebuah papan">
-    <h2>Memilih batas <em>sebuah sistem.</em></h2><div><p>Mikrokontroler menyatukan inti CPU, memori, dan periferal yang dapat dikendalikan dekat perangkat fisik. Kendali sederhana bisa berjalan dengan loop, sementara tugas dengan banyak tenggat dapat mengandalkan RTOS. Komputer papan tunggal biasanya punya SoC, RAM, media penyimpanan, dan antarmuka lebih lengkap untuk menjalankan sistem operasi seperti Linux.</p><p>Saya tertarik pada kedua pendekatan. Di mikrokontroler, perubahan satu register dapat terlihat sebagai perubahan level pin. Di SBC, perangkat yang serupa mungkin diakses melalui driver, lalu dibaca oleh proses userspace. Tegangan dan timing tetap nyata, tetapi tempat menanganinya berbeda.</p><p>Lima papan di bawah mewakili keluarga perangkat yang saya minati. Ilustrasi menunjukkan susunan konseptual dan fungsi antarmuka. Untuk merancang sambungan sungguhan, pinout serta revisi papan perlu diperiksa pada dokumentasi perangkat.</p></div>
+    <h2>Memilih batas <em>sebuah sistem.</em></h2><div><p>Mikrokontroler menyatukan inti CPU, memori, dan periferal yang dapat dikendalikan dekat perangkat fisik. Kendali sederhana bisa berjalan dengan loop, sementara tugas dengan banyak tenggat dapat mengandalkan RTOS. Komputer papan tunggal biasanya punya SoC, RAM, media penyimpanan, dan antarmuka lebih lengkap untuk menjalankan sistem operasi seperti Linux.</p><p>Saya tertarik pada kedua pendekatan. Di mikrokontroler, perubahan satu register dapat terlihat sebagai perubahan level pin. Di SBC, perangkat yang serupa mungkin diakses melalui driver, lalu dibaca oleh proses userspace. Tegangan dan timing tetap nyata, tetapi tempat menanganinya berbeda.</p><p>Lima papan di bawah mewakili keluarga perangkat yang saya minati. Render generatif menunjukkan bentuk dan susunan komponen secara konseptual. Untuk merancang sambungan sungguhan, pinout serta revisi papan perlu diperiksa pada dokumentasi perangkat.</p></div>
   </Essay>
-  <section className="frame"><Sequence label="Papan pengembangan" steps={boards.map(([board,label,text,detail])=>({label,text,detail,art:<BoardModel board={board}/> }))}/><p className="reference">Dokumentasi perangkat <a href={sources.esp}>ESP32 DevKitC</a>, <a href={sources.espS3}>ESP32-S3 DevKitC</a>, dan <a href={sources.pico}>Raspberry Pi Pico</a>.</p></section>
+  <section className="frame"><Sequence label="Papan pengembangan" steps={boards.map(([board,label,text,detail])=>({label,text,detail,art:<Render name={board} alt={`Ilustrasi konseptual papan ${label}`}/> }))}/><p className="reference">Dokumentasi perangkat <a href={sources.esp}>ESP32 DevKitC</a>, <a href={sources.espS3}>ESP32-S3 DevKitC</a>, dan <a href={sources.pico}>Raspberry Pi Pico</a>.</p></section>
   <section className="section frame" id="bus"><Chapter id="02" label="Waktu, data, dan arah sinyal"/><div className="section-heading"><h2>Membaca <em>percakapan di jalur.</em></h2><p className="lead">Satu sinyal dapat memberi level, menandai waktu, atau membawa bagian dari sebuah pesan. Pilih antarmuka dan bandingkan tanggung jawabnya.</p></div><Sequence label="Komunikasi periferal" steps={protocols}/><p className="reference">Gelombang memperlihatkan konsep timing. Diagram bukan rekaman transaksi lengkap.</p></section>
   <section className="section firmware-band" id="firmware"><div className="frame"><Chapter id="03" label="Dari sumber ke eksekusi"/><div className="section-heading"><h2>Bagaimana kode <em>sampai ke flash.</em></h2><p className="lead">Langkah C/C++ ini membantu saya memisahkan keputusan compiler, tata letak memori, dan proses memasukkan citra ke perangkat.</p></div>
-    <Sequence label="Rantai toolchain" steps={firmware.map(([label,text,from,to,code],i)=>({label,text,art:<TransferArt from={from} to={to} code={code} units={i<3?["SRC","OP","REG"]:["2A","0F","7E","B5"]}/> }))}/>
+    <Sequence label="Rantai toolchain" steps={firmware.map(([label,text,from,to,code],i)=>({label,text,art:<FirmwareFlow stage={i}/>, detail:`${from} → ${to}${code ? ` · ${code}` : ""}` }))}/>
     <Note label="Kapan flashing berbeda dari fabrikasi?"><p>Fabrikasi membentuk rangkaian fisik chip, sementara flashing menulis data ke memori nonvolatile pada target yang mendukungnya. Firmware, program boot, isi flash, RAM, ISA, dan reset sangat bergantung pada keluarga perangkat. Citra dapat diprogram setelah pemasangan pada PCB jika rancangan sistem mendukungnya.</p></Note>
     <Note label="Apa yang terjadi setelah startup?"><p>Startup sering menyalin data berinisialisasi ke RAM dan mengosongkan area BSS sebelum menjalankan kode C. Setelah inisialisasi periferal, handler interrupt dapat merespons peristiwa perangkat. Bentuk tepatnya bergantung pada target dan runtime.</p></Note>
   </div></section>

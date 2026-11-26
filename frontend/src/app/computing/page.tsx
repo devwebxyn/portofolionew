@@ -1,8 +1,9 @@
 import { Chapter, NextChapter, Scene } from "@/components/bare/Exhibit";
 import { Essay, Index, Note, sources } from "@/components/exhibition/Editorial";
-import { Gpu, ArtBoard } from "@/components/exhibition/Machines";
-import { Workload, Turntable } from "@/components/exhibition/InteractiveBoards";
-import { TransferArt } from "@/components/exhibition/Diagrams";
+import { ArtBoard } from "@/components/exhibition/Machines";
+import { Workload } from "@/components/exhibition/InteractiveBoards";
+import { Render } from "@/components/exhibition/Render";
+import { ModelFlow } from "@/components/exhibition/ModelFlow";
 import { Sequence, type Step } from "@/components/exhibition/Sequence";
 import { pageMetadata } from "@/lib/site";
 import type { CSSProperties } from "react";
@@ -29,12 +30,12 @@ function TensorArt() {
   </div>;
 }
 const pipeline:Step[]=[
-  {label:"Data",text:"Kumpulkan data sesuai tujuan. Periksa sumber, izin penggunaan, distribusi contoh, dan definisi label sebelum membuat keputusan model.",art:<TransferArt from="SUMBER" to="DATASET" units={["A","B","C"]}/>},
-  {label:"Preprocessing",text:"Data diubah menjadi representasi numerik dan dibagi dengan cara yang mengurangi kebocoran antarset. Tensor menyimpan nilai dan bentuk multidimensi.",art:<TransferArt from="CONTOH" to="TENSOR" units={["[N]","[H]","[W]"]}/>},
+  {label:"Data",text:"Kumpulkan data sesuai tujuan. Periksa sumber, izin penggunaan, distribusi contoh, dan definisi label sebelum membuat keputusan model.",art:<ModelFlow stage={0}/>},
+  {label:"Preprocessing",text:"Data diubah menjadi representasi numerik dan dibagi dengan cara yang mengurangi kebocoran antarset. Tensor menyimpan nilai dan bentuk multidimensi.",art:<ModelFlow stage={1}/>},
   {label:"Model",text:"Arsitektur menentukan operasi dan parameter yang terhubung. Perkalian matriks adalah contoh operasi umum yang bisa memanfaatkan banyak unit komputasi.",art:<TensorArt/>},
-  {label:"Training",text:"Prediksi dibandingkan dengan target melalui fungsi loss. Gradien membantu memperbarui parameter. Memori sering juga menyimpan aktivasi dan keadaan optimizer.",art:<TransferArt from="LOSS" to="BOBOT" units={["∂L","ΔW","W'"]}/>},
-  {label:"Evaluasi",text:"Ukur perilaku pada data yang disisihkan. Periksa pola kegagalan dan kecocokan metrik dengan tugas, termasuk contoh yang kurang terwakili.",art:<TransferArt from="PREDIKSI" to="METRIK" units={["UJI","REF","SEL"]}/>},
-  {label:"Inferensi",text:"Model menggunakan parameter yang sudah ditetapkan untuk menghasilkan keluaran baru. Latensi, throughput, memori, serta perpindahan data dapat membatasi pengalaman pengguna.",art:<TransferArt from="INPUT" to="OUTPUT" units={["X","F(X)","Y"]}/>},
+  {label:"Training",text:"Prediksi dibandingkan dengan target melalui fungsi loss. Gradien membantu memperbarui parameter. Memori sering juga menyimpan aktivasi dan keadaan optimizer.",art:<ModelFlow stage={3}/>},
+  {label:"Evaluasi",text:"Ukur perilaku pada data yang disisihkan. Periksa pola kegagalan dan kecocokan metrik dengan tugas, termasuk contoh yang kurang terwakili.",art:<ModelFlow stage={4}/>},
+  {label:"Inferensi",text:"Model menggunakan parameter yang sudah ditetapkan untuk menghasilkan keluaran baru. Latensi, throughput, memori, serta perpindahan data dapat membatasi pengalaman pengguna.",art:<ModelFlow stage={5}/>},
 ];
 
 export default function Computing(){
@@ -42,7 +43,7 @@ export default function Computing(){
     <section className="world-hero gpu-hero"><div className="frame page-top">
       <Chapter id="KOMPUTASI" label="GPU, CUDA, dan kecerdasan buatan"/>
       <header className="world-title entrance"><h1>Bekerja <em>secara paralel.</em></h1><p className="lead">Ketika banyak elemen menjalani operasi serupa, cara membagi kerja dan memindahkan data menjadi sama pentingnya dengan operasi itu sendiri.</p></header>
-      <Turntable label="Sudut rakitan GPU"><Gpu/></Turntable>
+      <Render name="gpu" alt="Ilustrasi kartu grafis dengan dua kipas dan sirip pendingin" priority/>
       <Index items={[["beban","Pembagian pekerjaan"],["cuda","Model CUDA"],["model-ai","Jalur model AI"]]}/>
     </div></section>
     <Essay id="beban" number="01" title="Latensi dan throughput">

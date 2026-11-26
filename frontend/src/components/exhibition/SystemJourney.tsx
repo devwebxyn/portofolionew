@@ -6,10 +6,13 @@ import { SignalDiagram, TransferArt } from "./Diagrams";
 import { Sequence, type Step } from "./Sequence";
 
 const boot:Step[]=[
-  {label:"Firmware",text:"Firmware awal membawa perangkat ke keadaan yang dapat dipakai dan memilih jalur boot. Tahap ini berbeda pada PC UEFI dan berbagai papan embedded.",art:<TransferArt from="RESET" to="FIRMWARE" units={["ROM","I/O","RAM"]}/>},
-  {label:"Bootloader",text:"Dalam satu jalur umum, bootloader memilih dan memuat kernel, parameter boot, serta initramfs jika digunakan. Sebagian sistem memiliki mekanisme pemuatan lain.",art:<TransferArt from="MEDIA" to="RAM" units={["KERN","INIT","ARG"]}/>},
-  {label:"Inisialisasi kernel",text:"Kernel menyiapkan pengelolaan memori, scheduler, interrupt, dan subsistem perangkat sesuai konfigurasi. File awal dapat membantu menyiapkan root filesystem.",art:<TransferArt from="KERNEL" to="PERANGKAT" units={["MM","IRQ","DRV"]}/>},
-  {label:"Init dan userspace",text:"Program init sebagai PID 1 mengelola proses awal sesuai distribusi. Layanan dan program lain menyusul, dengan interaksi sistem melalui antarmuka kernel.",art:<TransferArt from="PID 1" to="LAYANAN" units={["LOG","NET","APP"]}/>},
+  {label:"Firmware",text:"Firmware awal membawa perangkat ke keadaan yang dapat dipakai dan memilih jalur boot. Tahap ini berbeda pada PC UEFI dan berbagai papan embedded.",art:<div className="process-panel"><h4>Firmware setelah daya menyala</h4><div className="process-chain"><span>Reset CPU</span><span>Mulai firmware</span><span>Siapkan perangkat</span><span>Pilih media boot</span></div></div>},
+  {label:"Bootloader",text:"Dalam satu jalur umum, bootloader memilih dan memuat kernel, parameter boot, serta initramfs jika digunakan. Sebagian sistem memiliki mekanisme pemuatan lain.",art:<div className="process-panel"><h4>Bootloader memuat citra</h4><table><thead><tr><th>Dari penyimpanan</th><th>Disiapkan untuk kernel</th></tr></thead><tbody><tr><td>Citra kernel</td><td>Kode yang akan dijalankan</td></tr><tr><td>Initramfs, jika dipakai</td><td>Filesystem awal di RAM</td></tr><tr><td>Konfigurasi</td><td>Argumen boot</td></tr></tbody></table></div>},
+  {label:"Inisialisasi kernel",text:"Kernel menyiapkan pengelolaan memori, scheduler, interrupt, dan subsistem perangkat sesuai konfigurasi. File awal dapat membantu menyiapkan root filesystem.",art:<div className="process-panel"><h4>Kernel menyiapkan subsistem</h4><div className="process-chain"><span>Memori dan scheduler</span><span>Interrupt dan driver</span><span>Filesystem awal</span></div><p>Urutan rincinya mengikuti arsitektur dan konfigurasi.</p></div>},
+  {label:"Init dan userspace",text:"Program init sebagai PID 1 mengelola proses awal sesuai distribusi. Layanan dan program lain menyusul, dengan interaksi sistem melalui antarmuka kernel.",art:<div className="process-panel"><h4>Pohon proses di userspace</h4><pre>{`PID 1 · init
+├── layanan log
+├── layanan jaringan
+└── sesi pengguna`}</pre><p>Contoh. Layanan dan dependensinya mengikuti distribusi.</p></div>},
 ];
 
 function ScheduleArt() {

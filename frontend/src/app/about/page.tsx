@@ -1,6 +1,6 @@
 import { TextLink } from "@/components/Editorial";
 import { Chapter, NextChapter, Scene } from "@/components/bare/Exhibit";
-import { Wafer } from "@/components/bare/Hardware";
+import { Render } from "@/components/exhibition/Render";
 import { Connection } from "@/components/bare/Computing";
 import { Essay, Index, Note } from "@/components/exhibition/Editorial";
 import { pageMetadata } from "@/lib/site";
@@ -13,7 +13,7 @@ export default function About() {
       <Chapter id="PROFIL" label="Samuel Indra Bastian" />
       <div className="about-composition">
         <header className="entrance"><h1>Di balik<br /> <em>rasa ingin tahu.</em></h1><p className="lead">Saya Samuel Indra Bastian, pelajar berusia 18 tahun di SMK PGRI 3 Malang, jurusan Teknik Elektronika Industri. Saya tertarik pada pemrograman low-level dan sistem Linux, terutama ketika kode dapat ditelusuri sampai ke perangkat yang menjalankannya.</p></header>
-        <Scene art={<Wafer />} label="Permukaan silikon" className="wafer-scene" />
+        <Scene art={<Render name="wafer" alt="Wafer silikon dengan pola die berulang"/>} label="Permukaan silikon" className="wafer-scene" />
       </div>
       <Index items={[["pengalaman","Pengalaman elektronika"],["fokus","Yang saya dalami"],["cara-kerja","Cara belajar"]]}/>
     </section>

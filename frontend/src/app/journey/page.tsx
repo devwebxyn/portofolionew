@@ -1,5 +1,5 @@
 import { Chapter, NextChapter, Scene } from "@/components/bare/Exhibit";
-import { Wafer } from "@/components/bare/Hardware";
+import { Render } from "@/components/exhibition/Render";
 import { Essay, Index, Note } from "@/components/exhibition/Editorial";
 import { pageMetadata } from "@/lib/site";
 
@@ -25,7 +25,7 @@ export default function Journey() {
           <div className="timeline-dot" /><span className="eyebrow">{i === 0 ? <time dateTime="2024-07">{label}</time> : label}</span><div><h2>{title}</h2><p>{text}</p></div>
         </li>)}
       </ol>
-      <Scene art={<Wafer />} label="Dari aplikasi ke silikon" className="journey-wafer" />
+      <Scene art={<Render name="wafer" alt="Wafer silikon dengan pola die berulang"/>} label="Dari aplikasi ke silikon" className="journey-wafer" />
     </section>
     <Essay id="pergeseran" number="01" title="Pergeseran pertanyaan" tone="paper">
       <h2>Dari bisa berjalan <em>ke bisa dijelaskan.</em></h2>

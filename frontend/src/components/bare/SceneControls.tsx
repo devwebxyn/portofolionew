@@ -31,7 +31,7 @@ export function SceneObserver() {
   return null;
 }
 
-export function ProcessorStage({ children }: { children: ReactNode }) {
+export function ProcessorStage({ children, exploded }: { children: ReactNode; exploded: ReactNode }) {
   const stage = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const pointerBounds = useRef<DOMRect | null>(null);
@@ -85,13 +85,13 @@ export function ProcessorStage({ children }: { children: ReactNode }) {
       pointerBounds.current = null;
       for (const key of ["--yaw", "--pitch", "--light-x"]) event.currentTarget.style.removeProperty(key);
     }}>
-    <div className="stage-header"><span><i /> Model prosesor</span><span>ISOMETRI / 01</span></div>
-    <div className="processor-camera">{children}</div>
-    <p className="sr-only">Ilustrasi konseptual. Dari atas ke bawah, prosesor terdiri dari penutup logam, die silikon, substrat, dan pad kontak.</p>
+    <div className="stage-header"><span><i /> Paket prosesor</span><span>ILUSTRASI</span></div>
+    <div className="processor-camera"><div className="processor-assembled" aria-hidden={open}>{children}</div><div className="processor-exploded" aria-hidden={!open}>{exploded}</div></div>
+    <p className="sr-only">Ilustrasi konseptual. Dari atas ke bawah, prosesor terdiri dari die silikon, substrat, dan kontak.</p>
     <div className="stage-footer">
       <label className="view-angle"><span>Sudut pandang</span><input type="range" min="-22" max="22" defaultValue="0"
         onChange={(event) => stage.current?.style.setProperty("--view-angle", `${event.currentTarget.value}deg`)} /></label>
-      <button type="button" aria-pressed={open} className="inspect" onClick={() => setOpen(!open)}><Layers3 size={16} aria-hidden /> Pisahkan lapisan</button>
+      <button type="button" aria-pressed={open} className="inspect" onClick={() => setOpen(!open)}><Layers3 size={16} aria-hidden /> {open ? "Rakit kembali" : "Pisahkan lapisan"}</button>
     </div>
   </div>;
 }

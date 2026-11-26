@@ -1,8 +1,8 @@
 import { Chapter, NextChapter, Scene } from "@/components/bare/Exhibit";
-import { Board, Processor, Wafer } from "@/components/bare/Hardware";
+import { Render } from "@/components/exhibition/Render";
 import { Essay, Index, Note, sources } from "@/components/exhibition/Editorial";
 import { CrystalArt, TransistorCutaway } from "@/components/exhibition/Machines";
-import { CrossSection, Floorplan, GateNet, SignalDiagram, TestStation, TransferArt } from "@/components/exhibition/Diagrams";
+import { CrossSection, Floorplan, GateNet, SignalDiagram, TestStation } from "@/components/exhibition/Diagrams";
 import { Sequence, type Step } from "@/components/exhibition/Sequence";
 import { pageMetadata } from "@/lib/site";
 
@@ -10,21 +10,21 @@ export const metadata=pageMetadata("/semiconductor","Silikon dan fabrikasi chip"
 
 const manufacturing:Step[]=[
   {label:"Arsitektur dan spesifikasi",text:"Pekerjaan dimulai dari tugas yang ingin dijalankan chip, batas daya, kebutuhan memori, dan antarmuka. Untuk prosesor, spesifikasi instruksi membentuk kontrak yang dapat dipakai perangkat lunak.",art:<Floorplan/>},
-  {label:"Desain RTL",text:"Register-transfer level menggambarkan perpindahan data antarregister dan logika kombinasional di antaranya. Verilog adalah HDL yang dapat menyatakan struktur serta perilaku itu.",art:<TransferArt from="VERILOG" to="REGISTER" units={["CLK","D","Q"]} code="always @(posedge clk) q <= d;"/>},
+  {label:"Desain RTL",text:"Register-transfer level menggambarkan perpindahan data antarregister dan logika kombinasional di antaranya. Verilog adalah HDL yang dapat menyatakan struktur serta perilaku itu.",art:<div className="process-panel"><h4>Satu register pada tepi clock</h4><code>always @(posedge clk) q &lt;= d;</code><div className="process-chain"><span>D membawa nilai</span><span>Clock naik</span><span>Q menyimpan D</span></div></div>},
   {label:"Verifikasi fungsi",text:"Testbench memberi stimulus dan membandingkan respons rancangan dengan hasil yang diharapkan. Corner case seperti reset dan perubahan sinyal dekat batas waktu perlu dipertimbangkan.",art:<SignalDiagram labels={["CLK","D","Q"]}/>,detail:"Simulasi fungsional, pemeriksaan formal, dan analisis timing menjawab pertanyaan yang berbeda."},
   {label:"Sintesis logika",text:"Sintesis menerjemahkan subset RTL yang dapat disintesis menjadi jaringan gerbang atau sel dari pustaka teknologi. Hasilnya diperiksa terhadap fungsi dan batasan desain.",art:<GateNet/>},
   {label:"Desain fisik",text:"Floorplan membagi area untuk blok. Placement menempatkan sel, distribusi clock mengirim sinyal waktu, dan routing menghubungkan jaringan. Analisis timing memeriksa apakah data sampai tepat waktu.",art:<Floorplan routed/>,detail:"Fisik yang berubah dapat memengaruhi delay, area, daya, dan integritas sinyal. Tahap ini biasanya berulang."},
   {label:"Tape-out",text:"Setelah paket verifikasi dan pemeriksaan fisik diselesaikan untuk target proses, data layout diserahkan ke manufaktur. Data itu menjadi salah satu masukan persiapan pola untuk fabrikasi.",art:<TestStation mode="mask"/>},
-  {label:"Wafer silikon",text:"Wafer yang disiapkan sebagai permukaan proses menampung pola banyak die. Pantulan pada ilustrasi memperlihatkan susunan berulang, tanpa menunjukkan dimensi proses tertentu.",art:<Wafer/>},
+  {label:"Wafer silikon",text:"Wafer yang disiapkan sebagai permukaan proses menampung pola banyak die. Pantulan pada ilustrasi memperlihatkan susunan berulang, tanpa menunjukkan dimensi proses tertentu.",art:<Render name="wafer" alt="Wafer silikon dengan pola die berulang"/>},
   {label:"Fabrikasi semikonduktor",text:"Pabrik membentuk perangkat dan interkoneksi melalui urutan pelapisan, pembentukan pola, serta pengolahan material berulang. Resep dan urutan bergantung pada layer dan teknologi.",detail:"Jelajahi penampang di bawah untuk melihat contoh fungsi proses, dari deposisi dan litografi hingga interkoneksi logam.",art:<CrossSection stage="exposure"/>},
   {label:"Pengujian wafer dan dicing",text:"Probe menghubungi pad untuk mengukur die di atas wafer. Pemetaan hasil membantu memilih die, lalu wafer dipisah dalam proses dicing.",art:<div className="twin-process"><TestStation mode="probe"/><TestStation mode="dicing"/></div>},
   {label:"Pengemasan",text:"Die dipasang pada kemasan dan dihubungkan ke terminal luar lewat metode seperti bonding atau flip-chip. Pada sebagian paket, jalur panas diteruskan melalui material termal ke penutup.",art:<PackageExploded/>},
   {label:"Pengujian akhir",text:"Setelah pengemasan, produk dapat menjalani uji fungsi, pengukuran karakteristik listrik, dan skrining mutu sesuai kebutuhan penggunaan.",art:<TestStation mode="final"/>},
-  {label:"Integrasi",text:"Terminal kemasan menjadi antarmuka ke PCB. Pasokan daya, jalur sinyal, firmware, dan pendinginan menentukan bagaimana chip dipakai sebagai bagian dari perangkat.",art:<Board/>},
+  {label:"Integrasi",text:"Terminal kemasan menjadi antarmuka ke PCB. Pasokan daya, jalur sinyal, firmware, dan pendinginan menentukan bagaimana chip dipakai sebagai bagian dari perangkat.",art:<Render name="pcb-populated" alt="PCB dengan chip yang telah terpasang"/>},
 ];
 
 function PackageExploded() {
-  return <div className="package-plate"><Processor/></div>;
+  return <div className="package-plate"><Render name="chip" alt="Lapisan paket chip, die, substrat, dan kontak"/></div>;
 }
 
 const process:Step[]=[
@@ -44,7 +44,7 @@ export default function Semiconductor(){
     <section className="world-hero silicon-hero">
       <div className="frame page-top"><Chapter id="SILIKON" label="Semikonduktor dan desain chip"/>
         <header className="world-title entrance"><h1>Dari silikon ke <em>sebuah instruksi.</em></h1><p className="lead">Ketika membaca satu instruksi, saya baru melihat permukaannya. Di bawahnya ada keputusan arsitektur, pola kecil yang ditanam pada wafer, serta rangkaian yang bekerja bersama.</p></header>
-        <Scene art={<Wafer/>} label="Wafer dengan pola die" className="world-object silicon-object"/>
+        <Scene art={<Render name="wafer" alt="Wafer silikon dengan pola die berulang"/>} label="Wafer dengan pola die" className="world-object silicon-object"/>
         <Index items={[["material","Material"],["alur-chip","12 tahap chip"],["fabrikasi","Fabrikasi"],["industri","Ekosistem industri"]]}/>
       </div>
     </section>

@@ -39,7 +39,7 @@ export function Floorplan({routed=false}:{routed?:boolean}) {
     <path d="m65 93 390-46 111 62-391 49v166L65 255zM175 324l391-49V109l-391 49z" stroke="#88938e" fill="#35404a"/>
     <g transform="matrix(1 -.12 .39 .7 69 102)">
       <rect width="360" height="220" fill="#282d38" stroke="#a6a7b3"/>
-      {[[18,18,132,65],[174,18,165,65],[18,107,91,95],[128,107,92,95],[239,107,99,95]].map(([x,y,w,h],i)=><g key={x} className="floor-cell" style={stageStyle(i)}><rect x={x} y={y} width={w} height={h} fill={["#a7806c","#6c8b94","#7d7996","#9b8767","#608377"][i]} stroke="#e9d1ae"/><text x={x+8} y={y+24} className="art-label" fill="#15191a">{["CACHE","INTI","I/O","CLOCK","BUS"][i]}</text></g>)}
+      {[[18,18,132,65],[174,18,165,65],[18,107,91,95],[128,107,92,95],[239,107,99,95]].map(([x,y,w,h],i)=><g key={`${x}-${y}`} className="floor-cell" style={stageStyle(i)}><rect x={x} y={y} width={w} height={h} fill={["#a7806c","#6c8b94","#7d7996","#9b8767","#608377"][i]} stroke="#e9d1ae"/><text x={x+8} y={y+24} className="art-label" fill="#15191a">{["CACHE","INTI","I/O","CLOCK","BUS"][i]}</text></g>)}
       {routed && <g stroke="#f2d1a1" strokeWidth="2" fill="none">{n(7).map(i=><path className="data-sweep" pathLength="1" key={i} d={`M${38+i*15} 63v${29+i%2*5}h${205-i*13}v${44+i*5}`}/>)}</g>}
     </g>
   </ArtBoard>;

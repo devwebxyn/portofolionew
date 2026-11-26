@@ -5,7 +5,7 @@ import { Action, TextLink } from "@/components/Editorial";
 import { ProjectShowcase, ProjectSkeleton } from "@/components/ProjectShowcase";
 import { Abstraction, Connection, Logic, Memory, Registers, Stack } from "@/components/bare/Computing";
 import { Chapter, Scene } from "@/components/bare/Exhibit";
-import { Processor } from "@/components/bare/Hardware";
+import { Render } from "@/components/exhibition/Render";
 import { AtlasFirmware, AtlasIndex, AtlasMaterial, AtlasParallel } from "@/components/exhibition/HomeAtlas";
 import { ProcessorStage } from "@/components/bare/SceneControls";
 
@@ -28,7 +28,7 @@ export default function Home() {
           <p className="lead">Saya pelajar Teknik Elektronika Industri di SMK PGRI 3 Malang. Saya mengikuti jalur dari material dan rangkaian hingga firmware, Linux, serta aplikasi.</p>
           <div className="opening-actions"><Action href="/systems">Jelajahi sistem</Action><Link className="text-link opening-scroll" href="#material"><ArrowDown size={16} aria-hidden /> Mulai dari silikon</Link></div>
         </div>
-        <ProcessorStage><Processor /></ProcessorStage>
+        <ProcessorStage exploded={<Render name="chip" alt="Die, substrat, dan kontak paket chip yang dipisahkan"/>}><Render name="cpu" alt="Paket CPU dengan penutup logam dan substrat hijau" priority/></ProcessorStage>
       </div>
       <div className="frame opening-index"><span>PERANGKAT LUNAK <i /> PERANGKAT KERAS</span><span>SILIKON → APLIKASI</span></div>
     </section>
